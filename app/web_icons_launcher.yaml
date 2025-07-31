@@ -1,0 +1,6 @@
+icons_launcher:
+  platforms:
+    web:
+      enable: true
+      image_path: "config/app_icon/web/app_icon_web.png"
+      favicon_path: "config/app_icon/web/app_icon_web.png"

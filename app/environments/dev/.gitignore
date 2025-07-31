@@ -1,0 +1,8 @@
+firebase_options.dart
+firebase.json
+GoogleService-Info.plist
+Info.plist
+google-services.json
+env.json
+AndroidManifest.xml
+strings.xml

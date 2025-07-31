@@ -1,0 +1,6 @@
+icons_launcher:
+  platforms:
+    ios:
+      enable: true
+      image_path: "config/app_icon/ios/app_icon_ios_light.png"
+      dark_path: "config/app_icon/ios/app_icon_ios_dark.png"

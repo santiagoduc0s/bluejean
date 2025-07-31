@@ -1,0 +1,185 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Development - Debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "development",
+        "--target",
+        "lib/main_development.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "dev",
+      "cwd": "./"
+    },
+    {
+      "name": "Development - Profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "development",
+        "--target",
+        "lib/main_development.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "dev",
+      "cwd": "./",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Development - Release",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "development",
+        "--target",
+        "lib/main_development.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "dev",
+      "cwd": "./",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Staging - Debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_staging.dart",
+      "args": [
+        "--flavor",
+        "staging",
+        "--target",
+        "lib/main_staging.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "stg",
+      "cwd": "./"
+    },
+    {
+      "name": "Staging - Profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_staging.dart",
+      "args": [
+        "--flavor",
+        "staging",
+        "--target",
+        "lib/main_staging.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "stg",
+      "cwd": "./",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Staging - Release",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_staging.dart",
+      "args": [
+        "--flavor",
+        "staging",
+        "--target",
+        "lib/main_staging.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "stg",
+      "cwd": "./",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Production - Debug",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_production.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--target",
+        "lib/main_production.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "prod",
+      "cwd": "./"
+    },
+    {
+      "name": "Production - Profile",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_production.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--target",
+        "lib/main_production.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "prod",
+      "cwd": "./",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Production - Release",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_production.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--target",
+        "lib/main_production.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080"
+      ],
+      "preLaunchTask": "prod",
+      "cwd": "./",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Development - Chrome (No Web Security)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_development.dart",
+      "args": [
+        "--flavor",
+        "development",
+        "--target",
+        "lib/main_development.dart",
+        "--dart-define-from-file",
+        "env.json",
+        "--web-port=8080",
+        "-d",
+        "chrome",
+        "--web-browser-flag",
+        "--disable-web-security"
+      ],
+      "preLaunchTask": "prod",
+      "cwd": "./"
+    }
+  ]
+}
