@@ -46,6 +46,16 @@ target_dir="environments/$ENV"
 # Ensure the target directory exists
 mkdir -p "$target_dir"
 
+# Create env.json if it doesn't exist
+if [ ! -f "$target_dir/env.json" ]; then
+    echo "Creating env.json for environment: $ENV"
+    cat > "$target_dir/env.json" << EOF
+{
+ "env": "$ENV"
+}
+EOF
+fi
+
 # Move generated files to the environment directory
 mv lib/firebase_options.dart "$target_dir/"
 mv ios/Runner/GoogleService-Info.plist "$target_dir/"
