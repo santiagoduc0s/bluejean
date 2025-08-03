@@ -21,6 +21,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get home => 'Inicio';
 
   @override
+  String get name => 'Nombre';
+
+  @override
   String get firstName => 'Nombre';
 
   @override

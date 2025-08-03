@@ -102,7 +102,7 @@ class ProfilePage extends StatelessWidget {
                                 formControlName: 'name',
                                 textInputAction: TextInputAction.next,
                                 decoration: inputsProvider.primary.copyWith(
-                                  hintText: l10n.firstName,
+                                  hintText: l10n.name,
                                   fillColor: colorsProvider.surfaceContainer,
                                   filled: true,
                                 ),

@@ -8,6 +8,8 @@
   "@settings": {},
   "home": "Home",
   "@home": {},
+  "name": "Name",
+  "@name": {},
   "firstName": "First Name",
   "@firstName": {},
   "lastName": "Last Name",
