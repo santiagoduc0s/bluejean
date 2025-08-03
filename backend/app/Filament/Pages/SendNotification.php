@@ -16,6 +16,8 @@ class SendNotification extends Page
     protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
 
     protected static ?string $navigationLabel = 'Send Notification';
+    
+    protected static ?string $navigationGroup = 'Push Notifications';
 
     protected static string $view = 'filament.pages.send-notification';
 

@@ -22,6 +22,8 @@ class FirebaseNotificationResource extends Resource
     protected static ?string $navigationLabel = 'Firebase Notifications';
     
     protected static ?string $modelLabel = 'Firebase Notification';
+    
+    protected static ?string $navigationGroup = 'Push Notifications';
 
     public static function form(Form $form): Form
     {

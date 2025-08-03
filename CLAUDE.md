@@ -89,7 +89,7 @@ The Flutter app follows **Clean Architecture** with clear separation of concerns
 - `utils/` - Utility functions including ApiClient for HTTP requests
 
 **Domain Layer (`lib/domain/`):**
-- `entities/` - Business entities (Channel, User, Driver, Device, Preference)
+- `entities/` - Business entities (User, Device, Preference)
 - `repositories/` - Repository interfaces
 - `usecases/` - Business logic use cases
 - `enums/` - Domain enumerations

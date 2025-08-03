@@ -36,3 +36,9 @@ Add to the ```<env>/env.json```
 ## Project
 
 Rename the ```bluejean.code-workspace```
+
+## Create user admin
+
+```
+php artisan user-admin:create --name="Test Admin" --email="admin@admin.com" --password="12341234"
+```
