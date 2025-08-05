@@ -413,5 +413,7 @@
   "importFromContacts": "Import from Contacts",
   "@importFromContacts": {},
   "profileEmailNote": "This email is not your authentication email, just for information",
-  "@profileEmailNote": {}
+  "@profileEmailNote": {},
+  "deviceDeletedSuccessfully": "Device deleted successfully",
+  "@deviceDeletedSuccessfully": {}
 }

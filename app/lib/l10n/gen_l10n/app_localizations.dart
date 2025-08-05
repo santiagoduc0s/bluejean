@@ -1231,6 +1231,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This email is not your authentication email, just for information'**
   String get profileEmailNote;
+
+  /// No description provided for @deviceDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Device deleted successfully'**
+  String get deviceDeletedSuccessfully;
 }
 
 class _AppLocalizationsDelegate

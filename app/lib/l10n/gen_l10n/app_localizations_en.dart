@@ -612,4 +612,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get profileEmailNote =>
       'This email is not your authentication email, just for information';
+
+  @override
+  String get deviceDeletedSuccessfully => 'Device deleted successfully';
 }

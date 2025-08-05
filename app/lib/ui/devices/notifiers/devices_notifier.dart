@@ -69,7 +69,7 @@ class DevicesNotifier extends ChangeNotifier {
 
       primarySnackbar(
         _snackbar,
-        'Device deleted successfully',
+        _localization.tr.deviceDeletedSuccessfully,
       );
     } catch (e, s) {
       logError(e, s);

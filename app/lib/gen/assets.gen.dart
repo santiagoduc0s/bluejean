@@ -1,3 +1,5 @@
+// dart format width=80
+
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
@@ -5,12 +7,15 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
+// ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
 import 'package:flutter/widgets.dart';
 
 class $AssetsDarkGen {
   const $AssetsDarkGen();
+
+  /// Directory path: assets/dark/icons
+  $AssetsDarkIconsGen get icons => const $AssetsDarkIconsGen();
 
   /// Directory path: assets/dark/images
   $AssetsDarkImagesGen get images => const $AssetsDarkImagesGen();
@@ -32,8 +37,21 @@ class $AssetsFilesGen {
 class $AssetsLightGen {
   const $AssetsLightGen();
 
+  /// Directory path: assets/light/icons
+  $AssetsLightIconsGen get icons => const $AssetsLightIconsGen();
+
   /// Directory path: assets/light/images
   $AssetsLightImagesGen get images => const $AssetsLightImagesGen();
+}
+
+class $AssetsDarkIconsGen {
+  const $AssetsDarkIconsGen();
+
+  /// File path: assets/dark/icons/logo.svg
+  String get logo => 'assets/dark/icons/logo.svg';
+
+  /// List of all assets
+  List<String> get values => [logo];
 }
 
 class $AssetsDarkImagesGen {
@@ -45,12 +63,18 @@ class $AssetsDarkImagesGen {
   /// File path: assets/dark/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/dark/images/logo.png');
 
-  /// File path: assets/dark/images/public_onboard_page_1.png
-  AssetGenImage get publicOnboardPage1 =>
-      const AssetGenImage('assets/dark/images/public_onboard_page_1.png');
+  /// List of all assets
+  List<dynamic> get values => [aGitignore, logo];
+}
+
+class $AssetsLightIconsGen {
+  const $AssetsLightIconsGen();
+
+  /// File path: assets/light/icons/logo.svg
+  String get logo => 'assets/light/icons/logo.svg';
 
   /// List of all assets
-  List<dynamic> get values => [aGitignore, logo, publicOnboardPage1];
+  List<String> get values => [logo];
 }
 
 class $AssetsLightImagesGen {
@@ -62,12 +86,8 @@ class $AssetsLightImagesGen {
   /// File path: assets/light/images/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/light/images/logo.png');
 
-  /// File path: assets/light/images/public_onboard_page_1.png
-  AssetGenImage get publicOnboardPage1 =>
-      const AssetGenImage('assets/light/images/public_onboard_page_1.png');
-
   /// List of all assets
-  List<dynamic> get values => [aGitignore, logo, publicOnboardPage1];
+  List<dynamic> get values => [aGitignore, logo];
 }
 
 class Assets {
@@ -79,12 +99,18 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+    this.animation,
+  });
 
   final String _assetName;
 
   final Size? size;
   final Set<String> flavors;
+  final AssetGenImageAnimation? animation;
 
   Image image({
     Key? key,
@@ -139,11 +165,30 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({AssetBundle? bundle, String? package}) {
-    return AssetImage(_assetName, bundle: bundle, package: package);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
   }
 
   String get path => _assetName;
 
   String get keyName => _assetName;
+}
+
+class AssetGenImageAnimation {
+  const AssetGenImageAnimation({
+    required this.isAnimation,
+    required this.duration,
+    required this.frames,
+  });
+
+  final bool isAnimation;
+  final Duration duration;
+  final int frames;
 }

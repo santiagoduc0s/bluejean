@@ -23,7 +23,7 @@ class DevicesScreen {
             onSignOut: () {
               context.read<AuthNotifier>().signOut();
             },
-          ),
+          )..loadDevices(),
           child: const DevicesPage(),
         );
       },

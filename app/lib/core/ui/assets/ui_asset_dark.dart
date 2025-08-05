@@ -10,7 +10,4 @@ class UIAssetDark implements UIAsset {
 
   @override
   String get logo => Assets.dark.images.logo.path;
-
-  @override
-  String get publicOnboardPage1 => Assets.dark.images.publicOnboardPage1.path;
 }

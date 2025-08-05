@@ -73,6 +73,21 @@ class DeviceRepositoryImpl implements DeviceRepository {
         final data = response.jsonBody['data'] as Map<String, dynamic>;
         return DeviceModel.fromJson(data);
       } else {
+        if (response.statusCode == 404) {
+          await createDevice();
+
+          final response = await _apiClient.get(
+            'api/v1/devices/by-identifier',
+            queryParameters: {
+              'identifier': deviceId,
+            },
+          );
+
+          if (response.isSuccess) {
+            final data = response.jsonBody['data'] as Map<String, dynamic>;
+            return DeviceModel.fromJson(data);
+          }
+        }
         return null;
       }
     } catch (e) {
@@ -175,6 +190,22 @@ class DeviceRepositoryImpl implements DeviceRepository {
         'identifier': deviceId,
       },
     );
+
+    if (response.statusCode == 404) {
+      await createDevice();
+
+      final response = await _apiClient.post(
+        '/api/v1/devices/link',
+        body: {
+          'identifier': deviceId,
+        },
+      );
+
+      if (response.isError) {
+        throw Exception('Failed to link device to user account');
+      }
+      return;
+    }
 
     if (response.isError) {
       throw Exception('Failed to link device to user account');

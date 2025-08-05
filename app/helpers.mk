@@ -11,3 +11,6 @@ clean:
 
 pubget:
 	fvm flutter pub get
+
+lang:
+	fvm flutter gen-l10n

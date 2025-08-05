@@ -614,4 +614,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get profileEmailNote =>
       'Este email no es tu email de autenticación, solo es para información';
+
+  @override
+  String get deviceDeletedSuccessfully => 'Dispositivo eliminado exitosamente';
 }

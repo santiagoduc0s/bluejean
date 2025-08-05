@@ -10,7 +10,4 @@ class UIAssetLight implements UIAsset {
 
   @override
   String get logo => Assets.light.images.logo.path;
-
-  @override
-  String get publicOnboardPage1 => Assets.light.images.publicOnboardPage1.path;
 }
