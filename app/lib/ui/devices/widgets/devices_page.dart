@@ -7,21 +7,8 @@ import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/devices/notifiers/notifiers.dart';
 import 'package:provider/provider.dart';
 
-class DevicesPage extends StatefulWidget {
+class DevicesPage extends StatelessWidget {
   const DevicesPage({super.key});
-
-  @override
-  State<DevicesPage> createState() => _DevicesPageState();
-}
-
-class _DevicesPageState extends State<DevicesPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<DevicesNotifier>().loadDevices();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,32 +18,28 @@ class _DevicesPageState extends State<DevicesPage> {
 
     final notifier = context.watch<DevicesNotifier>();
 
-    if (notifier.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
     Widget body;
     if (notifier.devices.isEmpty) {
       body = Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.devices_other,
-              size: 64,
-              color: colors.onSurfaceVariant,
-            ),
-            2.spaceY,
-            Text(
-              l10n.noDevicesFound,
-              style: textStyles.titleMedium.copyWith(
-                color: colors.onSurfaceVariant,
+        child: notifier.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.devices_other,
+                    size: 64,
+                    color: colors.onSurfaceVariant,
+                  ),
+                  2.spaceY,
+                  Text(
+                    l10n.noDevicesFound,
+                    style: textStyles.titleMedium.copyWith(
+                      color: colors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       );
     } else {
       body = RefreshIndicator(
@@ -82,7 +65,6 @@ class _DevicesPageState extends State<DevicesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.manageDevices),
-        backgroundColor: Colors.transparent,
       ),
       body: body,
     );
