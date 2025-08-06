@@ -31,7 +31,7 @@ class AppLogger {
     String message, {
     required LogLevel level,
     StackTrace? stackTrace,
-    Map<String, Object> metadata = const {},
+    Map<String, dynamic> metadata = const {},
   }) async {
     switch (level) {
       case LogLevel.debug:
@@ -41,26 +41,19 @@ class AppLogger {
       case LogLevel.warning:
         logger.w(message, stackTrace: stackTrace);
       case LogLevel.error:
-        unawaited(
-          _sendLogToServer(
-            message: message,
-            type: level,
-            stackTrace: stackTrace?.toString(),
-            metadata: Map<String, dynamic>.from(metadata),
-          ),
-        );
         logger.e(message, stackTrace: stackTrace);
       case LogLevel.critical:
-        unawaited(
-          _sendLogToServer(
-            message: message,
-            type: level,
-            stackTrace: stackTrace?.toString(),
-            metadata: Map<String, dynamic>.from(metadata),
-          ),
-        );
         logger.f(message, stackTrace: stackTrace);
     }
+
+    unawaited(
+      _sendLogToServer(
+        message: message,
+        type: level,
+        stackTrace: stackTrace?.toString(),
+        metadata: Map<String, dynamic>.from(metadata),
+      ),
+    );
   }
 
   Future<void> _sendLogToServer({
@@ -92,6 +85,7 @@ class AppLogger {
         'type': _logLevelToString(type),
         'stack_trace': stackTrace,
         'metadata': {...?metadata, ...extraData},
+        'environment': Env.environment,
       }),
     );
   }
@@ -150,11 +144,23 @@ class AppLogger {
   void error(
     String message, {
     StackTrace? stackTrace,
-    Map<String, Object> metadata = const {},
+    Map<String, dynamic> metadata = const {},
   }) =>
       log(
         message,
         level: LogLevel.error,
+        stackTrace: stackTrace,
+        metadata: metadata,
+      );
+
+  void critical(
+    String message, {
+    StackTrace? stackTrace,
+    Map<String, dynamic> metadata = const {},
+  }) =>
+      log(
+        message,
+        level: LogLevel.critical,
         stackTrace: stackTrace,
         metadata: metadata,
       );
