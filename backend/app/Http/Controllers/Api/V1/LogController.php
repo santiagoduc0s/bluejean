@@ -26,13 +26,15 @@ class LogController extends Controller
             ])],
             'stack_trace' => 'nullable|string|max:10000',
             'metadata' => 'nullable|array',
+            'environment' => 'nullable|string|max:50',
         ]);
 
         $log = Log::createLog(
             message: $validated['message'],
             type: $validated['type'],
             stackTrace: $validated['stack_trace'] ?? null,
-            metadata: $validated['metadata'] ?? null
+            metadata: $validated['metadata'] ?? null,
+            environment: $validated['environment'] ?? null
         );
 
         return response([

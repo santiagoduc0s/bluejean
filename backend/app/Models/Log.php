@@ -11,6 +11,7 @@ class Log extends Model
         'type',
         'stack_trace',
         'metadata',
+        'environment',
     ];
 
     protected $casts = [
@@ -31,54 +32,56 @@ class Log extends Model
         string $message,
         string $type = self::TYPE_INFO,
         ?string $stackTrace = null,
-        ?array $metadata = null
+        ?array $metadata = null,
+        ?string $environment = null
     ): self {
         return self::create([
             'message' => $message,
             'type' => $type,
             'stack_trace' => $stackTrace,
             'metadata' => $metadata,
+            'environment' => $environment,
         ]);
     }
 
     /**
      * Log an info message
      */
-    public static function info(string $message, ?string $stackTrace = null, ?array $metadata = null): self
+    public static function info(string $message, ?string $stackTrace = null, ?array $metadata = null, ?string $environment = null): self
     {
-        return self::createLog($message, self::TYPE_INFO, $stackTrace, $metadata);
+        return self::createLog($message, self::TYPE_INFO, $stackTrace, $metadata, $environment);
     }
 
     /**
      * Log a warning message
      */
-    public static function warning(string $message, ?string $stackTrace = null, ?array $metadata = null): self
+    public static function warning(string $message, ?string $stackTrace = null, ?array $metadata = null, ?string $environment = null): self
     {
-        return self::createLog($message, self::TYPE_WARNING, $stackTrace, $metadata);
+        return self::createLog($message, self::TYPE_WARNING, $stackTrace, $metadata, $environment);
     }
 
     /**
      * Log an error message
      */
-    public static function error(string $message, ?string $stackTrace = null, ?array $metadata = null): self
+    public static function error(string $message, ?string $stackTrace = null, ?array $metadata = null, ?string $environment = null): self
     {
-        return self::createLog($message, self::TYPE_ERROR, $stackTrace, $metadata);
+        return self::createLog($message, self::TYPE_ERROR, $stackTrace, $metadata, $environment);
     }
 
     /**
      * Log a debug message
      */
-    public static function debug(string $message, ?string $stackTrace = null, ?array $metadata = null): self
+    public static function debug(string $message, ?string $stackTrace = null, ?array $metadata = null, ?string $environment = null): self
     {
-        return self::createLog($message, self::TYPE_DEBUG, $stackTrace, $metadata);
+        return self::createLog($message, self::TYPE_DEBUG, $stackTrace, $metadata, $environment);
     }
 
     /**
      * Log a critical message
      */
-    public static function critical(string $message, ?string $stackTrace = null, ?array $metadata = null): self
+    public static function critical(string $message, ?string $stackTrace = null, ?array $metadata = null, ?string $environment = null): self
     {
-        return self::createLog($message, self::TYPE_CRITICAL, $stackTrace, $metadata);
+        return self::createLog($message, self::TYPE_CRITICAL, $stackTrace, $metadata, $environment);
     }
 
     /**

@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('type')->default('info'); // info, warning, error, debug, etc.
             $table->longText('stack_trace')->nullable();
             $table->json('metadata')->nullable(); // Additional context data
+            $table->string('environment')->nullable(); // dev, staging, prod, etc.
             $table->timestamps();
             
             // Add indexes for better query performance
             $table->index('type');
             $table->index('created_at');
+            $table->index('environment');
         });
     }
 

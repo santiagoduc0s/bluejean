@@ -46,6 +46,8 @@ class LogResource extends Resource
                     ->disabled(),
                 Forms\Components\KeyValue::make('metadata')
                     ->disabled(),
+                Forms\Components\TextInput::make('environment')
+                    ->disabled(),
             ]);
     }
 
@@ -70,7 +72,11 @@ class LogResource extends Resource
                         Infolists\Components\TextEntry::make('created_at')
                             ->label('Logged At')
                             ->dateTime(),
-                    ])->columns(3),
+                        Infolists\Components\TextEntry::make('environment')
+                            ->badge()
+                            ->color('info')
+                            ->placeholder('Not specified'),
+                    ])->columns(4),
                 
                 Infolists\Components\Section::make('Stack Trace')
                     ->schema([
@@ -124,6 +130,12 @@ class LogResource extends Resource
                     ->trueIcon('heroicon-o-document-text')
                     ->falseIcon('heroicon-o-minus')
                     ->state(fn ($record) => !empty($record->metadata)),
+                Tables\Columns\TextColumn::make('environment')
+                    ->badge()
+                    ->color('info')
+                    ->sortable()
+                    ->searchable()
+                    ->placeholder('Not specified'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Logged At')
                     ->dateTime()
@@ -139,6 +151,13 @@ class LogResource extends Resource
                         'debug' => 'Debug',
                         'critical' => 'Critical',
                     ]),
+                Tables\Filters\SelectFilter::make('environment')
+                    ->options([
+                        'dev' => 'Development',
+                        'stg' => 'Staging',
+                        'prod' => 'Production',
+                    ])
+                    ->searchable(),
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')
