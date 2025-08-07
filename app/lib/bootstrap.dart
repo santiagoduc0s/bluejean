@@ -46,6 +46,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         Env.environment == 'prod',
       );
 
+      const env = Env.environment;
+
       AppLogger.instance.debug(Env.environment);
 
       runApp(
