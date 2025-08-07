@@ -122,7 +122,7 @@ class _MultiImagePickerContentState extends State<_MultiImagePickerContent> {
 
       if (status == PermissionStatus.granted) {
         final picker = ImagePicker();
-        
+
         if (source == ImageSource.camera) {
           // Camera can only take one image at a time
           final image = await picker.pickImage(
@@ -139,7 +139,7 @@ class _MultiImagePickerContentState extends State<_MultiImagePickerContent> {
           final selectedImages = await picker.pickMultiImage(
             imageQuality: widget.imageQuality,
           );
-          
+
           if (selectedImages.isNotEmpty) {
             // Limit the number of selected images to available slots
             final imagesToAdd = selectedImages.take(remainingSlots).toList();

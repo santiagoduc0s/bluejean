@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/session/session.dart';
 import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
@@ -41,6 +42,8 @@ import 'package:provider/provider.dart';
 
 class AppGoRouter extends CustomRouter {
   AppGoRouter(AuthNotifier authNotifier) : _authNotifier = authNotifier {
+    AppSession.instance.initialize(authNotifier);
+
     router = GoRouter(
       observers: [
         FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -66,7 +69,6 @@ class AppGoRouter extends CustomRouter {
 
             Future<void> onDestinationSelected(int index) async {
               unawaited(HapticFeedback.selectionClick());
-              
               if (authNotifier.isNotAuthenticated && index == 0) {
                 final dialog = context.read<CustomDialog>();
                 var wantToSignIn = await dialog.showWithoutContext<bool>(

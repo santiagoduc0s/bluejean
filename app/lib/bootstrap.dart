@@ -12,32 +12,32 @@ import 'package:lune/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
-  FlutterError.onError = (FlutterErrorDetails details) {
-    AppLogger.instance.error(
-      'Flutter Error: ${details.exception}',
-      stackTrace: details.stack,
-      metadata: {
-        'library': details.library,
-        'context': details.context?.toString(),
-        'informationCollector': details.informationCollector?.toString(),
-      },
-    );
-  };
-
-  PlatformDispatcher.instance.onError = (error, stack) {
-    AppLogger.instance.critical(
-      error.toString(),
-      stackTrace: stack,
-    );
-    return true;
-  };
-
   await runZonedGuarded(
     () async {
+      final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+      FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+      FlutterError.onError = (FlutterErrorDetails details) {
+        AppLogger.instance.error(
+          'Flutter Error: ${details.exception}',
+          stackTrace: details.stack,
+          metadata: {
+            'library': details.library,
+            'context': details.context?.toString(),
+            'informationCollector': details.informationCollector?.toString(),
+          },
+        );
+      };
+
+      PlatformDispatcher.instance.onError = (error, stack) {
+        AppLogger.instance.critical(
+          error.toString(),
+          stackTrace: stack,
+        );
+        return true;
+      };
+
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
@@ -45,6 +45,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
         Env.environment == 'prod',
       );
+
+      const env = Env.environment;
 
       AppLogger.instance.debug(Env.environment);
 
