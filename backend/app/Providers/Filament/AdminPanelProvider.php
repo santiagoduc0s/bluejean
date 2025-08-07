@@ -11,6 +11,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Stephenjude\FilamentDebugger\DebuggerPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -40,6 +41,23 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+            ])
+            ->plugins([
+                DebuggerPlugin::make()
+                    ->pulseNavigation(
+                        condition: true,
+                        label: 'Pulse',
+                        icon: 'heroicon-o-bolt',
+                        url: 'pulse',
+                        openInNewTab: true
+                    )
+                    ->horizonNavigation(
+                        condition: true,
+                        label: 'Horizon',
+                        icon: 'heroicon-o-queue-list',
+                        url: 'horizon',
+                        openInNewTab: true
+                    ),
             ])
             ->middleware([
                 EncryptCookies::class,

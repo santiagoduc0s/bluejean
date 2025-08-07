@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:ui';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
@@ -14,20 +16,53 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  FlutterError.onError = (FlutterErrorDetails details) {
+    AppLogger.instance.error(
+      'Flutter Error: ${details.exception}',
+      stackTrace: details.stack,
+      metadata: {
+        'library': details.library,
+        'context': details.context?.toString(),
+        'informationCollector': details.informationCollector?.toString(),
+      },
+    );
+  };
 
-  await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
-    Env.environment == 'prod',
-  );
+  PlatformDispatcher.instance.onError = (error, stack) {
+    AppLogger.instance.critical(
+      error.toString(),
+      stackTrace: stack,
+    );
+    return true;
+  };
 
-  AppLogger.instance.debug(Env.environment);
+  await runZonedGuarded(
+    () async {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-  runApp(
-    MultiProvider(
-      providers: providers,
-      child: await builder(),
-    ),
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
+        Env.environment == 'prod',
+      );
+
+      AppLogger.instance.debug(Env.environment);
+
+      runApp(
+        MultiProvider(
+          providers: providers,
+          child: await builder(),
+        ),
+      );
+    },
+    (error, stackTrace) {
+      AppLogger.instance.error(
+        'Zone Error: $error',
+        stackTrace: stackTrace,
+        metadata: {
+          'zone': Zone.current.toString(),
+        },
+      );
+    },
   );
 }
