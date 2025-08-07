@@ -343,6 +343,8 @@ All data access follows the repository pattern:
 
 **Key Pattern:** Repositories automatically choose appropriate endpoints based on authentication state, providing seamless experience for both anonymous and authenticated users.
 
+**Global Session Access:** Use `AppSession.instance` to access current user data globally in repository implementations when needed.
+
 ## Key Development Notes
 
 - Use `fvm` (Flutter Version Management) for Flutter commands

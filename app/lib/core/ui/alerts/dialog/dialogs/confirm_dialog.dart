@@ -21,10 +21,12 @@ class ConfirmDialog extends StatelessWidget {
     final texts = context.textStyles;
 
     return AlertDialog(
-      title: title != null ? Text(
-        title!,
-        style: texts.titleLarge,
-      ) : null,
+      title: title != null
+          ? Text(
+              title!,
+              style: texts.titleLarge,
+            )
+          : null,
       content: Text(
         message,
         style: texts.bodyMedium,
