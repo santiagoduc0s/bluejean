@@ -51,7 +51,7 @@ if [ ! -f "$target_dir/env.json" ]; then
     echo "Creating env.json for environment: $ENV"
     cat > "$target_dir/env.json" << EOF
 {
- "env": "$ENV"
+ "ENV": "$ENV"
 }
 EOF
 fi
