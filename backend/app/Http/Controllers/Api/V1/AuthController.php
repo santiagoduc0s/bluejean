@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Company;
 use App\Models\User;
 use App\Models\UserProvider;
 use App\Services\AppleAuthService;
@@ -40,6 +41,8 @@ class AuthController extends Controller
             'provider_email' => $request->input('email'),
             'password' => $request->input('password'),
         ]);
+
+        $this->createUserCompany($user);
 
         event(new Registered($user));
 
@@ -166,6 +169,7 @@ class AuthController extends Controller
         $email = $userData['email'];
 
         $existingProvider = UserProvider::byProvider('google', $googleId)->first();
+        $isNewUser = false;
 
         if ($existingProvider) {
             $user = $existingProvider->user;
@@ -178,6 +182,7 @@ class AuthController extends Controller
                 $user = User::create([
                     'email' => $email,
                 ]);
+                $isNewUser = true;
             }
 
             UserProvider::create([
@@ -187,6 +192,10 @@ class AuthController extends Controller
                 'provider_email' => $email,
                 'email_verified_at' => now(),
             ]);
+
+            if ($isNewUser) {
+                $this->createUserCompany($user);
+            }
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -206,6 +215,7 @@ class AuthController extends Controller
         $email = $userData['email'];
 
         $existingProvider = UserProvider::byProvider('apple', $appleId)->first();
+        $isNewUser = false;
 
         if ($existingProvider) {
             $user = $existingProvider->user;
@@ -218,6 +228,7 @@ class AuthController extends Controller
                 $user = User::create([
                     'email' => $email,
                 ]);
+                $isNewUser = true;
             }
 
             UserProvider::create([
@@ -227,6 +238,10 @@ class AuthController extends Controller
                 'provider_email' => $email,
                 'email_verified_at' => $email ? now() : null,
             ]);
+
+            if ($isNewUser) {
+                $this->createUserCompany($user);
+            }
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -290,5 +305,21 @@ class AuthController extends Controller
         $user->tokens()->delete();
         $user->delete();
         return response()->json([], 204);
+    }
+
+    private function createUserCompany(User $user): void
+    {
+        $existingCompany = Company::where('name', "company-{$user->id}")->first();
+
+        if (!$existingCompany) {
+            $company = Company::create([
+                'name' => "company-{$user->id}",
+            ]);
+
+
+            $user->companies()->attach($company->id, [
+                'roles' => json_encode(['admin'])
+            ]);
+        }
     }
 }

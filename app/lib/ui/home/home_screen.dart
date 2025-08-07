@@ -17,6 +17,7 @@ class HomeScreen {
         builder: (context, state) {
           return ChangeNotifierProvider(
             create: (context) => HomeNotifier(
+              channelRepository: context.read(),
             ),
             child: const HomePage(),
           );

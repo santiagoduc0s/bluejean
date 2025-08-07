@@ -1,4 +1,5 @@
 export 'auth/auth.dart';
+export 'channel/channel.dart';
 export 'devices/devices.dart';
 export 'forgot_password/forgot_password.dart';
 export 'home/home.dart';

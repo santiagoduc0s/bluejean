@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ChannelController;
 use App\Http\Controllers\Api\V1\FileController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\LogController;
@@ -60,6 +61,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('preferences')->group(function () {
         Route::get('/me', [PreferenceController::class, 'getCurrentAuthPreference']);
         Route::put('/me', [PreferenceController::class, 'updateAuth']);
+    });
+
+    Route::prefix('channels')->group(function () {
+        Route::get('/', [ChannelController::class, 'index']);
+        Route::post('/', [ChannelController::class, 'store']);
+        Route::get('/{channel}', [ChannelController::class, 'show']);
+        Route::put('/{channel}', [ChannelController::class, 'update']);
+        Route::delete('/{channel}', [ChannelController::class, 'destroy']);
     });
 
 });

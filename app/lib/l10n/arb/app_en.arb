@@ -415,5 +415,15 @@
   "profileEmailNote": "This email is not your authentication email, just for information",
   "@profileEmailNote": {},
   "deviceDeletedSuccessfully": "Device deleted successfully",
-  "@deviceDeletedSuccessfully": {}
+  "@deviceDeletedSuccessfully": {},
+  "editChannel": "Edit Channel",
+  "@editChannel": {},
+  "enterChannelName": "Enter channel name",
+  "@enterChannelName": {},
+  "enterChannelDescription": "Enter channel description (optional)",
+  "@enterChannelDescription": {},
+  "nameIsRequired": "Name is required",
+  "@nameIsRequired": {},
+  "create": "Create",
+  "@create": {}
 }

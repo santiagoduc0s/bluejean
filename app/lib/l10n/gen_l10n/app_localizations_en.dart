@@ -615,4 +615,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deviceDeletedSuccessfully => 'Device deleted successfully';
+
+  @override
+  String get editChannel => 'Edit Channel';
+
+  @override
+  String get enterChannelName => 'Enter channel name';
+
+  @override
+  String get enterChannelDescription => 'Enter channel description (optional)';
+
+  @override
+  String get nameIsRequired => 'Name is required';
+
+  @override
+  String get create => 'Create';
 }

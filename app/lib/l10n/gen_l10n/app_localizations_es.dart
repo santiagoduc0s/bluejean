@@ -617,4 +617,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deviceDeletedSuccessfully => 'Dispositivo eliminado exitosamente';
+
+  @override
+  String get editChannel => 'Editar Canal';
+
+  @override
+  String get enterChannelName => 'Ingresa el nombre del canal';
+
+  @override
+  String get enterChannelDescription =>
+      'Ingresa la descripción del canal (opcional)';
+
+  @override
+  String get nameIsRequired => 'El nombre es requerido';
+
+  @override
+  String get create => 'Crear';
 }

@@ -1,4 +1,5 @@
 export 'auth_repository.dart';
+export 'channel_repository.dart';
 export 'device_repository.dart';
 export 'injections_repositories.dart';
 export 'messaging_repository.dart';

@@ -1237,6 +1237,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Device deleted successfully'**
   String get deviceDeletedSuccessfully;
+
+  /// No description provided for @editChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Channel'**
+  String get editChannel;
+
+  /// No description provided for @enterChannelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter channel name'**
+  String get enterChannelName;
+
+  /// No description provided for @enterChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter channel description (optional)'**
+  String get enterChannelDescription;
+
+  /// No description provided for @nameIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameIsRequired;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
 }
 
 class _AppLocalizationsDelegate

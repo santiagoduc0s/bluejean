@@ -73,6 +73,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserProvider::class);
     }
 
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class)
+            ->withPivot('roles')
+            ->withTimestamps();
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class)
+            ->withTimestamps();
+    }
+
     /**
      * Get the primary email provider for this user.
      */

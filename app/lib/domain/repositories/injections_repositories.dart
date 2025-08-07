@@ -12,6 +12,13 @@ List<SingleChildWidget> providerRepositories = [
     ),
   ),
 
+  // Channel Repository
+  Provider<ChannelRepository>(
+    create: (context) => ChannelRepositoryImpl(
+      apiClient: context.read(),
+    ),
+  ),
+
   // Device Repository
   Provider<DeviceRepository>(
     create: (context) => DeviceRepositoryImpl(

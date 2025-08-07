@@ -151,7 +151,11 @@ class AppGoRouter extends CustomRouter {
             ),
             StatefulShellBranch(
               routes: [
-                HomeScreen.route(),
+                HomeScreen.route(
+                  routes: [
+                    ChannelFormScreen.route(),
+                  ],
+                ),
               ],
             ),
             StatefulShellBranch(
