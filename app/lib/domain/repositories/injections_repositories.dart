@@ -19,6 +19,13 @@ List<SingleChildWidget> providerRepositories = [
     ),
   ),
 
+  // Listener Repository
+  Provider<ListenerRepository>(
+    create: (context) => ListenerRepositoryImpl(
+      apiClient: context.read(),
+    ),
+  ),
+
   // Device Repository
   Provider<DeviceRepository>(
     create: (context) => DeviceRepositoryImpl(

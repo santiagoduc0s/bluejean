@@ -594,6 +594,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addListener => 'Agregar Oyente';
 
   @override
+  String get editListener => 'Editar Oyente';
+
+  @override
+  String get deleteListener => 'Eliminar Oyente';
+
+  @override
+  String deleteListenerConfirmation(String listenerName) {
+    return '¿Estás seguro de que quieres eliminar a \"$listenerName\"?';
+  }
+
+  @override
+  String get noListenersAdded => 'No se han agregado oyentes aún';
+
+  @override
+  String get phoneNumberIsRequired => 'El número de teléfono es requerido';
+
+  @override
+  String get address => 'Dirección';
+
+  @override
+  String get setOnMap => 'Ubicar en Mapa';
+
+  @override
+  String get selectLocation => 'Seleccionar Ubicación';
+
+  @override
+  String get dragMarkerToSelectLocation =>
+      'Arrastra el marcador para seleccionar una ubicación';
+
+  @override
+  String get dragMapToSelectLocation =>
+      'Arrastra el mapa para seleccionar una ubicación';
+
+  @override
+  String get clear => 'Limpiar';
+
+  @override
   String get listenerName => 'Nombre del Oyente';
 
   @override
@@ -633,4 +670,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get create => 'Crear';
+
+  @override
+  String get deleteChannel => 'Eliminar Canal';
+
+  @override
+  String deleteChannelConfirmation(String channelName) {
+    return '¿Estás seguro de que quieres eliminar \"$channelName\"?';
+  }
+
+  @override
+  String get noChannelsFound =>
+      'No se encontraron canales. ¡Crea uno usando el botón +!';
 }

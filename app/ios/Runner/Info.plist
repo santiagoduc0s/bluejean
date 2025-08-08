@@ -39,6 +39,8 @@
 	<string>This app requires access to your contacts to allow you to link drivers with channels.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses your photo library so you can choose a photo to set as your profile picture.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to show your current location on the map and help you select locations for listeners.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

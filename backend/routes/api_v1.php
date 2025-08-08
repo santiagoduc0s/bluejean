@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ChannelController;
 use App\Http\Controllers\Api\V1\FileController;
 use App\Http\Controllers\Api\V1\DeviceController;
+use App\Http\Controllers\Api\V1\ListenerController;
 use App\Http\Controllers\Api\V1\LogController;
 use App\Http\Controllers\Api\V1\PreferenceController;
 use App\Http\Controllers\Api\V1\SupportTicketController;
@@ -69,6 +70,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{channel}', [ChannelController::class, 'show']);
         Route::put('/{channel}', [ChannelController::class, 'update']);
         Route::delete('/{channel}', [ChannelController::class, 'destroy']);
+        Route::get('/{channel}/listeners', [ListenerController::class, 'getByChannel']);
+    });
+
+    Route::prefix('listeners')->group(function () {
+        Route::get('/', [ListenerController::class, 'index']);
+        Route::post('/', [ListenerController::class, 'store']);
+        Route::get('/{listener}', [ListenerController::class, 'show']);
+        Route::put('/{listener}', [ListenerController::class, 'update']);
+        Route::delete('/{listener}', [ListenerController::class, 'destroy']);
     });
 
 });

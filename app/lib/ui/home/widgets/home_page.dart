@@ -28,12 +28,9 @@ class _HomePageState extends State<HomePage> {
     final l10n = context.l10n;
     final colors = context.colors;
 
+    final paddingTop = MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.home),
-        backgroundColor: colors.primary,
-        foregroundColor: colors.onPrimary,
-      ),
       body: Container(
         height: double.infinity,
         decoration: BoxDecoration(
@@ -60,13 +57,13 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Error: ${notifier.error}',
+                      l10n.errorPrefix(notifier.error!),
                       style: TextStyle(color: colors.error),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => notifier.loadChannels(),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),
@@ -74,14 +71,13 @@ class _HomePageState extends State<HomePage> {
             }
 
             if (notifier.channels.isEmpty) {
-              return const Center(
-                child:
-                    Text('No channels found. Create one using the + button!'),
+              return Center(
+                child: Text(l10n.noChannelsFound),
               );
             }
 
             return ListView.builder(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16).copyWith(top: paddingTop + 16),
               itemCount: notifier.channels.length,
               itemBuilder: (context, index) {
                 final channel = notifier.channels[index];
@@ -101,13 +97,13 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                       itemBuilder: (context) => [
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'edit',
-                          child: Text('Edit'),
+                          child: Text(l10n.edit),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'delete',
-                          child: Text('Delete'),
+                          child: Text(l10n.delete),
                         ),
                       ],
                     ),
@@ -138,25 +134,28 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showDeleteChannelDialog(BuildContext context, ChannelEntity channel) {
+    final l10n = context.l10n;
+    final homeNotifier = context.read<HomeNotifier>();
+
     showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Channel'),
-        content: Text('Are you sure you want to delete "${channel.name}"?'),
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.deleteChannel),
+        content: Text(l10n.deleteChannelConfirmation(channel.name)),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
-              context.read<HomeNotifier>().deleteChannel(channel.id);
-              Navigator.of(context).pop();
+              homeNotifier.deleteChannel(channel.id);
+              Navigator.of(dialogContext).pop();
             },
             style: TextButton.styleFrom(
               foregroundColor: Colors.red,
             ),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

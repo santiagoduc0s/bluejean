@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/channel/notifiers/notifiers.dart';
+import 'package:lune/ui/channel/widgets/listener_form_widget.dart';
+import 'package:lune/ui/channel/widgets/listener_list_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChannelFormPage extends StatefulWidget {
@@ -16,6 +19,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  bool _showListenerForm = false;
 
   @override
   void initState() {
@@ -100,6 +105,50 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                     const SizedBox(height: 24),
                     Consumer<ChannelFormNotifier>(
                       builder: (context, notifier, child) {
+                        if (!notifier.isEditMode) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return Column(
+                          children: [
+                            if (_showListenerForm) ...[
+                              ListenerFormWidget(
+                                listener: notifier.editingListener,
+                                onSave: (
+                                  name,
+                                  phoneNumber,
+                                  address,
+                                  latitude,
+                                  longitude,
+                                ) =>
+                                    _saveListener(
+                                  context,
+                                  notifier,
+                                  name,
+                                  phoneNumber,
+                                  address,
+                                  latitude,
+                                  longitude,
+                                ),
+                                onCancel: () => _cancelListenerForm(notifier),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                            ListenerListWidget(
+                              listeners: notifier.listeners,
+                              onAdd: () => _showAddListenerForm(notifier),
+                              onEdit: (listener) =>
+                                  _showEditListenerForm(notifier, listener),
+                              onDelete: (listener) =>
+                                  _deleteListener(notifier, listener),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
+                        );
+                      },
+                    ),
+                    Consumer<ChannelFormNotifier>(
+                      builder: (context, notifier, child) {
                         if (notifier.error != null) {
                           return Container(
                             margin: const EdgeInsets.only(bottom: 16),
@@ -166,5 +215,70 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     if (success && context.mounted) {
       context.pop(true); // Return true to indicate success
     }
+  }
+
+  void _showAddListenerForm(ChannelFormNotifier notifier) {
+    notifier.setEditingListener(null);
+    setState(() {
+      _showListenerForm = true;
+    });
+  }
+
+  void _showEditListenerForm(
+    ChannelFormNotifier notifier,
+    ListenerEntity listener,
+  ) {
+    notifier.setEditingListener(listener);
+    setState(() {
+      _showListenerForm = true;
+    });
+  }
+
+  void _cancelListenerForm(ChannelFormNotifier notifier) {
+    notifier.setEditingListener(null);
+    setState(() {
+      _showListenerForm = false;
+    });
+  }
+
+  Future<void> _saveListener(
+    BuildContext context,
+    ChannelFormNotifier notifier,
+    String name,
+    String phoneNumber,
+    String? address,
+    double? latitude,
+    double? longitude,
+  ) async {
+    bool success;
+    if (notifier.editingListener != null) {
+      success = await notifier.updateListener(
+        notifier.editingListener!,
+        name,
+        phoneNumber,
+        address,
+        latitude,
+        longitude,
+      );
+    } else {
+      success = await notifier.addListenerItem(
+        name,
+        phoneNumber,
+        address,
+        latitude,
+        longitude,
+      );
+    }
+
+    if (success) {
+      _cancelListenerForm(notifier);
+    }
+  }
+
+  Future<void> _deleteListener(
+    ChannelFormNotifier notifier,
+    ListenerEntity listener,
+  ) async {
+    await notifier.deleteListener(listener);
   }
 }

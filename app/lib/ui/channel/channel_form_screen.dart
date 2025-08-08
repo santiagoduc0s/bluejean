@@ -19,10 +19,19 @@ class ChannelFormScreen {
           final channel = state.extra as ChannelEntity?;
 
           return ChangeNotifierProvider(
-            create: (context) => ChannelFormNotifier(
-              channelRepository: context.read(),
-              channel: channel,
-            ),
+            create: (context) {
+              final notifier = ChannelFormNotifier(
+                channelRepository: context.read(),
+                listenerRepository: context.read(),
+                channel: channel,
+              );
+
+              if (channel != null) {
+                notifier.loadListeners();
+              }
+
+              return notifier;
+            },
             child: const ChannelFormPage(),
           );
         },

@@ -400,6 +400,34 @@
   "@listeners": {},
   "addListener": "Add Listener",
   "@addListener": {},
+  "editListener": "Edit Listener",
+  "@editListener": {},
+  "deleteListener": "Delete Listener",
+  "@deleteListener": {},
+  "deleteListenerConfirmation": "Are you sure you want to delete \"{listenerName}\"?",
+  "@deleteListenerConfirmation": {
+    "placeholders": {
+      "listenerName": {
+        "type": "String"
+      }
+    }
+  },
+  "noListenersAdded": "No listeners added yet",
+  "@noListenersAdded": {},
+  "phoneNumberIsRequired": "Phone number is required",
+  "@phoneNumberIsRequired": {},
+  "address": "Address",
+  "@address": {},
+  "setOnMap": "Set on Map",
+  "@setOnMap": {},
+  "selectLocation": "Select Location",
+  "@selectLocation": {},
+  "dragMarkerToSelectLocation": "Drag the marker to select a location",
+  "@dragMarkerToSelectLocation": {},
+  "dragMapToSelectLocation": "Drag the map to select a location",
+  "@dragMapToSelectLocation": {},
+  "clear": "Clear",
+  "@clear": {},
   "listenerName": "Listener Name",
   "@listenerName": {},
   "phoneNumber": "Phone Number",
@@ -425,5 +453,17 @@
   "nameIsRequired": "Name is required",
   "@nameIsRequired": {},
   "create": "Create",
-  "@create": {}
+  "@create": {},
+  "deleteChannel": "Delete Channel",
+  "@deleteChannel": {},
+  "deleteChannelConfirmation": "Are you sure you want to delete \"{channelName}\"?",
+  "@deleteChannelConfirmation": {
+    "placeholders": {
+      "channelName": {
+        "type": "String"
+      }
+    }
+  },
+  "noChannelsFound": "No channels found. Create one using the + button!",
+  "@noChannelsFound": {}
 }

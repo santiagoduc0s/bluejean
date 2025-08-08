@@ -4,6 +4,7 @@ export 'devices/devices.dart';
 export 'forgot_password/forgot_password.dart';
 export 'home/home.dart';
 export 'main/main.dart';
+export 'map/location_picker_screen.dart';
 export 'preference/preferences.dart';
 export 'privacy_policy/privacy_policy.dart';
 export 'profile/profile.dart';

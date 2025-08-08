@@ -592,6 +592,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addListener => 'Add Listener';
 
   @override
+  String get editListener => 'Edit Listener';
+
+  @override
+  String get deleteListener => 'Delete Listener';
+
+  @override
+  String deleteListenerConfirmation(String listenerName) {
+    return 'Are you sure you want to delete \"$listenerName\"?';
+  }
+
+  @override
+  String get noListenersAdded => 'No listeners added yet';
+
+  @override
+  String get phoneNumberIsRequired => 'Phone number is required';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get setOnMap => 'Set on Map';
+
+  @override
+  String get selectLocation => 'Select Location';
+
+  @override
+  String get dragMarkerToSelectLocation =>
+      'Drag the marker to select a location';
+
+  @override
+  String get dragMapToSelectLocation => 'Drag the map to select a location';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
   String get listenerName => 'Listener Name';
 
   @override
@@ -630,4 +666,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create => 'Create';
+
+  @override
+  String get deleteChannel => 'Delete Channel';
+
+  @override
+  String deleteChannelConfirmation(String channelName) {
+    return 'Are you sure you want to delete \"$channelName\"?';
+  }
+
+  @override
+  String get noChannelsFound =>
+      'No channels found. Create one using the + button!';
 }

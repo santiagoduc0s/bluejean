@@ -154,6 +154,7 @@ class AppGoRouter extends CustomRouter {
                 HomeScreen.route(
                   routes: [
                     ChannelFormScreen.route(),
+                    LocationPickerScreen.route(),
                   ],
                 ),
               ],

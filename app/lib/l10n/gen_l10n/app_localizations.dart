@@ -1190,6 +1190,72 @@ abstract class AppLocalizations {
   /// **'Add Listener'**
   String get addListener;
 
+  /// No description provided for @editListener.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Listener'**
+  String get editListener;
+
+  /// No description provided for @deleteListener.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Listener'**
+  String get deleteListener;
+
+  /// No description provided for @deleteListenerConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{listenerName}\"?'**
+  String deleteListenerConfirmation(String listenerName);
+
+  /// No description provided for @noListenersAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No listeners added yet'**
+  String get noListenersAdded;
+
+  /// No description provided for @phoneNumberIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneNumberIsRequired;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @setOnMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Set on Map'**
+  String get setOnMap;
+
+  /// No description provided for @selectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Location'**
+  String get selectLocation;
+
+  /// No description provided for @dragMarkerToSelectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the marker to select a location'**
+  String get dragMarkerToSelectLocation;
+
+  /// No description provided for @dragMapToSelectLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the map to select a location'**
+  String get dragMapToSelectLocation;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
   /// No description provided for @listenerName.
   ///
   /// In en, this message translates to:
@@ -1267,6 +1333,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create'**
   String get create;
+
+  /// No description provided for @deleteChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Channel'**
+  String get deleteChannel;
+
+  /// No description provided for @deleteChannelConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{channelName}\"?'**
+  String deleteChannelConfirmation(String channelName);
+
+  /// No description provided for @noChannelsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No channels found. Create one using the + button!'**
+  String get noChannelsFound;
 }
 
 class _AppLocalizationsDelegate
