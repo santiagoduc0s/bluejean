@@ -678,4 +678,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noChannelsFound =>
       'No channels found. Create one using the + button!';
+
+  @override
+  String get searchingLocation => 'Searching location...';
+
+  @override
+  String get locationFound => 'Location found';
+
+  @override
+  String get typeAddressForLocation => 'Type address to find coordinates';
 }

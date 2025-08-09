@@ -55,48 +55,50 @@ class ListenerListWidget extends StatelessWidget {
             ),
           )
         else
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: listeners.length,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) {
-              final listener = listeners[index];
-              return ListTile(
-                title: Text(listener.name),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(listener.phoneNumber),
-                    if (listener.address != null &&
-                        listener.address!.isNotEmpty)
-                      Text(
-                        listener.address!,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
+          Card(
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: listeners.length,
+              separatorBuilder: (context, index) => const Divider(),
+              itemBuilder: (context, index) {
+                final listener = listeners[index];
+                return ListTile(
+                  title: Text(listener.name),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(listener.phoneNumber),
+                      if (listener.address != null &&
+                          listener.address!.isNotEmpty)
+                        Text(
+                          listener.address!,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
                         ),
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit),
+                        onPressed: () => onEdit(listener),
+                        tooltip: l10n.edit,
                       ),
-                  ],
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () => onEdit(listener),
-                      tooltip: l10n.edit,
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => _showDeleteDialog(context, listener),
-                      tooltip: l10n.delete,
-                    ),
-                  ],
-                ),
-              );
-            },
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => _showDeleteDialog(context, listener),
+                        tooltip: l10n.delete,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
       ],
     );

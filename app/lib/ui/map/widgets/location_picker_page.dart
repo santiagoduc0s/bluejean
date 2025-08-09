@@ -69,8 +69,6 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.selectLocation),
-        backgroundColor: colors.primary,
-        foregroundColor: colors.onPrimary,
         actions: [
           TextButton(
             onPressed: _onDonePressed,

@@ -44,6 +44,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     final l10n = context.l10n;
     final colors = context.colors;
 
+    final inputs = context.inputStyles;
+
     return Scaffold(
       appBar: AppBar(
         title: Consumer<ChannelFormNotifier>(
@@ -53,8 +55,6 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
             );
           },
         ),
-        backgroundColor: colors.primary,
-        foregroundColor: colors.onPrimary,
       ),
       body: Container(
         height: double.infinity,
@@ -70,125 +70,130 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
         ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: '${l10n.name} *',
-                        hintText: l10n.enterChannelName,
-                        border: const OutlineInputBorder(),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: _nameController,
+                            decoration: InputDecoration(
+                              labelText: '${l10n.name} *',
+                              hintText: l10n.enterChannelName,
+                              border: const OutlineInputBorder(),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return l10n.nameIsRequired;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _descriptionController,
+                            decoration: InputDecoration(
+                              labelText: l10n.description,
+                              hintText: l10n.enterChannelDescription,
+                              border: const OutlineInputBorder(),
+                            ),
+                            maxLines: 3,
+                          ),
+                        ],
                       ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return l10n.nameIsRequired;
-                        }
-                        return null;
-                      },
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: InputDecoration(
-                        labelText: l10n.description,
-                        hintText: l10n.enterChannelDescription,
-                        border: const OutlineInputBorder(),
-                      ),
-                      maxLines: 3,
-                    ),
-                    const SizedBox(height: 24),
-                    Consumer<ChannelFormNotifier>(
-                      builder: (context, notifier, child) {
-                        if (!notifier.isEditMode) {
-                          return const SizedBox.shrink();
-                        }
-
-                        return Column(
-                          children: [
-                            if (_showListenerForm) ...[
-                              ListenerFormWidget(
-                                listener: notifier.editingListener,
-                                onSave: (
-                                  name,
-                                  phoneNumber,
-                                  address,
-                                  latitude,
-                                  longitude,
-                                ) =>
-                                    _saveListener(
-                                  context,
-                                  notifier,
-                                  name,
-                                  phoneNumber,
-                                  address,
-                                  latitude,
-                                  longitude,
-                                ),
-                                onCancel: () => _cancelListenerForm(notifier),
-                              ),
-                              const SizedBox(height: 16),
-                            ],
-                            ListenerListWidget(
-                              listeners: notifier.listeners,
-                              onAdd: () => _showAddListenerForm(notifier),
-                              onEdit: (listener) =>
-                                  _showEditListenerForm(notifier, listener),
-                              onDelete: (listener) =>
-                                  _deleteListener(notifier, listener),
-                            ),
-                            const SizedBox(height: 24),
-                          ],
-                        );
-                      },
-                    ),
-                    Consumer<ChannelFormNotifier>(
-                      builder: (context, notifier, child) {
-                        if (notifier.error != null) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 16),
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: colors.errorContainer,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              notifier.error!,
-                              style: TextStyle(color: colors.onErrorContainer),
-                            ),
-                          );
-                        }
+                  ),
+                  const SizedBox(height: 24),
+                  Consumer<ChannelFormNotifier>(
+                    builder: (context, notifier, child) {
+                      if (!notifier.isEditMode) {
                         return const SizedBox.shrink();
-                      },
-                    ),
-                    Consumer<ChannelFormNotifier>(
-                      builder: (context, notifier, child) {
-                        return ElevatedButton(
-                          onPressed: notifier.isLoading
-                              ? null
-                              : () => _saveChannel(context, notifier),
-                          child: notifier.isLoading
-                              ? const SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
-                                )
-                              : Text(
-                                  notifier.isEditMode
-                                      ? l10n.update
-                                      : l10n.create,
-                                ),
+                      }
+
+                      return Column(
+                        children: [
+                          if (_showListenerForm) ...[
+                            ListenerFormWidget(
+                              listener: notifier.editingListener,
+                              onSave: (
+                                name,
+                                phoneNumber,
+                                address,
+                                latitude,
+                                longitude,
+                              ) =>
+                                  _saveListener(
+                                context,
+                                notifier,
+                                name,
+                                phoneNumber,
+                                address,
+                                latitude,
+                                longitude,
+                              ),
+                              onCancel: () => _cancelListenerForm(notifier),
+                            ),
+                            const SizedBox(height: 16),
+                          ],
+                          ListenerListWidget(
+                            listeners: notifier.listeners,
+                            onAdd: () => _showAddListenerForm(notifier),
+                            onEdit: (listener) =>
+                                _showEditListenerForm(notifier, listener),
+                            onDelete: (listener) =>
+                                _deleteListener(notifier, listener),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
+                      );
+                    },
+                  ),
+                  Consumer<ChannelFormNotifier>(
+                    builder: (context, notifier, child) {
+                      if (notifier.error != null) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 16),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: colors.errorContainer,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            notifier.error!,
+                            style: TextStyle(color: colors.onErrorContainer),
+                          ),
                         );
-                      },
-                    ),
-                  ],
-                ),
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                  Consumer<ChannelFormNotifier>(
+                    builder: (context, notifier, child) {
+                      return ElevatedButton(
+                        onPressed: notifier.isLoading
+                            ? null
+                            : () => _saveChannel(context, notifier),
+                        child: notifier.isLoading
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child:
+                                    CircularProgressIndicator(strokeWidth: 2),
+                              )
+                            : Text(
+                                notifier.isEditMode ? l10n.update : l10n.create,
+                              ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ),

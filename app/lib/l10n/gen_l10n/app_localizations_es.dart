@@ -682,4 +682,14 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get noChannelsFound =>
       'No se encontraron canales. ¡Crea uno usando el botón +!';
+
+  @override
+  String get searchingLocation => 'Buscando ubicación...';
+
+  @override
+  String get locationFound => 'Ubicación encontrada';
+
+  @override
+  String get typeAddressForLocation =>
+      'Escribe la dirección para encontrar coordenadas';
 }

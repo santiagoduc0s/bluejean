@@ -465,5 +465,11 @@
     }
   },
   "noChannelsFound": "No channels found. Create one using the + button!",
-  "@noChannelsFound": {}
+  "@noChannelsFound": {},
+  "searchingLocation": "Searching location...",
+  "@searchingLocation": {},
+  "locationFound": "Location found",
+  "@locationFound": {},
+  "typeAddressForLocation": "Type address to find coordinates",
+  "@typeAddressForLocation": {}
 }

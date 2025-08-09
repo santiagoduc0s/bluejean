@@ -1351,6 +1351,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No channels found. Create one using the + button!'**
   String get noChannelsFound;
+
+  /// No description provided for @searchingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching location...'**
+  String get searchingLocation;
+
+  /// No description provided for @locationFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Location found'**
+  String get locationFound;
+
+  /// No description provided for @typeAddressForLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Type address to find coordinates'**
+  String get typeAddressForLocation;
 }
 
 class _AppLocalizationsDelegate

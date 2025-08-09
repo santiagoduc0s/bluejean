@@ -465,5 +465,11 @@
     }
   },
   "noChannelsFound": "No se encontraron canales. ¡Crea uno usando el botón +!",
-  "@noChannelsFound": {}
+  "@noChannelsFound": {},
+  "searchingLocation": "Buscando ubicación...",
+  "@searchingLocation": {},
+  "locationFound": "Ubicación encontrada",
+  "@locationFound": {},
+  "typeAddressForLocation": "Escribe la dirección para encontrar coordenadas",
+  "@typeAddressForLocation": {}
 }
