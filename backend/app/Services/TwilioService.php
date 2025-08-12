@@ -43,7 +43,7 @@ class TwilioService
     {
         try {
             $twilioMessage = $this->twilio->messages->create(
-                to: 'whatsapp:'.$to,
+                to: 'whatsapp:' . $to,
                 options: [
                     'from' => $this->fromNumber,
                     'body' => $message
