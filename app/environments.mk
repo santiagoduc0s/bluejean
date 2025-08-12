@@ -7,6 +7,7 @@ dev:
 	@if [ -f environments/dev/env.json ]; then cp -f environments/dev/env.json env.json; fi
 	@if [ -f environments/dev/AndroidManifest.xml ]; then cp -f environments/dev/AndroidManifest.xml android/app/src/main/AndroidManifest.xml; fi
 	@if [ -f environments/dev/strings.xml ]; then cp -f environments/dev/strings.xml android/app/src/main/res/values/strings.xml; fi
+	@if [ -f environments/prod/AppDelegate.swift ]; then cp -f environments/prod/AppDelegate.swift ios/Runner/AppDelegate.swift; fi
 
 stg:
 	@if [ -f environments/stg/firebase_options.dart ]; then cp -f environments/stg/firebase_options.dart lib/firebase_options.dart; fi
@@ -17,6 +18,7 @@ stg:
 	@if [ -f environments/stg/env.json ]; then cp -f environments/stg/env.json env.json; fi
 	@if [ -f environments/stg/AndroidManifest.xml ]; then cp -f environments/stg/AndroidManifest.xml android/app/src/main/AndroidManifest.xml; fi
 	@if [ -f environments/stg/strings.xml ]; then cp -f environments/stg/strings.xml android/app/src/main/res/values/strings.xml; fi
+	@if [ -f environments/stg/AppDelegate.swift ]; then cp -f environments/stg/AppDelegate.swift ios/Runner/AppDelegate.swift; fi
 
 prod:
 	@if [ -f environments/prod/firebase_options.dart ]; then cp -f environments/prod/firebase_options.dart lib/firebase_options.dart; fi
@@ -27,3 +29,5 @@ prod:
 	@if [ -f environments/prod/env.json ]; then cp -f environments/prod/env.json env.json; fi
 	@if [ -f environments/prod/AndroidManifest.xml ]; then cp -f environments/prod/AndroidManifest.xml android/app/src/main/AndroidManifest.xml; fi
 	@if [ -f environments/prod/strings.xml ]; then cp -f environments/prod/strings.xml android/app/src/main/res/values/strings.xml; fi
+	@if [ -f environments/prod/AppDelegate.swift ]; then cp -f environments/prod/AppDelegate.swift ios/Runner/AppDelegate.swift; fi
+	@if [ -f environments/prod/AppDelegate.swift ]; then cp -f environments/prod/AppDelegate.swift ios/Runner/AppDelegate.swift; fi
