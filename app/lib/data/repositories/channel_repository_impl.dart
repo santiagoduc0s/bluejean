@@ -25,15 +25,45 @@ class ChannelRepositoryImpl implements ChannelRepository {
   }
 
   @override
+  Future<List<ChannelEntity>> getActiveChannels() async {
+    final response = await _apiClient.get('/api/v1/channels?status=active');
+
+    if (response.isSuccess) {
+      final data = response.jsonBody['data'] as List<dynamic>;
+      return data
+          .map((json) => ChannelModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception('Failed to get active channels');
+    }
+  }
+
+  @override
+  Future<List<ChannelEntity>> getInactiveChannels() async {
+    final response = await _apiClient.get('/api/v1/channels?status=inactive');
+
+    if (response.isSuccess) {
+      final data = response.jsonBody['data'] as List<dynamic>;
+      return data
+          .map((json) => ChannelModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } else {
+      throw Exception('Failed to get inactive channels');
+    }
+  }
+
+  @override
   Future<ChannelEntity> createChannel({
     required String name,
     String? description,
+    String? status,
   }) async {
     final response = await _apiClient.post(
       '/api/v1/channels',
       body: {
         'name': name,
         'description': description,
+        if (status != null) 'status': status,
       },
     );
 
@@ -50,10 +80,12 @@ class ChannelRepositoryImpl implements ChannelRepository {
     required int id,
     String? name,
     String? description,
+    String? status,
   }) async {
     final body = <String, dynamic>{};
     if (name != null) body['name'] = name;
     if (description != null) body['description'] = description;
+    if (status != null) body['status'] = status;
 
     final response = await _apiClient.put(
       '/api/v1/channels/$id',

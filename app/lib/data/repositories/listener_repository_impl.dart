@@ -39,6 +39,8 @@ class ListenerRepositoryImpl implements ListenerRepository {
     String? address,
     double? latitude,
     double? longitude,
+    int? thresholdMeters,
+    String? status,
   }) async {
     final body = {
       'channel_id': channelId,
@@ -49,6 +51,8 @@ class ListenerRepositoryImpl implements ListenerRepository {
     if (address != null) body['address'] = address;
     if (latitude != null) body['latitude'] = latitude;
     if (longitude != null) body['longitude'] = longitude;
+    if (thresholdMeters != null) body['threshold_meters'] = thresholdMeters;
+    if (status != null) body['status'] = status;
 
     final response = await apiClient.post(
       '/api/v1/listeners',
@@ -68,6 +72,8 @@ class ListenerRepositoryImpl implements ListenerRepository {
     String? address,
     double? latitude,
     double? longitude,
+    int? thresholdMeters,
+    String? status,
   }) async {
     final data = <String, dynamic>{};
     if (name != null) data['name'] = name;
@@ -75,6 +81,8 @@ class ListenerRepositoryImpl implements ListenerRepository {
     if (address != null) data['address'] = address;
     if (latitude != null) data['latitude'] = latitude;
     if (longitude != null) data['longitude'] = longitude;
+    if (thresholdMeters != null) data['threshold_meters'] = thresholdMeters;
+    if (status != null) data['status'] = status;
 
     final response = await apiClient.put(
       '/api/v1/listeners/$id',

@@ -23,6 +23,7 @@ class ChannelFormScreen {
               final notifier = ChannelFormNotifier(
                 channelRepository: context.read(),
                 listenerRepository: context.read(),
+                permissionService: context.read(),
                 channel: channel,
               );
 

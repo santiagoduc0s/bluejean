@@ -471,5 +471,19 @@
   "locationFound": "Location found",
   "@locationFound": {},
   "typeAddressForLocation": "Type address to find coordinates",
-  "@typeAddressForLocation": {}
+  "@typeAddressForLocation": {},
+  "status": "Status",
+  "@status": {},
+  "active": "Active",
+  "@active": {},
+  "inactive": "Inactive",
+  "@inactive": {},
+  "activeChannels": "Active Channels",
+  "@activeChannels": {},
+  "inactiveChannels": "Inactive Channels",
+  "@inactiveChannels": {},
+  "activeChannelsSubtitle": "The listeners of these channels will be notified when the car is close to their location",
+  "@activeChannelsSubtitle": {},
+  "inactiveChannelsSubtitle": "These channels are disabled and the driving mode needs to be updated",
+  "@inactiveChannelsSubtitle": {}
 }

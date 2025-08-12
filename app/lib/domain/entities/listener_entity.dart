@@ -5,6 +5,8 @@ class ListenerEntity extends Equatable {
     required this.id,
     required this.name,
     required this.phoneNumber,
+    required this.thresholdMeters,
+    required this.status,
     required this.updatedAt,
     required this.createdAt,
     this.address,
@@ -18,6 +20,8 @@ class ListenerEntity extends Equatable {
   final String? address;
   final double? latitude;
   final double? longitude;
+  final int thresholdMeters;
+  final String status;
   final DateTime updatedAt;
   final DateTime createdAt;
 
@@ -30,6 +34,8 @@ class ListenerEntity extends Equatable {
         '  address: $address,\n'
         '  latitude: $latitude,\n'
         '  longitude: $longitude,\n'
+        '  thresholdMeters: $thresholdMeters,\n'
+        '  status: $status,\n'
         '  updatedAt: $updatedAt,\n'
         '  createdAt: $createdAt,\n'
         ')';
@@ -42,6 +48,8 @@ class ListenerEntity extends Equatable {
     String? address,
     double? latitude,
     double? longitude,
+    int? thresholdMeters,
+    String? status,
     DateTime? updatedAt,
     DateTime? createdAt,
   }) {
@@ -52,6 +60,8 @@ class ListenerEntity extends Equatable {
       address: address ?? this.address,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      thresholdMeters: thresholdMeters ?? this.thresholdMeters,
+      status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -66,6 +76,8 @@ class ListenerEntity extends Equatable {
       address,
       latitude,
       longitude,
+      thresholdMeters,
+      status,
       updatedAt,
       createdAt,
     ];

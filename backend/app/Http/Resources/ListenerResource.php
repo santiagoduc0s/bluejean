@@ -22,6 +22,8 @@ class ListenerResource extends JsonResource
             'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
+            'threshold_meters' => $this->threshold_meters,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'channel' => $this->whenLoaded('channel', function () {

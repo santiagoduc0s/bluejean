@@ -55,6 +55,8 @@ class ListenerController extends Controller
             'address' => 'nullable|string|max:500',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'threshold_meters' => 'nullable|integer|min:100|max:1000',
+            'status' => 'nullable|string|in:active,inactive',
         ]);
 
         $channel = Channel::findOrFail($request->channel_id);
@@ -67,6 +69,8 @@ class ListenerController extends Controller
             'address' => $request->address,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
+            'threshold_meters' => $request->threshold_meters ?? 200,
+            'status' => $request->status ?? 'active',
         ]);
 
         return ListenerResource::make($listener->load('channel'));
@@ -94,12 +98,14 @@ class ListenerController extends Controller
             'address' => 'nullable|string|max:500',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'threshold_meters' => 'nullable|integer|min:100|max:1000',
+            'status' => 'sometimes|string|in:active,inactive',
         ]);
 
         $listener = Listener::findOrFail($id);
         $this->authorize('belongsToListenerCompany', $listener);
 
-        $listener->update($request->only(['name', 'phone_number', 'address', 'latitude', 'longitude']));
+        $listener->update($request->only(['name', 'phone_number', 'address', 'latitude', 'longitude', 'threshold_meters', 'status']));
 
         return ListenerResource::make($listener->load('channel'));
     }

@@ -39,4 +39,10 @@ return [
         'client_id' => env('GOOGLE_CLIENT_ID'),
     ],
 
+    'twilio' => [
+        'account_sid' => env('TWILIO_ACCOUNT_SID'),
+        'auth_token' => env('TWILIO_AUTH_TOKEN'),
+        'whatsapp_from' => env('TWILIO_WHATSAPP_FROM'), // e.g., whatsapp:+14155238886
+    ],
+
 ];

@@ -18,6 +18,7 @@ class HomeScreen {
           return ChangeNotifierProvider(
             create: (context) => HomeNotifier(
               channelRepository: context.read(),
+              driverPositionRepository: context.read(),
             ),
             child: const HomePage(),
           );

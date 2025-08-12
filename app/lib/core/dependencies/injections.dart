@@ -40,6 +40,11 @@ List<SingleChildWidget> providers = [
     value: DeviceInfoService(),
   ),
   Provider.value(
+    value: LocationTrackingService(
+      permissionService: PermissionService(),
+    ),
+  ),
+  Provider.value(
     value: ApiClient(
       baseUrl: Env.baseUrl,
       enableLogging: kDebugMode,

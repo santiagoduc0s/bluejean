@@ -74,4 +74,12 @@ List<SingleChildWidget> providerRepositories = [
       apiClient: context.read(),
     ),
   ),
+
+  // Driver Position Repository
+  Provider<DriverPositionRepository>(
+    create: (context) => DriverPositionRepositoryImpl(
+      apiClient: context.read(),
+      locationTrackingService: context.read(),
+    ),
+  ),
 ];

@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:lune/core/core.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/map/location_picker_screen.dart';
@@ -37,9 +40,11 @@ class ListenerFormWidget extends StatefulWidget {
     required this.onCancel,
     super.key,
     this.listener,
+    this.prefilledContact,
   });
 
   final ListenerEntity? listener;
+  final Contact? prefilledContact;
 
   final void Function(
     String name,
@@ -47,6 +52,8 @@ class ListenerFormWidget extends StatefulWidget {
     String? address,
     double? latitude,
     double? longitude,
+    int thresholdMeters,
+    String status,
   ) onSave;
 
   final VoidCallback onCancel;
@@ -67,8 +74,10 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
   bool _isLoadingSuggestions = false;
   List<PlaceSuggestion> _suggestions = [];
   Timer? _debounceTimer;
+  String _selectedStatus = 'active';
+  int _selectedThreshold = 200;
 
-  static const String _googleApiKey = "AIzaSyDI8pTScjcDsjr-NHzp1E7yRLglz_OxmCE";
+  static const String _googleApiKey = Env.googleApiKey;
 
   @override
   void initState() {
@@ -80,6 +89,16 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       _searchController.text = widget.listener!.address ?? '';
       _latitude = widget.listener!.latitude;
       _longitude = widget.listener!.longitude;
+      _selectedThreshold = widget.listener!.thresholdMeters;
+      _selectedStatus = widget.listener!.status;
+    } else if (widget.prefilledContact != null) {
+      // Prefill from contact data
+      _nameController.text = widget.prefilledContact!.displayName;
+      _phoneController.text = widget.prefilledContact!.phones.isNotEmpty 
+          ? widget.prefilledContact!.phones.first.number 
+          : '';
+      _selectedThreshold = 200;
+      _selectedStatus = 'active';
     }
   }
 
@@ -101,6 +120,8 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
         _searchController.text.isEmpty ? null : _searchController.text,
         _latitude,
         _longitude,
+        _selectedThreshold,
+        _selectedStatus,
       );
     }
   }
@@ -122,7 +143,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       final url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
           '?input=${Uri.encodeQueryComponent(query)}'
           '&key=$_googleApiKey'
-          '&components=country:us|country:mx|country:es'
+          '&components=country:uy'
           '&types=address';
 
       final response = await http.get(Uri.parse(url));
@@ -196,6 +217,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       extra: {
         'latitude': _latitude,
         'longitude': _longitude,
+        'thresholdMeters': _selectedThreshold,
       },
     );
 
@@ -203,6 +225,9 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       setState(() {
         _latitude = result['latitude'] as double?;
         _longitude = result['longitude'] as double?;
+        if (result['thresholdMeters'] != null) {
+          _selectedThreshold = result['thresholdMeters'] as int;
+        }
       });
     }
   }
@@ -380,6 +405,56 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                         : colors.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+              // Threshold dropdown
+              DropdownButtonFormField<int>(
+                value: _selectedThreshold,
+                decoration: const InputDecoration(
+                  labelText: 'Notification Distance',
+                  border: OutlineInputBorder(),
+                  helperText: 'Distance from location to receive notifications',
+                ),
+                items: [
+                  for (int meters in [100, 200, 300, 400, 500, 600, 700])
+                    DropdownMenuItem(
+                      value: meters,
+                      child: Text('${meters}m'),
+                    ),
+                ],
+                onChanged: (int? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedThreshold = newValue;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+              // Status dropdown
+              DropdownButtonFormField<String>(
+                value: _selectedStatus,
+                decoration: InputDecoration(
+                  labelText: l10n.status,
+                  border: const OutlineInputBorder(),
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: 'active',
+                    child: Text(l10n.active),
+                  ),
+                  DropdownMenuItem(
+                    value: 'inactive',
+                    child: Text(l10n.inactive),
+                  ),
+                ],
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedStatus = newValue;
+                    });
+                  }
+                },
               ),
               const SizedBox(height: 16),
               Row(

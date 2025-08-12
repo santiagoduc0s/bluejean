@@ -13,12 +13,13 @@ class Channel extends Model
         'name',
         'description',
         'company_id',
+        'status',
     ];
 
     protected function casts(): array
     {
         return [
-            //
+            'status' => 'string',
         ];
     }
 
@@ -36,5 +37,15 @@ class Channel extends Model
     public function listeners()
     {
         return $this->hasMany(Listener::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    public function scopeInactive($query)
+    {
+        return $query->where('status', 'inactive');
     }
 }

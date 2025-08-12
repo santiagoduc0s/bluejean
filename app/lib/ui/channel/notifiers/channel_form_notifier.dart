@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/entities/entities.dart';
+import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class ChannelFormNotifier extends ChangeNotifier {
   ChannelFormNotifier({
     required ChannelRepository channelRepository,
     required ListenerRepository listenerRepository,
+    required PermissionService permissionService,
     ChannelEntity? channel,
   })  : _channelRepository = channelRepository,
         _listenerRepository = listenerRepository,
+        _permissionService = permissionService,
         _channel = channel,
         _isEditMode = channel != null;
 
   final ChannelRepository _channelRepository;
   final ListenerRepository _listenerRepository;
+  final PermissionService _permissionService;
   final ChannelEntity? _channel;
   final bool _isEditMode;
 
@@ -34,6 +40,7 @@ class ChannelFormNotifier extends ChangeNotifier {
   Future<bool> saveChannel({
     required String name,
     String? description,
+    String? status,
   }) async {
     if (name.trim().isEmpty) {
       _error = 'Name is required';
@@ -51,11 +58,13 @@ class ChannelFormNotifier extends ChangeNotifier {
           id: _channel.id,
           name: name,
           description: description,
+          status: status,
         );
       } else {
         await _channelRepository.createChannel(
           name: name,
           description: description,
+          status: status,
         );
       }
       return true;
@@ -95,6 +104,8 @@ class ChannelFormNotifier extends ChangeNotifier {
     String? address,
     double? latitude,
     double? longitude,
+    int thresholdMeters,
+    String status,
   ) async {
     if (_channel == null) return false;
 
@@ -106,6 +117,8 @@ class ChannelFormNotifier extends ChangeNotifier {
         address: address,
         latitude: latitude,
         longitude: longitude,
+        thresholdMeters: thresholdMeters,
+        status: status,
       );
       _listeners.add(listener);
       notifyListeners();
@@ -124,6 +137,8 @@ class ChannelFormNotifier extends ChangeNotifier {
     String? address,
     double? latitude,
     double? longitude,
+    int thresholdMeters,
+    String status,
   ) async {
     try {
       final updatedListener = await _listenerRepository.updateListener(
@@ -133,6 +148,8 @@ class ChannelFormNotifier extends ChangeNotifier {
         address: address,
         latitude: latitude,
         longitude: longitude,
+        thresholdMeters: thresholdMeters,
+        status: status,
       );
 
       final index = _listeners.indexWhere((l) => l.id == listener.id);
@@ -164,5 +181,86 @@ class ChannelFormNotifier extends ChangeNotifier {
   void setEditingListener(ListenerEntity? listener) {
     _editingListener = listener;
     notifyListeners();
+  }
+
+  Future<List<Contact>> getContacts() async {
+    final status = await _permissionService.status(PermissionType.contacts);
+    if (status != PermissionStatus.granted) {
+      final result = await _permissionService.request(PermissionType.contacts);
+      if (result != PermissionStatus.granted) {
+        throw Exception('Contacts permission denied');
+      }
+    }
+
+    try {
+      final contacts = await FlutterContacts.getContacts(
+        withProperties: true,
+        withPhoto: false,
+      );
+      return contacts.where((contact) => 
+        contact.phones.isNotEmpty && 
+        contact.displayName.isNotEmpty
+      ).toList();
+    } catch (e) {
+      throw Exception('Failed to load contacts: $e');
+    }
+  }
+
+  Future<bool> importContactAsListener(Contact contact) async {
+    if (_channel == null) return false;
+    if (contact.phones.isEmpty) return false;
+
+    try {
+      final listener = await _listenerRepository.createListener(
+        channelId: _channel.id,
+        name: contact.displayName,
+        phoneNumber: contact.phones.first.number,
+        address: null,
+        latitude: null,
+        longitude: null,
+        thresholdMeters: 200,
+        status: 'active',
+      );
+      _listeners.add(listener);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
+  Future<bool> importMultipleContactsAsListeners(List<Contact> contacts) async {
+    if (_channel == null) return false;
+
+    bool allSucceeded = true;
+    final List<ListenerEntity> newListeners = [];
+
+    try {
+      for (final contact in contacts) {
+        if (contact.phones.isEmpty) continue;
+
+        final listener = await _listenerRepository.createListener(
+          channelId: _channel.id,
+          name: contact.displayName,
+          phoneNumber: contact.phones.first.number,
+          address: null,
+          latitude: null,
+          longitude: null,
+          thresholdMeters: 200,
+          status: 'active',
+        );
+        newListeners.add(listener);
+      }
+
+      _listeners.addAll(newListeners);
+      notifyListeners();
+      return allSucceeded;
+    } catch (e) {
+      _error = e.toString();
+      notifyListeners();
+      return false;
+    }
   }
 }

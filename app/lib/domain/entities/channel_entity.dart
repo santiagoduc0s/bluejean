@@ -5,6 +5,7 @@ class ChannelEntity extends Equatable {
     required this.id,
     required this.name,
     required this.description,
+    required this.status,
     required this.updatedAt,
     required this.createdAt,
   });
@@ -12,6 +13,7 @@ class ChannelEntity extends Equatable {
   final int id;
   final String name;
   final String? description;
+  final String status;
   final DateTime updatedAt;
   final DateTime createdAt;
 
@@ -21,6 +23,7 @@ class ChannelEntity extends Equatable {
         '  id: $id,\n'
         '  name: $name,\n'
         '  description: $description,\n'
+        '  status: $status,\n'
         '  updatedAt: $updatedAt,\n'
         '  createdAt: $createdAt,\n'
         ')';
@@ -30,6 +33,7 @@ class ChannelEntity extends Equatable {
     int? id,
     String? name,
     String? description,
+    String? status,
     DateTime? updatedAt,
     DateTime? createdAt,
   }) {
@@ -37,6 +41,7 @@ class ChannelEntity extends Equatable {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      status: status ?? this.status,
       updatedAt: updatedAt ?? this.updatedAt,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -48,6 +53,7 @@ class ChannelEntity extends Equatable {
       id,
       name,
       description,
+      status,
       updatedAt,
       createdAt,
     ];

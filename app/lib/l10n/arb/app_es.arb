@@ -471,5 +471,19 @@
   "locationFound": "Ubicación encontrada",
   "@locationFound": {},
   "typeAddressForLocation": "Escribe la dirección para encontrar coordenadas",
-  "@typeAddressForLocation": {}
+  "@typeAddressForLocation": {},
+  "status": "Estado",
+  "@status": {},
+  "active": "Activo",
+  "@active": {},
+  "inactive": "Inactivo",
+  "@inactive": {},
+  "activeChannels": "Canales Activos",
+  "@activeChannels": {},
+  "inactiveChannels": "Canales Inactivos",
+  "@inactiveChannels": {},
+  "activeChannelsSubtitle": "Los oyentes de estos canales serán notificados cuando el automóvil esté cerca de su ubicación",
+  "@activeChannelsSubtitle": {},
+  "inactiveChannelsSubtitle": "Estos canales están deshabilitados y el modo de conducción necesita ser actualizado",
+  "@inactiveChannelsSubtitle": {}
 }

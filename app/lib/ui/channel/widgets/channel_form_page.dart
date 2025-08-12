@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/channel/notifiers/notifiers.dart';
+import 'package:lune/ui/channel/widgets/contacts_picker_dialog.dart';
 import 'package:lune/ui/channel/widgets/listener_form_widget.dart';
 import 'package:lune/ui/channel/widgets/listener_list_widget.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
   final _descriptionController = TextEditingController();
 
   bool _showListenerForm = false;
+  String _selectedStatus = 'active';
+  Contact? _prefilledContact;
 
   @override
   void initState() {
@@ -29,6 +33,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     if (notifier.isEditMode && notifier.channel != null) {
       _nameController.text = notifier.channel!.name;
       _descriptionController.text = notifier.channel!.description ?? '';
+      _selectedStatus = notifier.channel!.status;
     }
   }
 
@@ -43,8 +48,6 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final colors = context.colors;
-
-    final inputs = context.inputStyles;
 
     return Scaffold(
       appBar: AppBar(
@@ -106,6 +109,31 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                             ),
                             maxLines: 3,
                           ),
+                          const SizedBox(height: 16),
+                          DropdownButtonFormField<String>(
+                            value: _selectedStatus,
+                            decoration: InputDecoration(
+                              labelText: l10n.status,
+                              border: const OutlineInputBorder(),
+                            ),
+                            items: [
+                              DropdownMenuItem(
+                                value: 'active',
+                                child: Text(l10n.active),
+                              ),
+                              DropdownMenuItem(
+                                value: 'inactive',
+                                child: Text(l10n.inactive),
+                              ),
+                            ],
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                setState(() {
+                                  _selectedStatus = newValue;
+                                });
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -122,12 +150,15 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                           if (_showListenerForm) ...[
                             ListenerFormWidget(
                               listener: notifier.editingListener,
+                              prefilledContact: _prefilledContact,
                               onSave: (
                                 name,
                                 phoneNumber,
                                 address,
                                 latitude,
                                 longitude,
+                                thresholdMeters,
+                                status,
                               ) =>
                                   _saveListener(
                                 context,
@@ -137,6 +168,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                                 address,
                                 latitude,
                                 longitude,
+                                thresholdMeters,
+                                status,
                               ),
                               onCancel: () => _cancelListenerForm(notifier),
                             ),
@@ -149,6 +182,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                                 _showEditListenerForm(notifier, listener),
                             onDelete: (listener) =>
                                 _deleteListener(notifier, listener),
+                            onImportFromContacts: () =>
+                                _importFromContacts(notifier),
                           ),
                           const SizedBox(height: 24),
                         ],
@@ -215,6 +250,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     final success = await notifier.saveChannel(
       name: _nameController.text,
       description: _descriptionController.text,
+      status: _selectedStatus,
     );
 
     if (success && context.mounted) {
@@ -243,6 +279,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     notifier.setEditingListener(null);
     setState(() {
       _showListenerForm = false;
+      _prefilledContact = null;
     });
   }
 
@@ -254,6 +291,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     String? address,
     double? latitude,
     double? longitude,
+    int thresholdMeters,
+    String status,
   ) async {
     bool success;
     if (notifier.editingListener != null) {
@@ -264,6 +303,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
         address,
         latitude,
         longitude,
+        thresholdMeters,
+        status,
       );
     } else {
       success = await notifier.addListenerItem(
@@ -272,6 +313,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
         address,
         latitude,
         longitude,
+        thresholdMeters,
+        status,
       );
     }
 
@@ -285,5 +328,47 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     ListenerEntity listener,
   ) async {
     await notifier.deleteListener(listener);
+  }
+
+  Future<void> _importFromContacts(ChannelFormNotifier notifier) async {
+    try {
+      // Get contacts
+      final contacts = await notifier.getContacts();
+
+      if (contacts.isEmpty) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No contacts with phone numbers found'),
+            ),
+          );
+        }
+        return;
+      }
+
+      if (!mounted) return;
+
+      final selectedContact = await showDialog<Contact>(
+        context: context,
+        builder: (context) => ContactsPickerDialog(contacts: contacts),
+      );
+
+      if (selectedContact != null) {
+        notifier.setEditingListener(null);
+        setState(() {
+          _showListenerForm = true;
+          _prefilledContact = selectedContact;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

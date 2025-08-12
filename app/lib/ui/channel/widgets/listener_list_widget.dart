@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lune/core/core.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/ui.dart';
@@ -10,6 +11,7 @@ class ListenerListWidget extends StatelessWidget {
     required this.onEdit,
     required this.onDelete,
     required this.onAdd,
+    required this.onImportFromContacts,
     super.key,
   });
 
@@ -17,25 +19,35 @@ class ListenerListWidget extends StatelessWidget {
   final void Function(ListenerEntity listener) onEdit;
   final void Function(ListenerEntity listener) onDelete;
   final VoidCallback onAdd;
+  final VoidCallback onImportFromContacts;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final colors = context.colors;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(
-              l10n.listeners,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            TextButton.icon(
-              onPressed: onAdd,
-              icon: const Icon(Icons.add),
-              label: Text(l10n.addListener),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextButton.icon(
+                  onPressed: onAdd,
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.addListener),
+                ),
+                TextButton.icon(
+                  onPressed: onImportFromContacts,
+                  icon: const Icon(Icons.contacts),
+                  label: Text(l10n.importFromContacts),
+                ),
+              ],
             ),
           ],
         ),
@@ -45,13 +57,12 @@ class ListenerListWidget extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey.shade300),
+              border: Border.all(color: colors.primary),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               l10n.noListenersAdded,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey.shade600),
             ),
           )
         else
@@ -111,7 +122,7 @@ class ListenerListWidget extends StatelessWidget {
 
     showDialog<void>(
       context: context,
-      builder: (context) => Provider.value(
+      builder: (context) => ChangeNotifierProvider.value(
         value: notifier,
         child: AlertDialog(
           title: Text(l10n.deleteListener),

@@ -692,4 +692,27 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get typeAddressForLocation =>
       'Escribe la dirección para encontrar coordenadas';
+
+  @override
+  String get status => 'Estado';
+
+  @override
+  String get active => 'Activo';
+
+  @override
+  String get inactive => 'Inactivo';
+
+  @override
+  String get activeChannels => 'Canales Activos';
+
+  @override
+  String get inactiveChannels => 'Canales Inactivos';
+
+  @override
+  String get activeChannelsSubtitle =>
+      'Los oyentes de estos canales serán notificados cuando el automóvil esté cerca de su ubicación';
+
+  @override
+  String get inactiveChannelsSubtitle =>
+      'Estos canales están deshabilitados y el modo de conducción necesita ser actualizado';
 }

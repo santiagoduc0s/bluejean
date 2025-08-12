@@ -687,4 +687,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get typeAddressForLocation => 'Type address to find coordinates';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get inactive => 'Inactive';
+
+  @override
+  String get activeChannels => 'Active Channels';
+
+  @override
+  String get inactiveChannels => 'Inactive Channels';
+
+  @override
+  String get activeChannelsSubtitle =>
+      'The listeners of these channels will be notified when the car is close to their location';
+
+  @override
+  String get inactiveChannelsSubtitle =>
+      'These channels are disabled and the driving mode needs to be updated';
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ChannelController;
+use App\Http\Controllers\Api\V1\DriverPositionController;
 use App\Http\Controllers\Api\V1\FileController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\ListenerController;
@@ -79,6 +80,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{listener}', [ListenerController::class, 'show']);
         Route::put('/{listener}', [ListenerController::class, 'update']);
         Route::delete('/{listener}', [ListenerController::class, 'destroy']);
+    });
+
+    Route::prefix('driver-positions')->group(function () {
+        Route::post('/', [DriverPositionController::class, 'store']);
     });
 
 });

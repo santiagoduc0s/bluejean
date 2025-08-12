@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
             
             // Add indexes for search performance
             $table->index(['channel_id', 'name']);
             $table->index(['channel_id', 'phone_number']);
+            $table->index('status');
         });
     }
 

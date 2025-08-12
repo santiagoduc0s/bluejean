@@ -13,6 +13,8 @@ abstract class ListenerRepository {
     String? address,
     double? latitude,
     double? longitude,
+    int? thresholdMeters,
+    String? status,
   });
 
   Future<ListenerEntity> updateListener({
@@ -22,6 +24,8 @@ abstract class ListenerRepository {
     String? address,
     double? latitude,
     double? longitude,
+    int? thresholdMeters,
+    String? status,
   });
 
   Future<void> deleteListener(int id);

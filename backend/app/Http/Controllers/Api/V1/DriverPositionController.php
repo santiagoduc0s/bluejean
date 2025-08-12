@@ -1,0 +1,66 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Controllers\Controller;
+use App\Jobs\ProcessGeofencingNotifications;
+use App\Models\DriverPosition;
+use Illuminate\Http\Request;
+
+class DriverPositionController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+        ]);
+
+        $driverPosition = DriverPosition::create([
+            'user_id' => auth()->id(),
+            'latitude' => $validated['latitude'],
+            'longitude' => $validated['longitude'],
+        ]);
+
+        ProcessGeofencingNotifications::dispatchSync($driverPosition);
+
+        return response()->noContent();
+    }
+
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}

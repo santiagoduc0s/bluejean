@@ -5,6 +5,8 @@ class ListenerModel extends ListenerEntity {
     required super.id,
     required super.name,
     required super.phoneNumber,
+    required super.thresholdMeters,
+    required super.status,
     required super.updatedAt,
     required super.createdAt,
     super.address,
@@ -24,6 +26,8 @@ class ListenerModel extends ListenerEntity {
       longitude: json['longitude'] != null
           ? double.parse(json['longitude'].toString())
           : null,
+      thresholdMeters: json['threshold_meters'] as int? ?? 200,
+      status: json['status'] as String? ?? 'active',
       updatedAt: DateTime.parse(json['updated_at'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
@@ -37,6 +41,8 @@ class ListenerModel extends ListenerEntity {
       'address': address,
       'latitude': latitude,
       'longitude': longitude,
+      'threshold_meters': thresholdMeters,
+      'status': status,
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
     };

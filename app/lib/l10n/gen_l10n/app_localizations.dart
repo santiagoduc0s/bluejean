@@ -1369,6 +1369,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Type address to find coordinates'**
   String get typeAddressForLocation;
+
+  /// No description provided for @status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// No description provided for @active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// No description provided for @inactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactive;
+
+  /// No description provided for @activeChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Channels'**
+  String get activeChannels;
+
+  /// No description provided for @inactiveChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive Channels'**
+  String get inactiveChannels;
+
+  /// No description provided for @activeChannelsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The listeners of these channels will be notified when the car is close to their location'**
+  String get activeChannelsSubtitle;
+
+  /// No description provided for @inactiveChannelsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'These channels are disabled and the driving mode needs to be updated'**
+  String get inactiveChannelsSubtitle;
 }
 
 class _AppLocalizationsDelegate

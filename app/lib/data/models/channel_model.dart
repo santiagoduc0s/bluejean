@@ -5,6 +5,7 @@ class ChannelModel extends ChannelEntity {
     required super.id,
     required super.name,
     required super.description,
+    required super.status,
     required super.updatedAt,
     required super.createdAt,
   });
@@ -14,6 +15,7 @@ class ChannelModel extends ChannelEntity {
       id: json['id'] as int,
       name: json['name'] as String,
       description: json['description'] as String?,
+      status: json['status'] as String? ?? 'active',
       updatedAt: DateTime.parse(json['updated_at'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
     );
@@ -24,6 +26,7 @@ class ChannelModel extends ChannelEntity {
       'id': id,
       'name': name,
       'description': description,
+      'status': status,
       'updated_at': updatedAt.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
     };
