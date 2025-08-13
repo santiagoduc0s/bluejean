@@ -22,7 +22,7 @@ class SplashScreen {
             lazy: false,
             create: (context) => SplashNotifier(
               authRepository: context.read(),
-              getPublicOnboardStatusUseCase: context.read(),
+              localStorageService: context.read(),
               router: context.read(),
             )..initialize(),
             child: const SplashPage(),

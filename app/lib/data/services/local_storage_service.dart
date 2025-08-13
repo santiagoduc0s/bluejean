@@ -59,7 +59,7 @@ class LocalStorageService {
     }
   }
 
-  Future<PublicOnboardStatus> getStatus() async {
+  Future<PublicOnboardStatus> getPOStatus() async {
     final publicOnboardStatusRaw = (await box()).get(_publicOnboard) as String?;
 
     if (publicOnboardStatusRaw == 'seen') {
@@ -71,7 +71,7 @@ class LocalStorageService {
     }
   }
 
-  Future<void> setStatus(PublicOnboardStatus status) async {
+  Future<void> setPOStatus(PublicOnboardStatus status) async {
     switch (status) {
       case PublicOnboardStatus.seen:
         await (await box()).put(_publicOnboard, 'seen');

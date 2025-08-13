@@ -65,20 +65,6 @@ List<SingleChildWidget> providerUseCases = [
     ),
   ],
 
-  // Public Onboard Use Cases
-  ...[
-    Provider<GetPublicOnboardStatusUseCase>(
-      create: (context) => GetPublicOnboardStatusUseCase(
-        context.read(),
-      ),
-    ),
-    Provider<SetPublicOnboardStatusUseCase>(
-      create: (context) => SetPublicOnboardStatusUseCase(
-        context.read(),
-      ),
-    ),
-  ],
-
   // Lifecycle Use Cases
   ...[
     Provider<OpenAppUseCase>(
