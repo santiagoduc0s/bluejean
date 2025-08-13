@@ -21,10 +21,9 @@ class PublicOnboardScreen {
             key: state.pageKey,
             child: ChangeNotifierProvider<PublicOnboardNotifier>(
               create: (_) => PublicOnboardNotifier(
-                getStatusUseCase: context.read(),
+                localStorageService: context.read(),
                 localization: context.read(),
                 router: context.read(),
-                setStatusUseCase: context.read(),
                 snackbar: context.read(),
               ),
               child: const PublicOnboardPage(),

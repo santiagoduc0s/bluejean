@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/utils/utils.dart';
+import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/enums/enums.dart';
-import 'package:lune/domain/usecases/public_onboard/public_onboard.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/home/home.dart';
 
 class PublicOnboardNotifier extends ChangeNotifier {
   PublicOnboardNotifier({
-    required this.setStatusUseCase,
-    required this.getStatusUseCase,
+    required this.localStorageService,
     required this.router,
     required this.snackbar,
     required this.localization,
   });
 
-  SetPublicOnboardStatusUseCase setStatusUseCase;
-  GetPublicOnboardStatusUseCase getStatusUseCase;
+  LocalStorageService localStorageService;
 
   CustomRouter router;
   CustomSnackbar snackbar;
@@ -28,7 +26,7 @@ class PublicOnboardNotifier extends ChangeNotifier {
   bool isLoading = false;
 
   Future<void> initialize() async {
-    status = await getStatusUseCase.call();
+    status = await localStorageService.getPOStatus();
   }
 
   void _setLoading(bool value) {
@@ -40,7 +38,7 @@ class PublicOnboardNotifier extends ChangeNotifier {
     _setLoading(true);
 
     try {
-      await setStatusUseCase.call(PublicOnboardStatus.seen);
+      await localStorageService.setPOStatus(PublicOnboardStatus.seen);
 
       router.goNamed(HomeScreen.path);
     } catch (e, s) {

@@ -28,13 +28,6 @@ List<SingleChildWidget> providerRepositories = [
     ),
   ),
 
-  // Public Onboard Repository
-  Provider<PublicOnboardRepository>(
-    create: (context) => PublicOnboardRepositoryImpl(
-      service: context.read(),
-    ),
-  ),
-
   // Permission Repository
   Provider<PermissionRepository>(
     create: (context) => PermissionRepositoryImpl(
