@@ -155,6 +155,7 @@ class AppGoRouter extends CustomRouter {
                   routes: [
                     ChannelFormScreen.route(),
                     LocationPickerScreen.route(),
+                    ListenerDetailScreen.route(),
                   ],
                 ),
               ],

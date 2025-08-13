@@ -11,11 +11,6 @@ import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/map/location_picker_screen.dart';
 
 class PlaceSuggestion {
-  final String placeId;
-  final String description;
-  final String mainText;
-  final String secondaryText;
-
   PlaceSuggestion({
     required this.placeId,
     required this.description,
@@ -27,11 +22,18 @@ class PlaceSuggestion {
     return PlaceSuggestion(
       placeId: (json['place_id'] as String?) ?? '',
       description: json['description'] as String? ?? '',
-      mainText: json['structured_formatting']?['main_text'] as String? ?? '',
-      secondaryText:
-          json['structured_formatting']?['secondary_text'] as String? ?? '',
+      mainText: (json['structured_formatting']
+              as Map<String, dynamic>?)?['main_text'] as String? ??
+          '',
+      secondaryText: (json['structured_formatting']
+              as Map<String, dynamic>?)?['secondary_text'] as String? ??
+          '',
     );
   }
+  final String placeId;
+  final String description;
+  final String mainText;
+  final String secondaryText;
 }
 
 class ListenerFormWidget extends StatefulWidget {
@@ -94,8 +96,8 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
     } else if (widget.prefilledContact != null) {
       // Prefill from contact data
       _nameController.text = widget.prefilledContact!.displayName;
-      _phoneController.text = widget.prefilledContact!.phones.isNotEmpty 
-          ? widget.prefilledContact!.phones.first.number 
+      _phoneController.text = widget.prefilledContact!.phones.isNotEmpty
+          ? widget.prefilledContact!.phones.first.number
           : '';
       _selectedThreshold = 200;
       _selectedStatus = 'active';
@@ -127,7 +129,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
   }
 
   Future<void> _searchPlaces(String query) async {
-    if (query.length < 3) {
+    if (query.isEmpty) {
       setState(() {
         _suggestions = [];
         _isLoadingSuggestions = false;
@@ -149,13 +151,15 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final data = json.decode(response.body) as Map<String, dynamic>;
         final predictions = data['predictions'] as List<dynamic>;
 
         setState(() {
           _suggestions = predictions
-              .map((json) =>
-                  PlaceSuggestion.fromJson(json as Map<String, dynamic>))
+              .map(
+                (json) =>
+                    PlaceSuggestion.fromJson(json as Map<String, dynamic>),
+              )
               .toList();
           _isLoadingSuggestions = false;
         });
@@ -178,8 +182,10 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final location = data['result']['geometry']['location'];
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        final result = data['result'] as Map<String, dynamic>;
+        final geometry = result['geometry'] as Map<String, dynamic>;
+        final location = geometry['location'] as Map<String, dynamic>;
 
         setState(() {
           _latitude = location['lat'] as double?;
@@ -206,7 +212,9 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
     });
     // Remove focus from the SearchBar to hide keyboard after a short delay
     Future.delayed(const Duration(milliseconds: 100), () {
-      FocusScope.of(context).unfocus();
+      if (mounted) {
+        FocusScope.of(context).unfocus();
+      }
     });
     _getPlaceDetails(suggestion.placeId);
   }
@@ -310,7 +318,8 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                 elevation: WidgetStateProperty.all(0),
                 surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
                 overlayColor: WidgetStateProperty.all(
-                    colors.surfaceContainerHighest.withValues(alpha: 0.1)),
+                  colors.surfaceContainerHighest.withValues(alpha: 0.1),
+                ),
                 constraints: const BoxConstraints(minHeight: 56),
               ),
               // Suggestions list
@@ -416,7 +425,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                   helperText: 'Distance from location to receive notifications',
                 ),
                 items: [
-                  for (int meters in [100, 200, 300, 400, 500, 600, 700])
+                  for (final int meters in [100, 200, 300, 400, 500, 600, 700])
                     DropdownMenuItem(
                       value: meters,
                       child: Text('${meters}m'),

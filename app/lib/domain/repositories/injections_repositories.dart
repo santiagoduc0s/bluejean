@@ -26,6 +26,13 @@ List<SingleChildWidget> providerRepositories = [
     ),
   ),
 
+  // Listener Notification Repository
+  Provider<ListenerNotificationRepository>(
+    create: (context) => ListenerNotificationRepositoryImpl(
+      apiClient: context.read(),
+    ),
+  ),
+
   // Device Repository
   Provider<DeviceRepository>(
     create: (context) => DeviceRepositoryImpl(

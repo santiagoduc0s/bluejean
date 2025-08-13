@@ -80,6 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{listener}', [ListenerController::class, 'show']);
         Route::put('/{listener}', [ListenerController::class, 'update']);
         Route::delete('/{listener}', [ListenerController::class, 'destroy']);
+        Route::get('/{listener}/notifications', [ListenerController::class, 'getNotifications']);
     });
 
     Route::prefix('driver-positions')->group(function () {

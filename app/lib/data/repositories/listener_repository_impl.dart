@@ -47,7 +47,7 @@ class ListenerRepositoryImpl implements ListenerRepository {
       'name': name,
       'phone_number': phoneNumber,
     };
-    
+
     if (address != null) body['address'] = address;
     if (latitude != null) body['latitude'] = latitude;
     if (longitude != null) body['longitude'] = longitude;

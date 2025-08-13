@@ -715,4 +715,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get inactiveChannelsSubtitle =>
       'Estos canales están deshabilitados y el modo de conducción necesita ser actualizado';
+
+  @override
+  String get information => 'Información';
+
+  @override
+  String get threshold => 'Umbral';
+
+  @override
+  String get errorLoadingNotifications => 'Error al cargar notificaciones';
+
+  @override
+  String get noNotificationsFound => 'No se encontraron notificaciones';
+
+  @override
+  String get notificationsWillAppearHere =>
+      'Las notificaciones aparecerán aquí cuando el autobús esté cerca de la ubicación de este oyente';
 }

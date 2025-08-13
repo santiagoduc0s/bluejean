@@ -485,5 +485,19 @@
   "activeChannelsSubtitle": "Los oyentes de estos canales serán notificados cuando el automóvil esté cerca de su ubicación",
   "@activeChannelsSubtitle": {},
   "inactiveChannelsSubtitle": "Estos canales están deshabilitados y el modo de conducción necesita ser actualizado",
-  "@inactiveChannelsSubtitle": {}
+  "@inactiveChannelsSubtitle": {},
+  "information": "Información",
+  "@information": {},
+  "notifications": "Notificaciones",
+  "@notifications": {},
+  "threshold": "Umbral",
+  "@threshold": {},
+  "errorLoadingNotifications": "Error al cargar notificaciones",
+  "@errorLoadingNotifications": {},
+  "retry": "Reintentar",
+  "@retry": {},
+  "noNotificationsFound": "No se encontraron notificaciones",
+  "@noNotificationsFound": {},
+  "notificationsWillAppearHere": "Las notificaciones aparecerán aquí cuando el autobús esté cerca de la ubicación de este oyente",
+  "@notificationsWillAppearHere": {}
 }

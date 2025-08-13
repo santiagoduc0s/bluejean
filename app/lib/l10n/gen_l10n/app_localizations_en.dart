@@ -710,4 +710,20 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get inactiveChannelsSubtitle =>
       'These channels are disabled and the driving mode needs to be updated';
+
+  @override
+  String get information => 'Information';
+
+  @override
+  String get threshold => 'Threshold';
+
+  @override
+  String get errorLoadingNotifications => 'Error loading notifications';
+
+  @override
+  String get noNotificationsFound => 'No notifications found';
+
+  @override
+  String get notificationsWillAppearHere =>
+      'Notifications will appear here when the bus is near this listener\'s location';
 }

@@ -34,13 +34,15 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
   void _filterContacts() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredContacts = widget.contacts.where((contact) =>
-        contact.displayName.toLowerCase().contains(query) ||
-        contact.phones.any((phone) => phone.number.contains(query))
-      ).toList();
+      _filteredContacts = widget.contacts
+          .where(
+            (contact) =>
+                contact.displayName.toLowerCase().contains(query) ||
+                contact.phones.any((phone) => phone.number.contains(query)),
+          )
+          .toList();
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,7 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // Search bar
             TextField(
               controller: _searchController,
@@ -81,16 +83,15 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
               ),
             ),
             const SizedBox(height: 16),
-            
-            
+
             // Contacts list
             Expanded(
               child: _filteredContacts.isEmpty
                   ? Center(
                       child: Text(
-                        widget.contacts.isEmpty 
-                          ? 'No contacts found'
-                          : 'No contacts match your search',
+                        widget.contacts.isEmpty
+                            ? 'No contacts found'
+                            : 'No contacts match your search',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: theme.colorScheme.onSurfaceVariant,
                         ),
@@ -100,15 +101,14 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
                       itemCount: _filteredContacts.length,
                       itemBuilder: (context, index) {
                         final contact = _filteredContacts[index];
-                        final phoneNumber = contact.phones.isNotEmpty 
-                            ? contact.phones.first.number 
+                        final phoneNumber = contact.phones.isNotEmpty
+                            ? contact.phones.first.number
                             : '';
 
                         return ListTile(
                           title: Text(contact.displayName),
-                          subtitle: phoneNumber.isNotEmpty 
-                              ? Text(phoneNumber)
-                              : null,
+                          subtitle:
+                              phoneNumber.isNotEmpty ? Text(phoneNumber) : null,
                           leading: const Icon(Icons.person),
                           onTap: () => Navigator.of(context).pop(contact),
                           dense: true,
@@ -116,7 +116,6 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
                       },
                     ),
             ),
-            
           ],
         ),
       ),

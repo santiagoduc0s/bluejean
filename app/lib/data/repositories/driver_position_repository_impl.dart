@@ -44,13 +44,11 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
     final started = await _locationTrackingService.startTracking();
 
     if (started) {
-      // Listen to position updates and send to API
       _positionSubscription = _locationTrackingService.positionStream.listen(
         (Location position) async {
           try {
-            // Check if we should send this position (throttle to max 1 per 10 seconds)
             final now = DateTime.now();
-            if (_lastSentTime == null || 
+            if (_lastSentTime == null ||
                 now.difference(_lastSentTime!).inSeconds >= 10) {
               await storePosition(
                 latitude: position.latitude!,
@@ -59,8 +57,7 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
               _lastSentTime = now;
             }
           } catch (e) {
-            // Handle API errors but continue tracking
-            // Don't update _lastSentTime on failure so we can retry sooner
+            // Handle error silently or use proper logging
           }
         },
       );
@@ -83,7 +80,7 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
       await stopLocationTracking();
       return false;
     } else {
-      return await startLocationTracking();
+      return startLocationTracking();
     }
   }
 

@@ -195,7 +195,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                   isDense: true,
                 ),
                 items: [
-                  for (int meters in [100, 200, 300, 400, 500, 600, 700])
+                  for (final int meters in [100, 200, 300, 400, 500, 600, 700])
                     DropdownMenuItem(
                       value: meters,
                       child: Text('${meters}m'),

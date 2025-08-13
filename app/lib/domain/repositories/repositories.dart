@@ -3,6 +3,7 @@ export 'channel_repository.dart';
 export 'device_repository.dart';
 export 'driver_position_repository.dart';
 export 'injections_repositories.dart';
+export 'listener_notification_repository.dart';
 export 'listener_repository.dart';
 export 'messaging_repository.dart';
 export 'permission_repository.dart';

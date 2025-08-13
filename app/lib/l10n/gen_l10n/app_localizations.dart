@@ -1411,6 +1411,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These channels are disabled and the driving mode needs to be updated'**
   String get inactiveChannelsSubtitle;
+
+  /// No description provided for @information.
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
+  /// No description provided for @threshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Threshold'**
+  String get threshold;
+
+  /// No description provided for @errorLoadingNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading notifications'**
+  String get errorLoadingNotifications;
+
+  /// No description provided for @noNotificationsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications found'**
+  String get noNotificationsFound;
+
+  /// No description provided for @notificationsWillAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications will appear here when the bus is near this listener\'s location'**
+  String get notificationsWillAppearHere;
 }
 
 class _AppLocalizationsDelegate

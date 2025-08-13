@@ -485,5 +485,19 @@
   "activeChannelsSubtitle": "The listeners of these channels will be notified when the car is close to their location",
   "@activeChannelsSubtitle": {},
   "inactiveChannelsSubtitle": "These channels are disabled and the driving mode needs to be updated",
-  "@inactiveChannelsSubtitle": {}
+  "@inactiveChannelsSubtitle": {},
+  "information": "Information",
+  "@information": {},
+  "notifications": "Notifications",
+  "@notifications": {},
+  "threshold": "Threshold",
+  "@threshold": {},
+  "errorLoadingNotifications": "Error loading notifications",
+  "@errorLoadingNotifications": {},
+  "retry": "Retry",
+  "@retry": {},
+  "noNotificationsFound": "No notifications found",
+  "@noNotificationsFound": {},
+  "notificationsWillAppearHere": "Notifications will appear here when the bus is near this listener's location",
+  "@notificationsWillAppearHere": {}
 }

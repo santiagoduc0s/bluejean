@@ -12,6 +12,7 @@ class ListenerListWidget extends StatelessWidget {
     required this.onDelete,
     required this.onAdd,
     required this.onImportFromContacts,
+    this.onTap,
     super.key,
   });
 
@@ -20,6 +21,7 @@ class ListenerListWidget extends StatelessWidget {
   final void Function(ListenerEntity listener) onDelete;
   final VoidCallback onAdd;
   final VoidCallback onImportFromContacts;
+  final void Function(ListenerEntity listener)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,7 @@ class ListenerListWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final listener = listeners[index];
                 return ListTile(
+                  onTap: onTap != null ? () => onTap!(listener) : null,
                   title: Text(listener.name),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

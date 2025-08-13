@@ -8,6 +8,7 @@ import 'package:lune/ui/channel/notifiers/notifiers.dart';
 import 'package:lune/ui/channel/widgets/contacts_picker_dialog.dart';
 import 'package:lune/ui/channel/widgets/listener_form_widget.dart';
 import 'package:lune/ui/channel/widgets/listener_list_widget.dart';
+import 'package:lune/ui/listener_detail/listener_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class ChannelFormPage extends StatefulWidget {
@@ -184,6 +185,8 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                                 _deleteListener(notifier, listener),
                             onImportFromContacts: () =>
                                 _importFromContacts(notifier),
+                            onTap: (listener) => 
+                                _navigateToListenerDetail(context, listener),
                           ),
                           const SizedBox(height: 24),
                         ],
@@ -370,5 +373,12 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
         );
       }
     }
+  }
+
+  void _navigateToListenerDetail(
+    BuildContext context, 
+    ListenerEntity listener,
+  ) {
+    context.pushNamed(ListenerDetailScreen.path, extra: listener);
   }
 }

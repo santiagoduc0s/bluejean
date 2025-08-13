@@ -3,6 +3,7 @@ export 'channel/channel.dart';
 export 'devices/devices.dart';
 export 'forgot_password/forgot_password.dart';
 export 'home/home.dart';
+export 'listener_detail/listener_detail.dart';
 export 'main/main.dart';
 export 'map/location_picker_screen.dart';
 export 'preference/preferences.dart';

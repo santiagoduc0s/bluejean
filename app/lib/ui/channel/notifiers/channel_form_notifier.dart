@@ -195,12 +195,13 @@ class ChannelFormNotifier extends ChangeNotifier {
     try {
       final contacts = await FlutterContacts.getContacts(
         withProperties: true,
-        withPhoto: false,
       );
-      return contacts.where((contact) => 
-        contact.phones.isNotEmpty && 
-        contact.displayName.isNotEmpty
-      ).toList();
+      return contacts
+          .where(
+            (contact) =>
+                contact.phones.isNotEmpty && contact.displayName.isNotEmpty,
+          )
+          .toList();
     } catch (e) {
       throw Exception('Failed to load contacts: $e');
     }
@@ -215,9 +216,6 @@ class ChannelFormNotifier extends ChangeNotifier {
         channelId: _channel.id,
         name: contact.displayName,
         phoneNumber: contact.phones.first.number,
-        address: null,
-        latitude: null,
-        longitude: null,
         thresholdMeters: 200,
         status: 'active',
       );
@@ -234,8 +232,8 @@ class ChannelFormNotifier extends ChangeNotifier {
   Future<bool> importMultipleContactsAsListeners(List<Contact> contacts) async {
     if (_channel == null) return false;
 
-    bool allSucceeded = true;
-    final List<ListenerEntity> newListeners = [];
+    const allSucceeded = true;
+    final newListeners = <ListenerEntity>[];
 
     try {
       for (final contact in contacts) {
@@ -245,9 +243,6 @@ class ChannelFormNotifier extends ChangeNotifier {
           channelId: _channel.id,
           name: contact.displayName,
           phoneNumber: contact.phones.first.number,
-          address: null,
-          latitude: null,
-          longitude: null,
           thresholdMeters: 200,
           status: 'active',
         );

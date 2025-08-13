@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ListenerNotificationResource;
 use App\Http\Resources\ListenerResource;
 use App\Models\Channel;
 use App\Models\Listener;
+use App\Models\ListenerNotification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
@@ -145,5 +147,24 @@ class ListenerController extends Controller
             ->paginate($request->get('per_page', 15));
 
         return ListenerResource::collection($listeners);
+    }
+
+    /**
+     * Get notifications for a specific listener.
+     */
+    public function getNotifications(Request $request, string $id)
+    {
+        $request->validate([
+            'per_page' => 'integer|min:1|max:100',
+        ]);
+
+        $listener = Listener::findOrFail($id);
+        $this->authorize('belongsToListenerCompany', $listener);
+
+        $notifications = ListenerNotification::where('listener_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->paginate($request->get('per_page', 20));
+
+        return ListenerNotificationResource::collection($notifications);
     }
 }
