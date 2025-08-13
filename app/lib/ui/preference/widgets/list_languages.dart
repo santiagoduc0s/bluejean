@@ -20,7 +20,7 @@ class ListLanguages extends StatelessWidget {
     return SizedBox(
       child: FilledButton.tonal(
         onPressed: () async {
-          final locale = await showModalBottomSheet<String?>(
+          var locale = await showModalBottomSheet<String?>(
             useRootNavigator: true,
             context: context,
             isScrollControlled: true,
@@ -56,7 +56,7 @@ class ListLanguages extends StatelessWidget {
                               ? Icon(Icons.check, color: colors.primary)
                               : null,
                           onTap: () {
-                            context.pop();
+                            context.pop('system');
                           },
                         ),
                         ListTile(
@@ -94,7 +94,11 @@ class ListLanguages extends StatelessWidget {
             },
           );
 
-          if (!context.mounted) return;
+          if (!context.mounted || locale == null) return;
+
+          if (locale == 'system') {
+            locale = null;
+          }
 
           await context.read<PreferenceNotifier>().setLanguage(locale);
         },
