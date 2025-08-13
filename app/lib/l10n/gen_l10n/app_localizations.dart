@@ -935,19 +935,19 @@ abstract class AppLocalizations {
   /// No description provided for @onboard_title.
   ///
   /// In en, this message translates to:
-  /// **'Welcome'**
+  /// **'School Bus Tracker'**
   String get onboard_title;
 
   /// No description provided for @onboard_description.
   ///
   /// In en, this message translates to:
-  /// **'Description'**
+  /// **'Keep families informed when you\'re near their homes. This app automatically notifies parents via WhatsApp when the school bus is approaching their location.'**
   String get onboard_description;
 
   /// No description provided for @onboard_start.
   ///
   /// In en, this message translates to:
-  /// **'Start'**
+  /// **'Get Started'**
   String get onboard_start;
 
   /// No description provided for @systemDefault.

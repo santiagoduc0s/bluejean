@@ -453,10 +453,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enter_birthday => 'Introduce tu cumpleaños';
 
   @override
-  String get onboard_title => 'Bienvenido';
+  String get onboard_title => 'Rastreador de Autobús Escolar';
 
   @override
-  String get onboard_description => 'Descripción';
+  String get onboard_description =>
+      'Mantén a las familias informadas cuando estés cerca de sus hogares. Esta aplicación notifica automáticamente a los padres vía WhatsApp cuando el autobús escolar se acerca a su ubicación.';
 
   @override
   String get onboard_start => 'Comenzar';

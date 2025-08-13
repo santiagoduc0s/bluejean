@@ -46,23 +46,134 @@ class PublicOnboardPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(4.space),
-                        //   child: Image.asset(
-                        //     assets.publicOnboardPage1,
-                        //     height: 40.space,
-                        //   ),
-                        // )
-                        //     .animate()
-                        //     .scale(
-                        //       duration: 800.ms,
-                        //       curve: Curves.elasticOut,
-                        //     )
-                        //     .then()
-                        //     .shimmer(
-                        //       duration: 1200.ms,
-                        //       color: colors.primary.withValues(alpha: 0.3),
-                        //     ),
+                        Column(
+                          children: [
+                            // School Bus Animation
+                            Container(
+                              padding: EdgeInsets.all(4.space),
+                              decoration: BoxDecoration(
+                                color: colors.primary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(3.space),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.directions_bus,
+                                    size: 22.space,
+                                    color: colors.primary,
+                                  ),
+                                  SizedBox(width: 1.space),
+                                  // Children silhouettes in bus windows
+                                  Column(
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.person,
+                                            size: 6.space,
+                                            color: colors.primary
+                                                .withValues(alpha: 0.6),
+                                          ),
+                                          SizedBox(width: 0.5.space),
+                                          Icon(
+                                            Icons.person,
+                                            size: 6.space,
+                                            color: colors.primary
+                                                .withValues(alpha: 0.6),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 0.5.space),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.person,
+                                            size: 6.space,
+                                            color: colors.primary
+                                                .withValues(alpha: 0.6),
+                                          ),
+                                          SizedBox(width: 0.5.space),
+                                          Icon(
+                                            Icons.person,
+                                            size: 6.space,
+                                            color: colors.primary
+                                                .withValues(alpha: 0.6),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                                .animate(
+                                  onPlay: (controller) => controller.repeat(),
+                                )
+                                .then()
+                                .slideX(
+                                  begin: -0.2,
+                                  end: 0.2,
+                                  duration: 2000.ms,
+                                  curve: Curves.easeInOut,
+                                )
+                                .then()
+                                .slideX(
+                                  begin: 0.2,
+                                  end: -0.2,
+                                  duration: 2000.ms,
+                                  curve: Curves.easeInOut,
+                                ),
+
+                            SizedBox(height: 2.space),
+
+                            // Notification animation
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 3.space,
+                                vertical: 1.space,
+                              ),
+                              decoration: BoxDecoration(
+                                color: colors.secondary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(2.space),
+                                border: Border.all(
+                                  color:
+                                      colors.secondary.withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'WhatsApp',
+                                    style: textStyles.bodySmall.copyWith(
+                                      fontSize: 20,
+                                      color: colors.secondary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                                .animate(
+                                  onPlay: (controller) =>
+                                      controller.repeat(reverse: true),
+                                )
+                                .scale(
+                                  delay: 1500.ms,
+                                  duration: 600.ms,
+                                  curve: Curves.elasticOut,
+                                )
+                                .then(delay: 500.ms)
+                                .shimmer(
+                                  duration: 1000.ms,
+                                  color:
+                                      colors.secondary.withValues(alpha: 0.3),
+                                ),
+                          ],
+                        ),
                         SizedBox(height: 6.space),
                         Text(
                           l10n.onboard_title,

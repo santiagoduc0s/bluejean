@@ -451,13 +451,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_birthday => 'Enter your birthday';
 
   @override
-  String get onboard_title => 'Welcome';
+  String get onboard_title => 'School Bus Tracker';
 
   @override
-  String get onboard_description => 'Description';
+  String get onboard_description =>
+      'Keep families informed when you\'re near their homes. This app automatically notifies parents via WhatsApp when the school bus is approaching their location.';
 
   @override
-  String get onboard_start => 'Start';
+  String get onboard_start => 'Get Started';
 
   @override
   String get systemDefault => 'System Default';
