@@ -499,5 +499,7 @@
   "noNotificationsFound": "No se encontraron notificaciones",
   "@noNotificationsFound": {},
   "notificationsWillAppearHere": "Las notificaciones aparecerán aquí cuando el autobús esté cerca de la ubicación de este oyente",
-  "@notificationsWillAppearHere": {}
+  "@notificationsWillAppearHere": {},
+  "coordinates": "Coordenadas",
+  "@coordinates": {}
 }

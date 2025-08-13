@@ -1441,6 +1441,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications will appear here when the bus is near this listener\'s location'**
   String get notificationsWillAppearHere;
+
+  /// No description provided for @coordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates'**
+  String get coordinates;
 }
 
 class _AppLocalizationsDelegate

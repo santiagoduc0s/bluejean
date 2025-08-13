@@ -731,4 +731,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get notificationsWillAppearHere =>
       'Las notificaciones aparecerán aquí cuando el autobús esté cerca de la ubicación de este oyente';
+
+  @override
+  String get coordinates => 'Coordenadas';
 }

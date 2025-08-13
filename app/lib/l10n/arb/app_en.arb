@@ -499,5 +499,7 @@
   "noNotificationsFound": "No notifications found",
   "@noNotificationsFound": {},
   "notificationsWillAppearHere": "Notifications will appear here when the bus is near this listener's location",
-  "@notificationsWillAppearHere": {}
+  "@notificationsWillAppearHere": {},
+  "coordinates": "Coordinates",
+  "@coordinates": {}
 }

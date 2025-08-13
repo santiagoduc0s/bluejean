@@ -726,4 +726,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsWillAppearHere =>
       'Notifications will appear here when the bus is near this listener\'s location';
+
+  @override
+  String get coordinates => 'Coordinates';
 }

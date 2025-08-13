@@ -21,7 +21,7 @@ class ListenerDetailPage extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (context) => ListenerDetailNotifier(
-        listenerNotificationRepository: 
+        listenerNotificationRepository:
             context.read<ListenerNotificationRepository>(),
         listener: listener,
       ),
@@ -31,7 +31,7 @@ class ListenerDetailPage extends StatelessWidget {
           children: [
             // Listener Info Card
             ListenerInfoCard(listener: listener),
-            
+
             // Tab Bar
             TabBar(
               tabs: [
@@ -45,7 +45,7 @@ class ListenerDetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            
+
             // Tab Views
             const Expanded(
               child: TabBarView(
@@ -105,10 +105,19 @@ class _InfoTab extends StatelessWidget {
             icon: Icons.circle,
             label: l10n.status,
             value: listener.status,
-            valueColor: listener.status == 'active' 
-                ? theme.colorScheme.primary 
+            valueColor: listener.status == 'active'
+                ? theme.colorScheme.primary
                 : theme.colorScheme.error,
           ),
+          if (listener.latitude != null && listener.longitude != null) ...[
+            const SizedBox(height: 16),
+            _InfoRow(
+              icon: Icons.my_location,
+              label: l10n.coordinates,
+              value: '${listener.latitude!.toStringAsFixed(6)}, '
+                  '${listener.longitude!.toStringAsFixed(6)}',
+            ),
+          ],
         ],
       ),
     );
