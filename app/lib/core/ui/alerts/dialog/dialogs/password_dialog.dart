@@ -37,10 +37,7 @@ class _PasswordDialogState extends State<PasswordDialog> {
     final colorsProvider = context.colors;
 
     return AlertDialog(
-      title: Text(
-        widget.message,
-        style: texts.bodyLarge,
-      ),
+      title: Text(widget.message, style: texts.bodyLarge),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

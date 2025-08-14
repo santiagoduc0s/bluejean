@@ -6,13 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:lune/core/config/config.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 
-enum LogLevel {
-  debug,
-  info,
-  warning,
-  error,
-  critical,
-}
+enum LogLevel { debug, info, warning, error, critical }
 
 class AppLogger {
   AppLogger._singleton();
@@ -109,59 +103,54 @@ class AppLogger {
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.debug,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.debug,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   void info(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.info,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.info,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   void warning(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.warning,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.warning,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   void error(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.error,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.error,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   void critical(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.critical,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.critical,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 }

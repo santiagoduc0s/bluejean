@@ -6,8 +6,8 @@ class HomeNotifier extends ChangeNotifier {
   HomeNotifier({
     required ChannelRepository channelRepository,
     required DriverPositionRepository driverPositionRepository,
-  })  : _channelRepository = channelRepository,
-        _driverPositionRepository = driverPositionRepository;
+  }) : _channelRepository = channelRepository,
+       _driverPositionRepository = driverPositionRepository;
 
   final ChannelRepository _channelRepository;
   final DriverPositionRepository _driverPositionRepository;

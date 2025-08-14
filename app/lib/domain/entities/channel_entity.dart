@@ -49,13 +49,6 @@ class ChannelEntity extends Equatable {
 
   @override
   List<Object?> get props {
-    return [
-      id,
-      name,
-      description,
-      status,
-      updatedAt,
-      createdAt,
-    ];
+    return [id, name, description, status, updatedAt, createdAt];
   }
 }

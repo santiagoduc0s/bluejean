@@ -735,4 +735,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get coordinates => 'Coordenadas';
+
+  @override
+  String get tutorialLocationTitle => 'Rastreo de Ubicación';
+
+  @override
+  String get tutorialLocationDescription =>
+      'Presiona este botón para activar tu ubicación. Los oyentes de los canales activados serán notificados cuando estés cerca de ellos.';
+
+  @override
+  String get tutorialAddChannelTitle => 'Agregar Canal';
+
+  @override
+  String get tutorialAddChannelDescription =>
+      'Presiona este botón para crear un nuevo canal. Los canales te ayudan a organizar tus oyentes por rutas o grupos.';
+
+  @override
+  String get tutorialGotIt => '¡Entendido!';
 }

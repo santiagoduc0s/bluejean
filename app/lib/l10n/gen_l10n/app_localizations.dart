@@ -63,7 +63,7 @@ import 'app_localizations_es.dart';
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -86,16 +86,16 @@ abstract class AppLocalizations {
   /// of delegates is preferred or required.
   static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
       <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
-    Locale('es')
+    Locale('es'),
   ];
 
   /// No description provided for @appName.
@@ -1447,6 +1447,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coordinates'**
   String get coordinates;
+
+  /// No description provided for @tutorialLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location Tracking'**
+  String get tutorialLocationTitle;
+
+  /// No description provided for @tutorialLocationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Press this button to activate your location. The listeners of the activated channels will be notified when you are close to them.'**
+  String get tutorialLocationDescription;
+
+  /// No description provided for @tutorialAddChannelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Channel'**
+  String get tutorialAddChannelTitle;
+
+  /// No description provided for @tutorialAddChannelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Press this button to create a new channel. Channels help you organize your listeners by routes or groups.'**
+  String get tutorialAddChannelDescription;
+
+  /// No description provided for @tutorialGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it!'**
+  String get tutorialGotIt;
 }
 
 class _AppLocalizationsDelegate
@@ -1476,8 +1506,9 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   }
 
   throw FlutterError(
-      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
 }

@@ -12,6 +12,7 @@ class LocalStorageService {
   static const _keyLocale = 'locale';
   static const _publicOnboard = 'publicOnboard';
   static const _accessToken = 'accessToken';
+  static const _homeTutorialShown = 'homeTutorialShown';
 
   Future<Box<dynamic>> box() async {
     if (_box == null) {
@@ -90,5 +91,13 @@ class LocalStorageService {
     } else {
       return (await box()).delete(_accessToken);
     }
+  }
+
+  Future<bool> getHomeTutorialShown() async {
+    return (await box()).get(_homeTutorialShown, defaultValue: false) as bool;
+  }
+
+  Future<void> setHomeTutorialShown(bool shown) async {
+    return (await box()).put(_homeTutorialShown, shown);
   }
 }

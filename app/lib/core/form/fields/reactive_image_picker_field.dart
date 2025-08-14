@@ -17,17 +17,18 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
     this.imageQuality = 90,
     this.onError,
   }) : super(
-          formControlName: formControlName,
-          builder: (field) => _ImagePickerContent(
-            field: field,
-            imageQuality: imageQuality,
-            customBuilder: builder,
-            onError: onError,
-            permissionRepository: permissionRepository,
-            dialog: dialog,
-            localization: localization,
-          ),
-        );
+         formControlName: formControlName,
+         builder:
+             (field) => _ImagePickerContent(
+               field: field,
+               imageQuality: imageQuality,
+               customBuilder: builder,
+               onError: onError,
+               permissionRepository: permissionRepository,
+               dialog: dialog,
+               localization: localization,
+             ),
+       );
 
   final int imageQuality;
   final Widget Function(
@@ -37,7 +38,8 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     VoidCallback removeImage,
-  ) builder;
+  )
+  builder;
 
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
@@ -65,7 +67,8 @@ class _ImagePickerContent extends StatefulWidget {
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     VoidCallback removeImage,
-  ) customBuilder;
+  )
+  customBuilder;
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
   final CustomDialog dialog;
@@ -81,9 +84,10 @@ class _ImagePickerContentState extends State<_ImagePickerContent> {
   Future<void> _pickImage(ImageSource source) async {
     setState(() => _isProcessing = true);
 
-    final permissionType = source == ImageSource.camera
-        ? PermissionType.camera
-        : PermissionType.photos;
+    final permissionType =
+        source == ImageSource.camera
+            ? PermissionType.camera
+            : PermissionType.photos;
 
     try {
       var status = await widget.permissionRepository.check(permissionType);
@@ -92,9 +96,10 @@ class _ImagePickerContentState extends State<_ImagePickerContent> {
 
       if (status == PermissionStatus.permanentlyDenied) {
         final shouldOpen = await widget.dialog.confirm(
-          message: source == ImageSource.camera
-              ? widget.localization.tr.cameraIsDisabled
-              : widget.localization.tr.galleryIsDisabled,
+          message:
+              source == ImageSource.camera
+                  ? widget.localization.tr.cameraIsDisabled
+                  : widget.localization.tr.galleryIsDisabled,
           confirmText: widget.localization.tr.goToSettings,
           cancelText: widget.localization.tr.cancel,
         );

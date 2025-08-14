@@ -21,23 +21,15 @@ class UIButtonStyleDark extends UIButtonStyle {
   @override
   ButtonStyle get primaryElevated {
     return ButtonStyle(
-      minimumSize: WidgetStateProperty.all(
-        Size.zero,
-      ),
+      minimumSize: WidgetStateProperty.all(Size.zero),
       padding: WidgetStateProperty.all<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: 4.space,
-        ),
+        EdgeInsets.symmetric(horizontal: 4.space),
       ),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2.space),
-        ),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(
-          fontWeight: UIFontWeight.light,
-        ),
+        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
@@ -45,17 +37,15 @@ class UIButtonStyleDark extends UIButtonStyle {
         }
         return uiColor.primary;
       }),
-      backgroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return uiColor.onSurface.withValues(alpha: 0.12);
-          }
-          return uiColor.surfaceContainerLow;
-        },
-      ),
-      shadowColor: WidgetStateProperty.all<Color>(
-        uiColor.shadow,
-      ),
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
+          return uiColor.onSurface.withValues(alpha: 0.12);
+        }
+        return uiColor.surfaceContainerLow;
+      }),
+      shadowColor: WidgetStateProperty.all<Color>(uiColor.shadow),
       elevation: WidgetStateProperty.all<double>(0.25.space),
     );
   }
@@ -63,23 +53,15 @@ class UIButtonStyleDark extends UIButtonStyle {
   @override
   ButtonStyle get primaryFilled {
     return ButtonStyle(
-      minimumSize: WidgetStateProperty.all(
-        Size(UISpacing.zero, 12.space),
-      ),
+      minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
       padding: WidgetStateProperty.all<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: 4.space,
-        ),
+        EdgeInsets.symmetric(horizontal: 4.space),
       ),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(3.space),
-        ),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(
-          fontWeight: UIFontWeight.light,
-        ),
+        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
@@ -87,37 +69,29 @@ class UIButtonStyleDark extends UIButtonStyle {
         }
         return uiColor.onPrimary;
       }),
-      backgroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return uiColor.onSurface.withValues(alpha: 0.12);
-          }
-          return uiColor.primary;
-        },
-      ),
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
+          return uiColor.onSurface.withValues(alpha: 0.12);
+        }
+        return uiColor.primary;
+      }),
     );
   }
 
   @override
   ButtonStyle get primaryFilledTonal {
     return ButtonStyle(
-      minimumSize: WidgetStateProperty.all(
-        Size(UISpacing.zero, 12.space),
-      ),
+      minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
       padding: WidgetStateProperty.all<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: 4.space,
-        ),
+        EdgeInsets.symmetric(horizontal: 4.space),
       ),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2.space),
-        ),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(
-          fontWeight: UIFontWeight.light,
-        ),
+        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
@@ -125,37 +99,29 @@ class UIButtonStyleDark extends UIButtonStyle {
         }
         return uiColor.onSecondaryContainer;
       }),
-      backgroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return uiColor.onSurface.withValues(alpha: 0.12);
-          }
-          return uiColor.secondaryContainer;
-        },
-      ),
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
+          return uiColor.onSurface.withValues(alpha: 0.12);
+        }
+        return uiColor.secondaryContainer;
+      }),
     );
   }
 
   @override
   ButtonStyle get primaryOutlined {
     return ButtonStyle(
-      minimumSize: WidgetStateProperty.all(
-        Size(UISpacing.zero, 12.space),
-      ),
+      minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
       padding: WidgetStateProperty.all<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: 4.space,
-        ),
+        EdgeInsets.symmetric(horizontal: 4.space),
       ),
       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(2.space),
-        ),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(
-          fontWeight: UIFontWeight.light,
-        ),
+        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
@@ -163,54 +129,47 @@ class UIButtonStyleDark extends UIButtonStyle {
         }
         return uiColor.primary;
       }),
-      backgroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return UIColor.transparent;
-          }
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
           return UIColor.transparent;
-        },
-      ),
-      side: WidgetStateProperty.resolveWith<BorderSide>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return BorderSide(
-              color: uiColor.onSurface.withValues(alpha: 0.12),
-              width: .25.space,
-            );
-          }
+        }
+        return UIColor.transparent;
+      }),
+      side: WidgetStateProperty.resolveWith<BorderSide>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
           return BorderSide(
-            color: uiColor.outline,
+            color: uiColor.onSurface.withValues(alpha: 0.12),
             width: .25.space,
           );
-        },
-      ),
+        }
+        return BorderSide(color: uiColor.outline, width: .25.space);
+      }),
     );
   }
 
   @override
   ButtonStyle get primaryText {
     return ButtonStyle(
-      backgroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          return UIColor.transparent;
-        },
-      ),
-      foregroundColor: WidgetStateProperty.resolveWith<Color>(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return uiColor.outline;
-          }
-          return uiColor.primary;
-        },
-      ),
-      minimumSize: WidgetStateProperty.all(
-        Size(UISpacing.zero, 12.space),
-      ),
+      backgroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        return UIColor.transparent;
+      }),
+      foregroundColor: WidgetStateProperty.resolveWith<Color>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.disabled)) {
+          return uiColor.outline;
+        }
+        return uiColor.primary;
+      }),
+      minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
       padding: WidgetStateProperty.all<EdgeInsets>(
-        EdgeInsets.symmetric(
-          horizontal: 4.space,
-        ),
+        EdgeInsets.symmetric(horizontal: 4.space),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(uiTextStyle.labelLarge),
       elevation: WidgetStateProperty.all(UISpacing.zero),

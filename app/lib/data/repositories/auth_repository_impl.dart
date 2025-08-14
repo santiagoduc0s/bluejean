@@ -15,10 +15,10 @@ class AuthRepositoryImpl extends AuthRepository {
     required LocalStorageService localStorageService,
     required ApiClient apiClient,
     StreamController<UserEntity>? userController,
-  })  : _localStorageService = localStorageService,
-        _apiClient = apiClient,
-        _userController =
-            userController ?? StreamController<UserEntity>.broadcast();
+  }) : _localStorageService = localStorageService,
+       _apiClient = apiClient,
+       _userController =
+           userController ?? StreamController<UserEntity>.broadcast();
 
   final StreamController<UserEntity> _userController;
   final ApiClient _apiClient;
@@ -67,10 +67,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }) async {
     final response = await _apiClient.post(
       '/api/v1/auth/sign-in',
-      body: {
-        'email': email,
-        'password': password,
-      },
+      body: {'email': email, 'password': password},
     );
 
     if (response.isSuccess) {
@@ -82,7 +79,8 @@ class AuthRepositoryImpl extends AuthRepository {
       final errorData = response.jsonBody;
       final errors = errorData['errors'] as Map<String, dynamic>?;
 
-      final emailErrors = (errors?['email'] as List<dynamic>?)
+      final emailErrors =
+          (errors?['email'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [];
@@ -110,10 +108,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }) async {
     final response = await _apiClient.post(
       '/api/v1/auth/sign-up',
-      body: {
-        'email': email,
-        'password': password,
-      },
+      body: {'email': email, 'password': password},
     );
 
     if (response.isSuccess) {
@@ -122,7 +117,8 @@ class AuthRepositoryImpl extends AuthRepository {
       final errorData = response.jsonBody;
       final errors = errorData['errors'] as Map<String, dynamic>?;
 
-      final emailErrors = (errors?['email'] as List<dynamic>?)
+      final emailErrors =
+          (errors?['email'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           [];
@@ -153,9 +149,7 @@ class AuthRepositoryImpl extends AuthRepository {
     _localStorageService.setAccessToken(null);
   }
 
-  void saveSession({
-    required String accessToken,
-  }) {
+  void saveSession({required String accessToken}) {
     _accessToken = accessToken;
     _isAuthenticated = true;
     _localStorageService.setAccessToken(accessToken);
@@ -193,10 +187,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await _apiClient.post(
         '/api/v1/auth/sign-in-with-provider',
-        body: {
-          'provider': 'apple',
-          'id_token': identityToken,
-        },
+        body: {'provider': 'apple', 'id_token': identityToken},
       );
 
       if (response.isSuccess) {
@@ -238,10 +229,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await _apiClient.post(
         '/api/v1/auth/sign-in-with-provider',
-        body: {
-          'provider': 'google',
-          'id_token': idToken,
-        },
+        body: {'provider': 'google', 'id_token': idToken},
       );
 
       if (response.isSuccess) {

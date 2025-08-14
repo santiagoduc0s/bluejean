@@ -9,8 +9,8 @@ class DeviceRepositoryImpl implements DeviceRepository {
   DeviceRepositoryImpl({
     required DeviceInfoService deviceInfoService,
     required ApiClient apiClient,
-  })  : _deviceInfoService = deviceInfoService,
-        _apiClient = apiClient;
+  }) : _deviceInfoService = deviceInfoService,
+       _apiClient = apiClient;
 
   final DeviceInfoService _deviceInfoService;
   final ApiClient _apiClient;
@@ -44,9 +44,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
     try {
       final response = await _apiClient.get(
         'api/v1/devices/me',
-        queryParameters: {
-          'identifier': deviceId,
-        },
+        queryParameters: {'identifier': deviceId},
       );
 
       if (response.isSuccess) {
@@ -64,9 +62,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
     try {
       final response = await _apiClient.get(
         'api/v1/devices/by-identifier',
-        queryParameters: {
-          'identifier': deviceId,
-        },
+        queryParameters: {'identifier': deviceId},
       );
 
       if (response.isSuccess) {
@@ -78,9 +74,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
           final response = await _apiClient.get(
             'api/v1/devices/by-identifier',
-            queryParameters: {
-              'identifier': deviceId,
-            },
+            queryParameters: {'identifier': deviceId},
           );
 
           if (response.isSuccess) {
@@ -103,10 +97,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
     try {
       final response = await _apiClient.post(
         '/api/v1/devices',
-        body: {
-          'identifier': deviceId,
-          'model': deviceModel,
-        },
+        body: {'identifier': deviceId, 'model': deviceModel},
       );
 
       if (response.isSuccess) {
@@ -120,10 +111,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
       final response = await _apiClient.post(
         '/api/v1/devices',
-        body: {
-          'identifier': deviceId,
-          'model': deviceModel,
-        },
+        body: {'identifier': deviceId, 'model': deviceModel},
       );
 
       if (response.isSuccess) {
@@ -152,10 +140,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
   }) async {
     final response = await _apiClient.put(
       '/api/v1/devices/me',
-      body: {
-        'identifier': deviceId,
-        'fcm_token': fcmToken,
-      },
+      body: {'identifier': deviceId, 'fcm_token': fcmToken},
     );
 
     if (!response.isSuccess) {
@@ -169,10 +154,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
   }) async {
     final response = await _apiClient.put(
       '/api/v1/devices/by-identifier',
-      body: {
-        'identifier': deviceId,
-        'fcm_token': fcmToken,
-      },
+      body: {'identifier': deviceId, 'fcm_token': fcmToken},
     );
 
     if (!response.isSuccess) {
@@ -186,9 +168,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
     final response = await _apiClient.post(
       '/api/v1/devices/link',
-      body: {
-        'identifier': deviceId,
-      },
+      body: {'identifier': deviceId},
     );
 
     if (response.statusCode == 404) {
@@ -196,9 +176,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
       final response = await _apiClient.post(
         '/api/v1/devices/link',
-        body: {
-          'identifier': deviceId,
-        },
+        body: {'identifier': deviceId},
       );
 
       if (response.isError) {
@@ -216,10 +194,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
   Future<void> unlinkDevice(String deviceId) async {
     final response = await _apiClient.post(
       '/api/v1/devices/unlink',
-      body: {
-        'identifier': deviceId,
-        'invalidate_token': true,
-      },
+      body: {'identifier': deviceId, 'invalidate_token': true},
     );
 
     if (response.isError) {
@@ -233,9 +208,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
     final response = await _apiClient.post(
       '/api/v1/devices/unlink',
-      body: {
-        'identifier': deviceId,
-      },
+      body: {'identifier': deviceId},
     );
 
     if (response.isError) {

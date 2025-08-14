@@ -5,9 +5,7 @@ import 'package:lune/domain/repositories/listener_notification_repository.dart';
 
 class ListenerNotificationRepositoryImpl
     implements ListenerNotificationRepository {
-  const ListenerNotificationRepositoryImpl({
-    required this.apiClient,
-  });
+  const ListenerNotificationRepositoryImpl({required this.apiClient});
 
   final ApiClient apiClient;
 
@@ -27,9 +25,12 @@ class ListenerNotificationRepositoryImpl
 
     final data = response.jsonBody['data'] as List<dynamic>;
     return data
-        .map((json) => ListenerNotificationModel.fromJson(
-              json as Map<String, dynamic>,
-            ).toEntity(),)
+        .map(
+          (json) =>
+              ListenerNotificationModel.fromJson(
+                json as Map<String, dynamic>,
+              ).toEntity(),
+        )
         .toList();
   }
 }

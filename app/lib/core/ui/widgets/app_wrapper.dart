@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 /// to block the normal interaction as could be no internet connection,
 /// payment, security, a very important alert, etc.
 class AppWrapper extends StatelessWidget {
-  const AppWrapper({
-    required this.child,
-    super.key,
-  });
+  const AppWrapper({required this.child, super.key});
 
   final Widget child;
 
@@ -23,19 +20,12 @@ class AppWrapper extends StatelessWidget {
 }
 
 class AppWrapperContent extends StatelessWidget {
-  const AppWrapperContent({
-    required this.child,
-    super.key,
-  });
+  const AppWrapperContent({required this.child, super.key});
 
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(child: child),
-      ],
-    );
+    return Stack(children: [Positioned.fill(child: child)]);
   }
 }

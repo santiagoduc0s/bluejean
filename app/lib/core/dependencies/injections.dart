@@ -14,41 +14,24 @@ import 'package:provider/single_child_widget.dart';
 List<SingleChildWidget> providers = [
   /// CORE
   Provider.value(
-    value: AppDialog(
-      () => AppGlobalKey.getRootContext()!,
-    ) as CustomDialog,
+    value: AppDialog(() => AppGlobalKey.getRootContext()!) as CustomDialog,
   ),
   Provider.value(
-    value: AppSnackbar(
-      () => AppGlobalKey.getScaffoldMessengerState()!,
-    ) as CustomSnackbar,
+    value:
+        AppSnackbar(() => AppGlobalKey.getScaffoldMessengerState()!)
+            as CustomSnackbar,
   ),
-  Provider.value(
-    value: Localization(
-      () => AppGlobalKey.getRootContext()!,
-    ),
-  ),
+  Provider.value(value: Localization(() => AppGlobalKey.getRootContext()!)),
 
   /// SERVICES
+  Provider.value(value: LocalStorageService()),
+  Provider.value(value: PermissionService()),
+  Provider.value(value: DeviceInfoService()),
   Provider.value(
-    value: LocalStorageService(),
+    value: LocationTrackingService(permissionService: PermissionService()),
   ),
   Provider.value(
-    value: PermissionService(),
-  ),
-  Provider.value(
-    value: DeviceInfoService(),
-  ),
-  Provider.value(
-    value: LocationTrackingService(
-      permissionService: PermissionService(),
-    ),
-  ),
-  Provider.value(
-    value: ApiClient(
-      baseUrl: Env.baseUrl,
-      enableLogging: kDebugMode,
-    ),
+    value: ApiClient(baseUrl: Env.baseUrl, enableLogging: kDebugMode),
   ),
 
   /// REPOSITORIES
@@ -58,19 +41,13 @@ List<SingleChildWidget> providers = [
   ...providerUseCases,
 
   /// GLOBAL NOTIFIERS
+  ChangeNotifierProvider(create: (context) => AuthNotifier()),
   ChangeNotifierProvider(
-    create: (context) => AuthNotifier(),
-  ),
-  ChangeNotifierProvider(
-    create: (context) => PreferenceNotifier(
-      userPreferenceRepository: context.read(),
-    ),
+    create:
+        (context) =>
+            PreferenceNotifier(userPreferenceRepository: context.read()),
   ),
 
   /// ROUTER
-  Provider(
-    create: (context) => AppGoRouter(
-      context.read(),
-    ) as CustomRouter,
-  ),
+  Provider(create: (context) => AppGoRouter(context.read()) as CustomRouter),
 ];

@@ -11,11 +11,11 @@ class ChannelFormNotifier extends ChangeNotifier {
     required ListenerRepository listenerRepository,
     required PermissionService permissionService,
     ChannelEntity? channel,
-  })  : _channelRepository = channelRepository,
-        _listenerRepository = listenerRepository,
-        _permissionService = permissionService,
-        _channel = channel,
-        _isEditMode = channel != null;
+  }) : _channelRepository = channelRepository,
+       _listenerRepository = listenerRepository,
+       _permissionService = permissionService,
+       _channel = channel,
+       _isEditMode = channel != null;
 
   final ChannelRepository _channelRepository;
   final ListenerRepository _listenerRepository;
@@ -193,9 +193,7 @@ class ChannelFormNotifier extends ChangeNotifier {
     }
 
     try {
-      final contacts = await FlutterContacts.getContacts(
-        withProperties: true,
-      );
+      final contacts = await FlutterContacts.getContacts(withProperties: true);
       return contacts
           .where(
             (contact) =>

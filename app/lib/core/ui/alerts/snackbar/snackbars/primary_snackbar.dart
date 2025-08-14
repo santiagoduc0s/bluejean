@@ -4,28 +4,18 @@ import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
 
 class PrimarySnackBar extends SnackBar {
-  PrimarySnackBar({
-    required String text,
-    void Function()? onTap,
-    super.key,
-  }) : super(
-          content: PrimarySnackBarContent(
-            text: text,
-            onTap: onTap,
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          padding: EdgeInsets.zero,
-          duration: 5.seconds,
-        );
+  PrimarySnackBar({required String text, void Function()? onTap, super.key})
+    : super(
+        content: PrimarySnackBarContent(text: text, onTap: onTap),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        padding: EdgeInsets.zero,
+        duration: 5.seconds,
+      );
 }
 
 class PrimarySnackBarContent extends StatelessWidget {
-  const PrimarySnackBarContent({
-    required this.text,
-    super.key,
-    this.onTap,
-  });
+  const PrimarySnackBarContent({required this.text, super.key, this.onTap});
 
   final String text;
   final void Function()? onTap;
@@ -40,10 +30,7 @@ class PrimarySnackBarContent extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 4.space,
-          vertical: 4.space,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 4.space, vertical: 4.space),
         child: Container(
           padding: EdgeInsets.only(
             left: 4.space,
@@ -53,9 +40,7 @@ class PrimarySnackBarContent extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: bgColor,
-            borderRadius: BorderRadius.circular(
-              1.space,
-            ),
+            borderRadius: BorderRadius.circular(1.space),
             boxShadow: [
               BoxShadow(
                 color: colorsProvider.shadow.withValues(alpha: 0.3),

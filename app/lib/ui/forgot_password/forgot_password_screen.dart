@@ -8,25 +8,23 @@ class ForgotPasswordScreen {
 
   static const path = '/forgot-password';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          final email = state.uri.queryParameters['email'] ?? '';
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      final email = state.uri.queryParameters['email'] ?? '';
 
-          return ChangeNotifierProvider(
-            create: (context) => ForgotPasswordNotifier(
+      return ChangeNotifierProvider(
+        create:
+            (context) => ForgotPasswordNotifier(
               forgotPasswordUseCase: context.read(),
               snackbar: context.read(),
               localization: context.read(),
               router: context.read(),
             )..init(email),
-            child: const ForgotPasswordPage(),
-          );
-        },
-        routes: routes,
+        child: const ForgotPasswordPage(),
       );
+    },
+    routes: routes,
+  );
 }

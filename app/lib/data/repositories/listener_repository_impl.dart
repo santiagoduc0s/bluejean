@@ -54,10 +54,7 @@ class ListenerRepositoryImpl implements ListenerRepository {
     if (thresholdMeters != null) body['threshold_meters'] = thresholdMeters;
     if (status != null) body['status'] = status;
 
-    final response = await apiClient.post(
-      '/api/v1/listeners',
-      body: body,
-    );
+    final response = await apiClient.post('/api/v1/listeners', body: body);
 
     return ListenerModel.fromJson(
       response.jsonBody['data'] as Map<String, dynamic>,
@@ -84,10 +81,7 @@ class ListenerRepositoryImpl implements ListenerRepository {
     if (thresholdMeters != null) data['threshold_meters'] = thresholdMeters;
     if (status != null) data['status'] = status;
 
-    final response = await apiClient.put(
-      '/api/v1/listeners/$id',
-      body: data,
-    );
+    final response = await apiClient.put('/api/v1/listeners/$id', body: data);
 
     return ListenerModel.fromJson(
       response.jsonBody['data'] as Map<String, dynamic>,

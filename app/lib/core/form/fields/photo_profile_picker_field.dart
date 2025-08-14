@@ -40,11 +40,7 @@ class PhotoProfilePickerField extends StatelessWidget {
       formControlName: formControlName,
       imageQuality: imageQuality ?? 90,
       onError: (e) {
-        snackbar.show(
-          ErrorSnackBar(
-            text: l10n.generalError,
-          ),
-        );
+        snackbar.show(ErrorSnackBar(text: l10n.generalError));
       },
       permissionRepository: permissionRepository,
       dialog: dialog,
@@ -73,36 +69,32 @@ class PhotoProfilePickerField extends StatelessWidget {
                 transitionBuilder: (child, animation) {
                   return FadeTransition(
                     opacity: animation,
-                    child: ScaleTransition(
-                      scale: animation,
-                      child: child,
-                    ),
+                    child: ScaleTransition(scale: animation, child: child),
                   );
                 },
-                child: photo != null
-                    ? ClipOval(
-                        key: const ValueKey('photo'),
-                        child: kIsWeb
-                            ? Image.network(
-                                photo,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              )
-                            : Image.file(
-                                File(photo),
-                                fit: BoxFit.cover,
-                                width: double.infinity,
-                                height: double.infinity,
-                              ),
-                      )
-                    : Center(
-                        key: const ValueKey('icon'),
-                        child: Icon(
-                          Icons.person,
-                          size: 15.space,
+                child:
+                    photo != null
+                        ? ClipOval(
+                          key: const ValueKey('photo'),
+                          child:
+                              kIsWeb
+                                  ? Image.network(
+                                    photo,
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  )
+                                  : Image.file(
+                                    File(photo),
+                                    fit: BoxFit.cover,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  ),
+                        )
+                        : Center(
+                          key: const ValueKey('icon'),
+                          child: Icon(Icons.person, size: 15.space),
                         ),
-                      ),
               ),
             ),
             Positioned(
@@ -115,22 +107,23 @@ class PhotoProfilePickerField extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 menuPadding: EdgeInsets.zero,
                 offset: Offset(-2.space, 2.space),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 'gallery',
-                    child: Text(l10n.gallery),
-                  ),
-                  if (!kIsWeb)
-                    PopupMenuItem(
-                      value: 'camera',
-                      child: Text(l10n.takePicture),
-                    ),
-                  if (photo != null)
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Text(l10n.deletePicture),
-                    ),
-                ],
+                itemBuilder:
+                    (context) => [
+                      PopupMenuItem(
+                        value: 'gallery',
+                        child: Text(l10n.gallery),
+                      ),
+                      if (!kIsWeb)
+                        PopupMenuItem(
+                          value: 'camera',
+                          child: Text(l10n.takePicture),
+                        ),
+                      if (photo != null)
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Text(l10n.deletePicture),
+                        ),
+                    ],
                 onSelected: (value) {
                   switch (value) {
                     case 'gallery':
@@ -152,9 +145,7 @@ class PhotoProfilePickerField extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 5.space,
                     child: AnimatedSwitcher(
-                      duration: const Duration(
-                        milliseconds: 300,
-                      ),
+                      duration: const Duration(milliseconds: 300),
                       transitionBuilder: (child, animation) {
                         return FadeTransition(
                           opacity: animation,
@@ -164,19 +155,17 @@ class PhotoProfilePickerField extends StatelessWidget {
                           ),
                         );
                       },
-                      child: !isLoading
-                          ? Icon(
-                              Icons.edit,
-                              size: 5.space,
-                            )
-                          : SizedBox(
-                              width: 5.space,
-                              height: 5.space,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1.space,
-                                color: colors.onSurface,
+                      child:
+                          !isLoading
+                              ? Icon(Icons.edit, size: 5.space)
+                              : SizedBox(
+                                width: 5.space,
+                                height: 5.space,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1.space,
+                                  color: colors.onSurface,
+                                ),
                               ),
-                            ),
                     ),
                   ),
                 ),

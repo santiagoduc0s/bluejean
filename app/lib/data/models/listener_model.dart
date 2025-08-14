@@ -20,12 +20,14 @@ class ListenerModel extends ListenerEntity {
       name: json['name'] as String,
       phoneNumber: json['phone_number'] as String,
       address: json['address'] as String?,
-      latitude: json['latitude'] != null
-          ? double.parse(json['latitude'].toString())
-          : null,
-      longitude: json['longitude'] != null
-          ? double.parse(json['longitude'].toString())
-          : null,
+      latitude:
+          json['latitude'] != null
+              ? double.parse(json['latitude'].toString())
+              : null,
+      longitude:
+          json['longitude'] != null
+              ? double.parse(json['longitude'].toString())
+              : null,
       thresholdMeters: json['threshold_meters'] as int? ?? 200,
       status: json['status'] as String? ?? 'active',
       updatedAt: DateTime.parse(json['updated_at'] as String),

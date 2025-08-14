@@ -7,8 +7,8 @@ class DeviceInfoService {
   DeviceInfoService({
     DeviceInfoPlugin? deviceInfo,
     LocalStorageService? localStorageService,
-  })  : _deviceInfo = deviceInfo ?? DeviceInfoPlugin(),
-        _localStorageService = localStorageService ?? LocalStorageService();
+  }) : _deviceInfo = deviceInfo ?? DeviceInfoPlugin(),
+       _localStorageService = localStorageService ?? LocalStorageService();
 
   final DeviceInfoPlugin _deviceInfo;
   final LocalStorageService _localStorageService;

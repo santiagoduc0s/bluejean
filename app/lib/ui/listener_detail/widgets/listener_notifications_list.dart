@@ -42,9 +42,7 @@ class _ListenerNotificationsListState extends State<ListenerNotificationsList> {
     return Consumer<ListenerDetailNotifier>(
       builder: (context, notifier, child) {
         if (notifier.isLoading && notifier.notifications.isEmpty) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (notifier.hasError && notifier.notifications.isEmpty) {
@@ -115,15 +113,13 @@ class _ListenerNotificationsListState extends State<ListenerNotificationsList> {
           child: ListView.builder(
             controller: _scrollController,
             padding: const EdgeInsets.all(16),
-            itemCount: notifier.notifications.length + 
-                (notifier.hasMorePages ? 1 : 0),
+            itemCount:
+                notifier.notifications.length + (notifier.hasMorePages ? 1 : 0),
             itemBuilder: (context, index) {
               if (index == notifier.notifications.length) {
                 return const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  child: Center(child: CircularProgressIndicator()),
                 );
               }
 

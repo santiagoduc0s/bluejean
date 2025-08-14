@@ -56,62 +56,59 @@ class SettingsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                l10n.settings,
-                style: textStyles.headlineLarge.copyWith(
-                  color: colors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-                  .animate()
-                  .slideY(
-                    duration: 700.ms,
-                    curve: Curves.easeInOut,
+                    l10n.settings,
+                    style: textStyles.headlineLarge.copyWith(
+                      color: colors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
+                  .animate()
+                  .slideY(duration: 700.ms, curve: Curves.easeInOut)
                   .fadeIn(),
               3.spaceY,
               Card(
-                elevation: 0,
-                color: colors.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.space),
-                  side: BorderSide(
-                    color: colors.primary.withValues(alpha: 0.2),
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(4.space),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.options,
-                        style: textStyles.titleMedium.copyWith(
-                          color: colors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    elevation: 0,
+                    color: colors.surface,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.space),
+                      side: BorderSide(
+                        color: colors.primary.withValues(alpha: 0.2),
                       ),
-                      SizedBox(height: 3.space),
-                      const ListLanguages(),
-                      SizedBox(height: 3.space),
-                      FilledButton.tonal(
-                        onPressed: () {
-                          context.pushNamed<void>(SupportScreen.path);
-                        },
-                        style: buttonStyles.primaryFilledTonal,
-                        child: Text(l10n.support),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(4.space),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.options,
+                            style: textStyles.titleMedium.copyWith(
+                              color: colors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 3.space),
+                          const ListLanguages(),
+                          SizedBox(height: 3.space),
+                          FilledButton(
+                            onPressed: () {
+                              context.pushNamed<void>(SupportScreen.path);
+                            },
+                            style: buttonStyles.primaryFilled,
+                            child: Text(l10n.support),
+                          ),
+                          SizedBox(height: 3.space),
+                          FilledButton(
+                            onPressed: () {
+                              context.pushNamed<void>(DevicesScreen.path);
+                            },
+                            style: buttonStyles.primaryFilled,
+                            child: Text(l10n.manageDevices),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 3.space),
-                      FilledButton.tonal(
-                        onPressed: () {
-                          context.pushNamed<void>(DevicesScreen.path);
-                        },
-                        style: buttonStyles.primaryFilledTonal,
-                        child: Text(l10n.manageDevices),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+                    ),
+                  )
                   .animate()
                   .slide(
                     begin: const Offset(0, 1),
@@ -123,34 +120,34 @@ class SettingsPage extends StatelessWidget {
                   .fadeIn(),
               SizedBox(height: 4.space),
               Card(
-                elevation: 0,
-                color: colors.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.space),
-                  side: BorderSide(
-                    color: colors.primary.withValues(alpha: 0.2),
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(4.space),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.l10n.appearance,
-                        style: textStyles.titleMedium.copyWith(
-                          color: colors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    elevation: 0,
+                    color: colors.surface,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.space),
+                      side: BorderSide(
+                        color: colors.primary.withValues(alpha: 0.2),
                       ),
-                      SizedBox(height: 3.space),
-                      const ToggleButtonTheme(),
-                      SizedBox(height: 3.space),
-                      const ToggleTextScale(),
-                    ],
-                  ),
-                ),
-              )
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(4.space),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.l10n.appearance,
+                            style: textStyles.titleMedium.copyWith(
+                              color: colors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 3.space),
+                          const ToggleButtonTheme(),
+                          SizedBox(height: 3.space),
+                          const ToggleTextScale(),
+                        ],
+                      ),
+                    ),
+                  )
                   .animate()
                   .slide(
                     begin: const Offset(0, 1),
@@ -175,52 +172,54 @@ class SettingsPage extends StatelessWidget {
               ],
               SizedBox(height: 4.space),
               Card(
-                elevation: 0,
-                color: colors.surface,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4.space),
-                  side: BorderSide(
-                    color: colors.primary.withValues(alpha: 0.2),
-                  ),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(4.space),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Legal',
-                        style: textStyles.titleMedium.copyWith(
-                          color: colors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    elevation: 0,
+                    color: colors.surface,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.space),
+                      side: BorderSide(
+                        color: colors.primary.withValues(alpha: 0.2),
                       ),
-                      SizedBox(height: 3.space),
-                      ListTile(
-                        onTap: () {
-                          context.pushNamed<void>(TermsConditionsScreen.path);
-                        },
-                        title: Text(l10n.termsAndConditions),
-                        trailing: Icon(
-                          Icons.chevron_right,
-                          color: colors.onSurface.withValues(alpha: 0.5),
-                        ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(4.space),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Legal',
+                            style: textStyles.titleMedium.copyWith(
+                              color: colors.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 3.space),
+                          ListTile(
+                            onTap: () {
+                              context.pushNamed<void>(
+                                TermsConditionsScreen.path,
+                              );
+                            },
+                            title: Text(l10n.termsAndConditions),
+                            trailing: Icon(
+                              Icons.chevron_right,
+                              color: colors.onSurface.withValues(alpha: 0.5),
+                            ),
+                          ),
+                          Divider(color: colors.outline.withValues(alpha: 0.2)),
+                          ListTile(
+                            onTap: () {
+                              context.pushNamed<void>(PrivacyPolicyScreen.path);
+                            },
+                            title: Text(l10n.privacyPolicy),
+                            trailing: Icon(
+                              Icons.chevron_right,
+                              color: colors.onSurface.withValues(alpha: 0.5),
+                            ),
+                          ),
+                        ],
                       ),
-                      Divider(color: colors.outline.withValues(alpha: 0.2)),
-                      ListTile(
-                        onTap: () {
-                          context.pushNamed<void>(PrivacyPolicyScreen.path);
-                        },
-                        title: Text(l10n.privacyPolicy),
-                        trailing: Icon(
-                          Icons.chevron_right,
-                          color: colors.onSurface.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+                    ),
+                  )
                   .animate()
                   .slide(
                     begin: const Offset(0, 1),
@@ -240,10 +239,7 @@ class SettingsPage extends StatelessWidget {
 }
 
 class AuthButtonsAnimatedRow extends StatefulWidget {
-  const AuthButtonsAnimatedRow({
-    required this.show,
-    super.key,
-  });
+  const AuthButtonsAnimatedRow({required this.show, super.key});
 
   final bool show;
 
@@ -260,20 +256,12 @@ class _AuthButtonsAnimatedRowState extends State<AuthButtonsAnimatedRow>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: 700.ms,
-    );
+    _controller = AnimationController(vsync: this, duration: 700.ms);
 
     _offsetAnimation = Tween<Offset>(
       begin: const Offset(0, 1),
       end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
-      ),
-    );
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
@@ -359,21 +347,22 @@ class _AuthButtonsAnimatedRowState extends State<AuthButtonsAnimatedRow>
                     onPressed: () {
                       context.read<SettingsNotifier>().deleteAccount();
                     },
-                    style: buttonStyles.primaryOutlined.copyWith(
+                    style: buttonStyles.primaryFilled.copyWith(
+                      backgroundColor: WidgetStateProperty.all(colors.error),
                       side: WidgetStateProperty.all(
-                        BorderSide(color: colors.error),
+                        BorderSide(color: colors.surface),
                       ),
                     ),
                     loaderColor: colors.error,
                     child: Row(
                       children: [
-                        Icon(Icons.logout, color: colors.error),
+                        Icon(Icons.delete_outline, color: colors.onPrimary),
                         SizedBox(width: 2.space),
                         Flexible(
                           child: Text(
                             l10n.deleteAccount,
                             style: textStyles.labelLarge.copyWith(
-                              color: colors.error,
+                              color: colors.onPrimary,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),

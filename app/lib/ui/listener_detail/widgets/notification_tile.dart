@@ -18,9 +18,7 @@ class NotificationTile extends StatelessWidget {
     final dateFormat = DateFormat('MMM dd, yyyy • HH:mm');
 
     return Card(
-      margin: EdgeInsets.only(
-        bottom: isLast ? 0 : 8,
-      ),
+      margin: EdgeInsets.only(bottom: isLast ? 0 : 8),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

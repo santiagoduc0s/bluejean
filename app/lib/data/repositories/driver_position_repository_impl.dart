@@ -8,8 +8,8 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
   DriverPositionRepositoryImpl({
     required ApiClient apiClient,
     required LocationTrackingService locationTrackingService,
-  })  : _apiClient = apiClient,
-        _locationTrackingService = locationTrackingService;
+  }) : _apiClient = apiClient,
+       _locationTrackingService = locationTrackingService;
   final ApiClient _apiClient;
   final LocationTrackingService _locationTrackingService;
 
@@ -23,10 +23,7 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
   }) async {
     await _apiClient.post(
       '/api/v1/driver-positions',
-      body: {
-        'latitude': latitude,
-        'longitude': longitude,
-      },
+      body: {'latitude': latitude, 'longitude': longitude},
     );
   }
 
@@ -44,23 +41,23 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
     final started = await _locationTrackingService.startTracking();
 
     if (started) {
-      _positionSubscription = _locationTrackingService.positionStream.listen(
-        (Location position) async {
-          try {
-            final now = DateTime.now();
-            if (_lastSentTime == null ||
-                now.difference(_lastSentTime!).inSeconds >= 10) {
-              await storePosition(
-                latitude: position.latitude!,
-                longitude: position.longitude!,
-              );
-              _lastSentTime = now;
-            }
-          } catch (e) {
-            // Handle error silently or use proper logging
+      _positionSubscription = _locationTrackingService.positionStream.listen((
+        Location position,
+      ) async {
+        try {
+          final now = DateTime.now();
+          if (_lastSentTime == null ||
+              now.difference(_lastSentTime!).inSeconds >= 10) {
+            await storePosition(
+              latitude: position.latitude!,
+              longitude: position.longitude!,
+            );
+            _lastSentTime = now;
           }
-        },
-      );
+        } catch (e) {
+          // Handle error silently or use proper logging
+        }
+      });
     }
 
     return started;

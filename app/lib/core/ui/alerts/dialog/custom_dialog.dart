@@ -21,10 +21,7 @@ abstract class CustomDialog {
     String? title,
   });
 
-  Future<void> info({
-    required String message,
-    required String confirmText,
-  });
+  Future<void> info({required String message, required String confirmText});
 
   Future<T?> showWithoutContext<T>({
     required Widget Function(BuildContext) builder,

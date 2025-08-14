@@ -13,19 +13,17 @@ class SignInScreen {
 
   static const path = '/sign-in';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        pageBuilder: (context, state) {
-          return RouteAnimation.slideUpToDownTransition(
-            key: state.pageKey,
-            curve: Curves.elasticInOut,
-            duration: const Duration(milliseconds: 1500),
-            child: ChangeNotifierProvider(
-              create: (context) => SignInNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    pageBuilder: (context, state) {
+      return RouteAnimation.slideUpToDownTransition(
+        key: state.pageKey,
+        curve: Curves.elasticInOut,
+        duration: const Duration(milliseconds: 1500),
+        child: ChangeNotifierProvider(
+          create:
+              (context) => SignInNotifier(
                 signInWithEmailPasswordUseCase: context.read(),
                 signInWithAppleUseCase: context.read(),
                 signInWithGoogleUseCase: context.read(),
@@ -42,10 +40,10 @@ class SignInScreen {
                 localization: context.read(),
                 router: context.read(),
               ),
-              child: const SignInPage(),
-            ),
-          );
-        },
-        routes: routes,
+          child: const SignInPage(),
+        ),
       );
+    },
+    routes: routes,
+  );
 }

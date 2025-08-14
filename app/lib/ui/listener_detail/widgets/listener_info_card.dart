@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lune/domain/entities/listener_entity.dart';
 
 class ListenerInfoCard extends StatelessWidget {
-  const ListenerInfoCard({
-    required this.listener,
-    super.key,
-  });
+  const ListenerInfoCard({required this.listener, super.key});
 
   final ListenerEntity listener;
 
@@ -33,10 +30,7 @@ class ListenerInfoCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    listener.name,
-                    style: theme.textTheme.titleLarge,
-                  ),
+                  Text(listener.name, style: theme.textTheme.titleLarge),
                   const SizedBox(height: 4),
                   Text(
                     listener.phoneNumber,
@@ -59,22 +53,21 @@ class ListenerInfoCard extends StatelessWidget {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: listener.status == 'active'
-                    ? theme.colorScheme.primaryContainer
-                    : theme.colorScheme.errorContainer,
+                color:
+                    listener.status == 'active'
+                        ? theme.colorScheme.primaryContainer
+                        : theme.colorScheme.errorContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 listener.status.toUpperCase(),
                 style: theme.textTheme.labelSmall?.copyWith(
-                  color: listener.status == 'active'
-                      ? theme.colorScheme.onPrimaryContainer
-                      : theme.colorScheme.onErrorContainer,
+                  color:
+                      listener.status == 'active'
+                          ? theme.colorScheme.onPrimaryContainer
+                          : theme.colorScheme.onErrorContainer,
                   fontWeight: FontWeight.bold,
                 ),
               ),

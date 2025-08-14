@@ -8,20 +8,19 @@ class SupportScreen {
 
   static const path = '/support';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) {
+  static GoRoute route({List<RouteBase> routes = const []}) {
     return GoRoute(
       path: path,
       name: path,
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (context) => SupportNotifier(
-            localization: context.read(),
-            supportRepository: context.read(),
-            snackbar: context.read(),
-            remoteStorageRepository: context.read(),
-          ),
+          create:
+              (context) => SupportNotifier(
+                localization: context.read(),
+                supportRepository: context.read(),
+                snackbar: context.read(),
+                remoteStorageRepository: context.read(),
+              ),
           child: const SupportPage(),
         );
       },

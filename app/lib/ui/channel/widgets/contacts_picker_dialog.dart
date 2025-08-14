@@ -3,10 +3,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:lune/l10n/l10n.dart';
 
 class ContactsPickerDialog extends StatefulWidget {
-  const ContactsPickerDialog({
-    required this.contacts,
-    super.key,
-  });
+  const ContactsPickerDialog({required this.contacts, super.key});
 
   final List<Contact> contacts;
 
@@ -34,13 +31,14 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
   void _filterContacts() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredContacts = widget.contacts
-          .where(
-            (contact) =>
-                contact.displayName.toLowerCase().contains(query) ||
-                contact.phones.any((phone) => phone.number.contains(query)),
-          )
-          .toList();
+      _filteredContacts =
+          widget.contacts
+              .where(
+                (contact) =>
+                    contact.displayName.toLowerCase().contains(query) ||
+                    contact.phones.any((phone) => phone.number.contains(query)),
+              )
+              .toList();
     });
   }
 
@@ -86,35 +84,39 @@ class _ContactsPickerDialogState extends State<ContactsPickerDialog> {
 
             // Contacts list
             Expanded(
-              child: _filteredContacts.isEmpty
-                  ? Center(
-                      child: Text(
-                        widget.contacts.isEmpty
-                            ? 'No contacts found'
-                            : 'No contacts match your search',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
+              child:
+                  _filteredContacts.isEmpty
+                      ? Center(
+                        child: Text(
+                          widget.contacts.isEmpty
+                              ? 'No contacts found'
+                              : 'No contacts match your search',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
                         ),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: _filteredContacts.length,
-                      itemBuilder: (context, index) {
-                        final contact = _filteredContacts[index];
-                        final phoneNumber = contact.phones.isNotEmpty
-                            ? contact.phones.first.number
-                            : '';
+                      )
+                      : ListView.builder(
+                        itemCount: _filteredContacts.length,
+                        itemBuilder: (context, index) {
+                          final contact = _filteredContacts[index];
+                          final phoneNumber =
+                              contact.phones.isNotEmpty
+                                  ? contact.phones.first.number
+                                  : '';
 
-                        return ListTile(
-                          title: Text(contact.displayName),
-                          subtitle:
-                              phoneNumber.isNotEmpty ? Text(phoneNumber) : null,
-                          leading: const Icon(Icons.person),
-                          onTap: () => Navigator.of(context).pop(contact),
-                          dense: true,
-                        );
-                      },
-                    ),
+                          return ListTile(
+                            title: Text(contact.displayName),
+                            subtitle:
+                                phoneNumber.isNotEmpty
+                                    ? Text(phoneNumber)
+                                    : null,
+                            leading: const Icon(Icons.person),
+                            onTap: () => Navigator.of(context).pop(contact),
+                            dense: true,
+                          );
+                        },
+                      ),
             ),
           ],
         ),

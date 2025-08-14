@@ -31,10 +31,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       };
 
       PlatformDispatcher.instance.onError = (error, stack) {
-        AppLogger.instance.critical(
-          error.toString(),
-          stackTrace: stack,
-        );
+        AppLogger.instance.critical(error.toString(), stackTrace: stack);
         return true;
       };
 
@@ -48,20 +45,13 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
       AppLogger.instance.debug(Env.environment);
 
-      runApp(
-        MultiProvider(
-          providers: providers,
-          child: await builder(),
-        ),
-      );
+      runApp(MultiProvider(providers: providers, child: await builder()));
     },
     (error, stackTrace) {
       AppLogger.instance.error(
         'Zone Error: $error',
         stackTrace: stackTrace,
-        metadata: {
-          'zone': Zone.current.toString(),
-        },
+        metadata: {'zone': Zone.current.toString()},
       );
     },
   );

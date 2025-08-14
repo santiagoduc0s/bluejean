@@ -34,12 +34,6 @@ class DeviceEntity extends Equatable {
 
   @override
   List<Object?> get props {
-    return [
-      id,
-      identifier,
-      model,
-      createdAt,
-      updatedAt,
-    ];
+    return [id, identifier, model, createdAt, updatedAt];
   }
 }

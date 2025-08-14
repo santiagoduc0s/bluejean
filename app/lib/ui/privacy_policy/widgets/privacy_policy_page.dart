@@ -37,21 +37,18 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
     final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.privacyPolicy),
-      ),
-      body: _markdownData.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Markdown(
-              data: _markdownData,
-              styleSheet: MarkdownStyleSheet(
-                p: textStyles.bodyMedium,
+      appBar: AppBar(title: Text(l10n.privacyPolicy)),
+      body:
+          _markdownData.isEmpty
+              ? const Center(child: CircularProgressIndicator())
+              : Markdown(
+                data: _markdownData,
+                styleSheet: MarkdownStyleSheet(p: textStyles.bodyMedium),
+                onTapLink: (text, href, title) {
+                  if (href == null) return;
+                  launchUrlString(href);
+                },
               ),
-              onTapLink: (text, href, title) {
-                if (href == null) return;
-                launchUrlString(href);
-              },
-            ),
     );
   }
 }

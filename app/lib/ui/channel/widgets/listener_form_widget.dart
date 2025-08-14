@@ -22,11 +22,14 @@ class PlaceSuggestion {
     return PlaceSuggestion(
       placeId: (json['place_id'] as String?) ?? '',
       description: json['description'] as String? ?? '',
-      mainText: (json['structured_formatting']
-              as Map<String, dynamic>?)?['main_text'] as String? ??
+      mainText:
+          (json['structured_formatting'] as Map<String, dynamic>?)?['main_text']
+              as String? ??
           '',
-      secondaryText: (json['structured_formatting']
-              as Map<String, dynamic>?)?['secondary_text'] as String? ??
+      secondaryText:
+          (json['structured_formatting']
+                  as Map<String, dynamic>?)?['secondary_text']
+              as String? ??
           '',
     );
   }
@@ -56,7 +59,8 @@ class ListenerFormWidget extends StatefulWidget {
     double? longitude,
     int thresholdMeters,
     String status,
-  ) onSave;
+  )
+  onSave;
 
   final VoidCallback onCancel;
 
@@ -96,9 +100,10 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
     } else if (widget.prefilledContact != null) {
       // Prefill from contact data
       _nameController.text = widget.prefilledContact!.displayName;
-      _phoneController.text = widget.prefilledContact!.phones.isNotEmpty
-          ? widget.prefilledContact!.phones.first.number
-          : '';
+      _phoneController.text =
+          widget.prefilledContact!.phones.isNotEmpty
+              ? widget.prefilledContact!.phones.first.number
+              : '';
       _selectedThreshold = 200;
       _selectedStatus = 'active';
     }
@@ -142,7 +147,8 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
     });
 
     try {
-      final url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
+      final url =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json'
           '?input=${Uri.encodeQueryComponent(query)}'
           '&key=$_googleApiKey'
           '&components=country:uy'
@@ -155,12 +161,13 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
         final predictions = data['predictions'] as List<dynamic>;
 
         setState(() {
-          _suggestions = predictions
-              .map(
-                (json) =>
-                    PlaceSuggestion.fromJson(json as Map<String, dynamic>),
-              )
-              .toList();
+          _suggestions =
+              predictions
+                  .map(
+                    (json) =>
+                        PlaceSuggestion.fromJson(json as Map<String, dynamic>),
+                  )
+                  .toList();
           _isLoadingSuggestions = false;
         });
       }
@@ -174,7 +181,8 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
 
   Future<void> _getPlaceDetails(String placeId) async {
     try {
-      final url = 'https://maps.googleapis.com/maps/api/place/details/json'
+      final url =
+          'https://maps.googleapis.com/maps/api/place/details/json'
           '?place_id=$placeId'
           '&key=$_googleApiKey'
           '&fields=geometry';
@@ -342,10 +350,11 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: _suggestions.length,
-                    separatorBuilder: (context, index) => Divider(
-                      height: 1,
-                      color: colors.outline.withValues(alpha: 0.2),
-                    ),
+                    separatorBuilder:
+                        (context, index) => Divider(
+                          height: 1,
+                          color: colors.outline.withValues(alpha: 0.2),
+                        ),
                     itemBuilder: (context, index) {
                       final suggestion = _suggestions[index];
                       return InkWell(
@@ -376,14 +385,16 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     if (suggestion
-                                        .secondaryText.isNotEmpty) ...[
+                                        .secondaryText
+                                        .isNotEmpty) ...[
                                       const SizedBox(height: 2),
                                       Text(
                                         suggestion.secondaryText,
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: colors.onSurface
-                                              .withValues(alpha: 0.7),
+                                          color: colors.onSurface.withValues(
+                                            alpha: 0.7,
+                                          ),
                                         ),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -409,9 +420,10 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                       : l10n.typeAddressForLocation,
                   style: TextStyle(
                     fontSize: 12,
-                    color: (_latitude != null && _longitude != null)
-                        ? colors.primary
-                        : colors.onSurface.withValues(alpha: 0.6),
+                    color:
+                        (_latitude != null && _longitude != null)
+                            ? colors.primary
+                            : colors.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ),
@@ -426,10 +438,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                 ),
                 items: [
                   for (final int meters in [100, 200, 300, 400, 500, 600, 700])
-                    DropdownMenuItem(
-                      value: meters,
-                      child: Text('${meters}m'),
-                    ),
+                    DropdownMenuItem(value: meters, child: Text('${meters}m')),
                 ],
                 onChanged: (int? newValue) {
                   if (newValue != null) {
@@ -448,10 +457,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                   border: const OutlineInputBorder(),
                 ),
                 items: [
-                  DropdownMenuItem(
-                    value: 'active',
-                    child: Text(l10n.active),
-                  ),
+                  DropdownMenuItem(value: 'active', child: Text(l10n.active)),
                   DropdownMenuItem(
                     value: 'inactive',
                     child: Text(l10n.inactive),

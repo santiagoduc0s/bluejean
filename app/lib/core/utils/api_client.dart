@@ -11,8 +11,8 @@ class ApiClient {
     this.enableLogging = false,
     http.Client? client,
     AppLogger? logger,
-  })  : _client = client ?? http.Client(),
-        _logger = logger ?? AppLogger.instance;
+  }) : _client = client ?? http.Client(),
+       _logger = logger ?? AppLogger.instance;
 
   final http.Client _client;
 
@@ -184,9 +184,9 @@ class ApiClient {
     final cleanEndpoint =
         endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
 
-    return Uri.parse('$url$cleanEndpoint').replace(
-      queryParameters: queryParameters,
-    );
+    return Uri.parse(
+      '$url$cleanEndpoint',
+    ).replace(queryParameters: queryParameters);
   }
 
   void dispose() {

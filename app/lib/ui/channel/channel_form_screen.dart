@@ -9,33 +9,30 @@ class ChannelFormScreen {
 
   static const path = '/channel-form';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          final channel = state.extra as ChannelEntity?;
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      final channel = state.extra as ChannelEntity?;
 
-          return ChangeNotifierProvider(
-            create: (context) {
-              final notifier = ChannelFormNotifier(
-                channelRepository: context.read(),
-                listenerRepository: context.read(),
-                permissionService: context.read(),
-                channel: channel,
-              );
-
-              if (channel != null) {
-                notifier.loadListeners();
-              }
-
-              return notifier;
-            },
-            child: const ChannelFormPage(),
+      return ChangeNotifierProvider(
+        create: (context) {
+          final notifier = ChannelFormNotifier(
+            channelRepository: context.read(),
+            listenerRepository: context.read(),
+            permissionService: context.read(),
+            channel: channel,
           );
+
+          if (channel != null) {
+            notifier.loadListeners();
+          }
+
+          return notifier;
         },
-        routes: routes,
+        child: const ChannelFormPage(),
       );
+    },
+    routes: routes,
+  );
 }

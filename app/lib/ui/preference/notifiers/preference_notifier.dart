@@ -6,9 +6,8 @@ import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class PreferenceNotifier extends ChangeNotifier {
-  PreferenceNotifier({
-    required PreferenceRepository userPreferenceRepository,
-  }) : _userPreferenceRepository = userPreferenceRepository;
+  PreferenceNotifier({required PreferenceRepository userPreferenceRepository})
+    : _userPreferenceRepository = userPreferenceRepository;
 
   final PreferenceRepository _userPreferenceRepository;
 
@@ -42,9 +41,7 @@ class PreferenceNotifier extends ChangeNotifier {
   }
 
   Future<void> setLanguage(String? language) async {
-    preference = preference!.copyWith(
-      language: NullableParameter(language),
-    );
+    preference = preference!.copyWith(language: NullableParameter(language));
 
     notifyListeners();
 

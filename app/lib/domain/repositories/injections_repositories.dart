@@ -6,80 +6,72 @@ import 'package:provider/single_child_widget.dart';
 List<SingleChildWidget> providerRepositories = [
   // Auth Repository
   Provider<AuthRepository>(
-    create: (context) => AuthRepositoryImpl(
-      localStorageService: context.read(),
-      apiClient: context.read(),
-    ),
+    create:
+        (context) => AuthRepositoryImpl(
+          localStorageService: context.read(),
+          apiClient: context.read(),
+        ),
   ),
 
   // Channel Repository
   Provider<ChannelRepository>(
-    create: (context) => ChannelRepositoryImpl(
-      apiClient: context.read(),
-    ),
+    create: (context) => ChannelRepositoryImpl(apiClient: context.read()),
   ),
 
   // Listener Repository
   Provider<ListenerRepository>(
-    create: (context) => ListenerRepositoryImpl(
-      apiClient: context.read(),
-    ),
+    create: (context) => ListenerRepositoryImpl(apiClient: context.read()),
   ),
 
   // Listener Notification Repository
   Provider<ListenerNotificationRepository>(
-    create: (context) => ListenerNotificationRepositoryImpl(
-      apiClient: context.read(),
-    ),
+    create:
+        (context) =>
+            ListenerNotificationRepositoryImpl(apiClient: context.read()),
   ),
 
   // Device Repository
   Provider<DeviceRepository>(
-    create: (context) => DeviceRepositoryImpl(
-      deviceInfoService: context.read(),
-      apiClient: context.read(),
-    ),
+    create:
+        (context) => DeviceRepositoryImpl(
+          deviceInfoService: context.read(),
+          apiClient: context.read(),
+        ),
   ),
 
   // Preference Repository
   Provider<PreferenceRepository>(
-    create: (context) => PreferenceRepositoryImpl(
-      deviceInfoService: context.read(),
-      apiClient: context.read(),
-    ),
+    create:
+        (context) => PreferenceRepositoryImpl(
+          deviceInfoService: context.read(),
+          apiClient: context.read(),
+        ),
   ),
 
   // Permission Repository
   Provider<PermissionRepository>(
-    create: (context) => PermissionRepositoryImpl(
-      service: context.read(),
-    ),
+    create: (context) => PermissionRepositoryImpl(service: context.read()),
   ),
 
   // Messaging Repository
-  Provider<MessagingRepository>(
-    create: (context) => MessagingRepositoryImpl(),
-  ),
+  Provider<MessagingRepository>(create: (context) => MessagingRepositoryImpl()),
 
   // Support Repository
   Provider<SupportRepository>(
-    create: (context) => SupportRespositoryImpl(
-      apiClient: context.read(),
-    ),
+    create: (context) => SupportRespositoryImpl(apiClient: context.read()),
   ),
 
   // Remote Storage Repository
   Provider<RemoteStorageRepository>(
-    create: (context) => RemoteStorageRepositoryImpl(
-      apiClient: context.read(),
-    ),
+    create: (context) => RemoteStorageRepositoryImpl(apiClient: context.read()),
   ),
 
   // Driver Position Repository
   Provider<DriverPositionRepository>(
-    create: (context) => DriverPositionRepositoryImpl(
-      apiClient: context.read(),
-      locationTrackingService: context.read(),
-    ),
+    create:
+        (context) => DriverPositionRepositoryImpl(
+          apiClient: context.read(),
+          locationTrackingService: context.read(),
+        ),
   ),
 ];

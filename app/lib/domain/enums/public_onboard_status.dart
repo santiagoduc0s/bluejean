@@ -1,4 +1,1 @@
-enum PublicOnboardStatus {
-  seen,
-  unseen;
-}
+enum PublicOnboardStatus { seen, unseen }

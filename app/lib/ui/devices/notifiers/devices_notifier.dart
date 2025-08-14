@@ -13,11 +13,11 @@ class DevicesNotifier extends ChangeNotifier {
     required CustomSnackbar snackbar,
     required Localization localization,
     required void Function() onSignOut,
-  })  : _deviceRepository = deviceRepository,
-        _signOutUseCase = signOutUseCase,
-        _snackbar = snackbar,
-        _localization = localization,
-        _onSignOut = onSignOut;
+  }) : _deviceRepository = deviceRepository,
+       _signOutUseCase = signOutUseCase,
+       _snackbar = snackbar,
+       _localization = localization,
+       _onSignOut = onSignOut;
 
   final DeviceRepository _deviceRepository;
   final SignOutUseCase _signOutUseCase;
@@ -67,10 +67,7 @@ class DevicesNotifier extends ChangeNotifier {
       _devices.removeWhere((device) => device.id == deviceId);
       notifyListeners();
 
-      primarySnackbar(
-        _snackbar,
-        _localization.tr.deviceDeletedSuccessfully,
-      );
+      primarySnackbar(_snackbar, _localization.tr.deviceDeletedSuccessfully);
     } catch (e, s) {
       logError(e, s);
       errorSnackbar(_snackbar, _localization.tr.generalError);

@@ -4,8 +4,8 @@ class SaveFcmTokenUseCase {
   SaveFcmTokenUseCase({
     required MessagingRepository messagingRepository,
     required DeviceRepository deviceRepository,
-  })  : _messagingRepository = messagingRepository,
-        _deviceRepository = deviceRepository;
+  }) : _messagingRepository = messagingRepository,
+       _deviceRepository = deviceRepository;
 
   final MessagingRepository _messagingRepository;
   final DeviceRepository _deviceRepository;
@@ -15,8 +15,6 @@ class SaveFcmTokenUseCase {
 
     if (fcmToken == null) return;
 
-    await _deviceRepository.updateDevice(
-      fcmToken: fcmToken,
-    );
+    await _deviceRepository.updateDevice(fcmToken: fcmToken);
   }
 }

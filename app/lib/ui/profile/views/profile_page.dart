@@ -54,38 +54,34 @@ class ProfilePage extends StatelessWidget {
             SliverAppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              title: Text(
-                l10n.profile,
-                style: textsProvider.headlineLarge.copyWith(
-                  color: colorsProvider.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-                  .animate()
-                  .slideY(
-                    duration: 700.ms,
-                    curve: Curves.easeInOut,
-                  )
-                  .fadeIn(),
+              title:
+                  Text(
+                        l10n.profile,
+                        style: textsProvider.headlineLarge.copyWith(
+                          color: colorsProvider.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                      .animate()
+                      .slideY(duration: 700.ms, curve: Curves.easeInOut)
+                      .fadeIn(),
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 4.space,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 4.space),
                 child: ReactiveFormBuilder(
                   form: () => form,
                   builder: (context, form, child) {
                     return Column(
                       children: [
                         PhotoProfilePickerField(
-                          formControlName: 'photo',
-                          snackbar: context.read(),
-                          permissionRepository: context.read(),
-                          dialog: context.read(),
-                          localization: context.read(),
-                          imageQuality: context.read(),
-                        )
+                              formControlName: 'photo',
+                              snackbar: context.read(),
+                              permissionRepository: context.read(),
+                              dialog: context.read(),
+                              localization: context.read(),
+                              imageQuality: context.read(),
+                            )
                             .animate()
                             .slideY(
                               duration: 700.ms,
@@ -95,55 +91,48 @@ class ProfilePage extends StatelessWidget {
                             .fadeIn(),
                         SizedBox(height: 4.space),
                         ReactiveForm(
-                          formGroup: form,
-                          child: Column(
-                            children: [
-                              ReactiveTextField<String>(
-                                formControlName: 'name',
-                                textInputAction: TextInputAction.next,
-                                decoration: inputsProvider.primary.copyWith(
-                                  hintText: l10n.name,
-                                  fillColor: colorsProvider.surfaceContainer,
-                                  filled: true,
-                                ),
-                              ),
-                              // SizedBox(height: 4.space),
-                              // ReactiveTextField<String>(
-                              //   formControlName: 'lastName',
-                              //   textInputAction: TextInputAction.next,
-                              //   decoration: inputsProvider.primary.copyWith(
-                              //     hintText: l10n.lastName,
-                              //     fillColor: colorsProvider.surfaceContainer,
-                              //     filled: true,
-                              //   ),
-                              // ),
-                              SizedBox(height: 4.space),
-                              ReactiveTextField<String>(
-                                keyboardType: TextInputType.emailAddress,
-                                formControlName: 'email',
-                                textInputAction: TextInputAction.next,
-                                decoration: inputsProvider.primary.copyWith(
-                                  hintText: l10n.email,
-                                  fillColor: colorsProvider.surfaceContainer,
-                                  filled: true,
-                                ),
-                              ),
-                              SizedBox(height: 1.space),
-                              Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 2.space),
-                                child: Text(
-                                  l10n.profileEmailNote,
-                                  style: textsProvider.bodySmall.copyWith(
-                                    color: colorsProvider.onSurface
-                                        .withValues(alpha: 0.6),
-                                    fontSize: 12,
+                              formGroup: form,
+                              child: Column(
+                                children: [
+                                  ReactiveTextField<String>(
+                                    formControlName: 'name',
+                                    textInputAction: TextInputAction.next,
+                                    decoration: inputsProvider.primary.copyWith(
+                                      hintText: l10n.name,
+                                      fillColor:
+                                          colorsProvider.surfaceContainer,
+                                      filled: true,
+                                    ),
                                   ),
-                                ),
+                                  SizedBox(height: 4.space),
+                                  ReactiveTextField<String>(
+                                    keyboardType: TextInputType.emailAddress,
+                                    formControlName: 'email',
+                                    textInputAction: TextInputAction.next,
+                                    decoration: inputsProvider.primary.copyWith(
+                                      hintText: l10n.email,
+                                      fillColor:
+                                          colorsProvider.surfaceContainer,
+                                      filled: true,
+                                    ),
+                                  ),
+                                  SizedBox(height: 1.space),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 2.space,
+                                    ),
+                                    child: Text(
+                                      l10n.profileEmailNote,
+                                      style: textsProvider.bodySmall.copyWith(
+                                        color: colorsProvider.onSurface
+                                            .withValues(alpha: 0.6),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        )
+                            )
                             .animate()
                             .slide(
                               begin: const Offset(0, 1),
@@ -161,41 +150,44 @@ class ProfilePage extends StatelessWidget {
             ),
             SliverFillRemaining(
               hasScrollBody: false,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 4.space,
-                  right: 4.space,
-                  top: 4.space,
-                  bottom: bottomPadding,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      width: UISpacing.infinity,
-                      child: LoadingButton(
-                        type: ButtonType.filled,
-                        isLoading: isUpdatingData,
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          context.read<ProfileNotifier>().updateProfile();
-                        },
-                        style: buttonsProvider.primaryFilled,
-                        child: Text(l10n.save),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-                  .animate()
-                  .slide(
-                    begin: const Offset(0, 1),
-                    curve: Curves.easeInOut,
-                    end: Offset.zero,
-                    delay: 900.ms,
-                    duration: 700.ms,
-                  )
-                  .fadeIn(),
+              child:
+                  Padding(
+                        padding: EdgeInsets.only(
+                          left: 4.space,
+                          right: 4.space,
+                          top: 4.space,
+                          bottom: bottomPadding,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: UISpacing.infinity,
+                              child: LoadingButton(
+                                type: ButtonType.filled,
+                                isLoading: isUpdatingData,
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                  context
+                                      .read<ProfileNotifier>()
+                                      .updateProfile();
+                                },
+                                style: buttonsProvider.primaryFilled,
+                                child: Text(l10n.save),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                      .animate()
+                      .slide(
+                        begin: const Offset(0, 1),
+                        curve: Curves.easeInOut,
+                        end: Offset.zero,
+                        delay: 900.ms,
+                        duration: 700.ms,
+                      )
+                      .fadeIn(),
             ),
           ],
         ),

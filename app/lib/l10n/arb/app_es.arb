@@ -501,5 +501,15 @@
   "notificationsWillAppearHere": "Las notificaciones aparecerán aquí cuando el autobús esté cerca de la ubicación de este oyente",
   "@notificationsWillAppearHere": {},
   "coordinates": "Coordenadas",
-  "@coordinates": {}
+  "@coordinates": {},
+  "tutorialLocationTitle": "Rastreo de Ubicación",
+  "@tutorialLocationTitle": {},
+  "tutorialLocationDescription": "Presiona este botón para activar tu ubicación. Los oyentes de los canales activados serán notificados cuando estés cerca de ellos.",
+  "@tutorialLocationDescription": {},
+  "tutorialAddChannelTitle": "Agregar Canal",
+  "@tutorialAddChannelTitle": {},
+  "tutorialAddChannelDescription": "Presiona este botón para crear un nuevo canal. Los canales te ayudan a organizar tus oyentes por rutas o grupos.",
+  "@tutorialAddChannelDescription": {},
+  "tutorialGotIt": "¡Entendido!",
+  "@tutorialGotIt": {}
 }

@@ -21,14 +21,9 @@ abstract class AuthRepository {
 
   Future<void> signInWithGoogle();
 
-  Future<void> forgotPassword({
-    String? email,
-    String? phone,
-  });
+  Future<void> forgotPassword({String? email, String? phone});
 
-  Future<void> updatePassword({
-    required String password,
-  });
+  Future<void> updatePassword({required String password});
 
   Future<void> signOut();
 

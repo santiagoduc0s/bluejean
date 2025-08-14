@@ -62,10 +62,7 @@ class ListenerListWidget extends StatelessWidget {
               border: Border.all(color: colors.primary),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Text(
-              l10n.noListenersAdded,
-              textAlign: TextAlign.center,
-            ),
+            child: Text(l10n.noListenersAdded, textAlign: TextAlign.center),
           )
         else
           Card(
@@ -125,30 +122,31 @@ class ListenerListWidget extends StatelessWidget {
 
     showDialog<void>(
       context: context,
-      builder: (context) => ChangeNotifierProvider.value(
-        value: notifier,
-        child: AlertDialog(
-          title: Text(l10n.deleteListener),
-          content: Text(l10n.deleteListenerConfirmation(listener.name)),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.cancel),
+      builder:
+          (context) => ChangeNotifierProvider.value(
+            value: notifier,
+            child: AlertDialog(
+              title: Text(l10n.deleteListener),
+              content: Text(l10n.deleteListenerConfirmation(listener.name)),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(l10n.cancel),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onDelete(listener);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(l10n.delete),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                onDelete(listener);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-              child: Text(l10n.delete),
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }

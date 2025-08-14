@@ -6,15 +6,12 @@ class PrivacyPolicyScreen {
 
   static const path = '/privacy-policy';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return const PrivacyPolicyPage();
-        },
-        routes: routes,
-      );
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return const PrivacyPolicyPage();
+    },
+    routes: routes,
+  );
 }

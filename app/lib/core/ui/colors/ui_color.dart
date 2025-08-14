@@ -22,49 +22,37 @@ abstract class UIColor {
   /// Primary color.
   final MaterialColor primarySchema = MaterialColor(
     _primaryGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _primaryGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_primaryGenerator),
   );
 
   /// Secondary color.
   final MaterialColor secondarySchema = MaterialColor(
     _secondaryGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _secondaryGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_secondaryGenerator),
   );
 
   /// Tertiary color.
   final MaterialColor tertiarySchema = MaterialColor(
     _tertiaryGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _tertiaryGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_tertiaryGenerator),
   );
 
   /// Error color.
   final MaterialColor errorSchema = MaterialColor(
     _errorGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _errorGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_errorGenerator),
   );
 
   /// Neutral color.
   final MaterialColor neutralSchema = MaterialColor(
     _neutralGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _neutralGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_neutralGenerator),
   );
 
   /// Neutral variant color.
   final MaterialColor neutralVariantSchema = MaterialColor(
     _neutralVariantGenerator,
-    HctColor.generateMaterial3TonesHct(
-      _neutralVariantGenerator,
-    ),
+    HctColor.generateMaterial3TonesHct(_neutralVariantGenerator),
   );
 
   /// primary

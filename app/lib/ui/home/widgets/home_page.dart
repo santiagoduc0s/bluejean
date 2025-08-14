@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/core.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/data/services/local_storage_service.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/gen_l10n/app_localizations.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/channel/channel.dart';
 import 'package:lune/ui/home/notifiers/notifiers.dart';
 import 'package:provider/provider.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,12 +19,110 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late TutorialCoachMark tutorialCoachMark;
+  final GlobalKey _locationButtonKey = GlobalKey();
+  final GlobalKey _addChannelButtonKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeNotifier>().loadChannels();
+      _createTutorial();
+      _checkAndShowTutorial();
     });
+  }
+
+  void _createTutorial() {
+    tutorialCoachMark = TutorialCoachMark(
+      hideSkip: true,
+      targets: _createTargets(),
+      onFinish: () async {
+        final localStorageService = context.read<LocalStorageService>();
+        await localStorageService.setHomeTutorialShown(true);
+      },
+    );
+  }
+
+  List<TargetFocus> _createTargets() {
+    final l10n = context.l10n;
+    return [
+      TargetFocus(
+        identify: 'location_button',
+        keyTarget: _locationButtonKey,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.tutorialLocationTitle,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  Text(
+                    l10n.tutorialLocationDescription,
+                    style: const TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+        shape: ShapeLightFocus.Circle,
+      ),
+      TargetFocus(
+        identify: 'add_channel_button',
+        keyTarget: _addChannelButtonKey,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    l10n.tutorialAddChannelTitle,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  Text(
+                    l10n.tutorialAddChannelDescription,
+                    style: const TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+        shape: ShapeLightFocus.Circle,
+      ),
+    ];
+  }
+
+  Future<void> _checkAndShowTutorial() async {
+    final localStorageService = context.read<LocalStorageService>();
+    final hasShownTutorial = await localStorageService.getHomeTutorialShown();
+
+    if (!hasShownTutorial && mounted) {
+      Future.delayed(const Duration(milliseconds: 800), () {
+        if (mounted) {
+          tutorialCoachMark.show(context: context);
+        }
+      });
+    }
   }
 
   @override
@@ -47,9 +148,7 @@ class _HomePageState extends State<HomePage> {
         child: Consumer<HomeNotifier>(
           builder: (context, notifier, child) {
             if (notifier.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (notifier.error != null) {
@@ -73,9 +172,7 @@ class _HomePageState extends State<HomePage> {
 
             if (notifier.activeChannels.isEmpty &&
                 notifier.inactiveChannels.isEmpty) {
-              return Center(
-                child: Text(l10n.noChannelsFound),
-              );
+              return Center(child: Text(l10n.noChannelsFound));
             }
 
             return SingleChildScrollView(
@@ -127,6 +224,7 @@ class _HomePageState extends State<HomePage> {
           Consumer<HomeNotifier>(
             builder: (context, notifier, child) {
               return FloatingActionButton(
+                key: _locationButtonKey,
                 heroTag: 'location',
                 onPressed: () => notifier.toggleLocationTracking(),
                 backgroundColor:
@@ -141,6 +239,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            key: _addChannelButtonKey,
             heroTag: 'add',
             onPressed: () => _navigateToChannelForm(context),
             child: const Icon(Icons.add),
@@ -154,8 +253,10 @@ class _HomePageState extends State<HomePage> {
     BuildContext context, {
     ChannelEntity? channel,
   }) async {
-    final result =
-        await context.pushNamed(ChannelFormScreen.path, extra: channel);
+    final result = await context.pushNamed(
+      ChannelFormScreen.path,
+      extra: channel,
+    );
 
     if (result == true && context.mounted) {
       await context.read<HomeNotifier>().loadChannels();
@@ -168,26 +269,25 @@ class _HomePageState extends State<HomePage> {
 
     showDialog<void>(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.deleteChannel),
-        content: Text(l10n.deleteChannelConfirmation(channel.name)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(l10n.cancel),
+      builder:
+          (dialogContext) => AlertDialog(
+            title: Text(l10n.deleteChannel),
+            content: Text(l10n.deleteChannelConfirmation(channel.name)),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () {
+                  homeNotifier.deleteChannel(channel.id);
+                  Navigator.of(dialogContext).pop();
+                },
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
+                child: Text(l10n.delete),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              homeNotifier.deleteChannel(channel.id);
-              Navigator.of(dialogContext).pop();
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.red,
-            ),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
     );
   }
 
@@ -236,28 +336,32 @@ class _HomePageState extends State<HomePage> {
       child: ListTile(
         leading: Icon(
           isActive ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-          color: isActive
-              ? colors.primary
-              : colors.onSurface.withValues(alpha: 0.6),
+          color:
+              isActive
+                  ? colors.primary
+                  : colors.onSurface.withValues(alpha: 0.6),
         ),
         title: Text(
           channel.name,
           style: TextStyle(
-            color: isActive
-                ? colors.onSurface
-                : colors.onSurface.withValues(alpha: 0.7),
+            color:
+                isActive
+                    ? colors.onSurface
+                    : colors.onSurface.withValues(alpha: 0.7),
           ),
         ),
-        subtitle: channel.description != null
-            ? Text(
-                channel.description!,
-                style: TextStyle(
-                  color: isActive
-                      ? colors.onSurface.withValues(alpha: 0.7)
-                      : colors.onSurface.withValues(alpha: 0.5),
-                ),
-              )
-            : null,
+        subtitle:
+            channel.description != null
+                ? Text(
+                  channel.description!,
+                  style: TextStyle(
+                    color:
+                        isActive
+                            ? colors.onSurface.withValues(alpha: 0.7)
+                            : colors.onSurface.withValues(alpha: 0.5),
+                  ),
+                )
+                : null,
         trailing: PopupMenuButton<String>(
           onSelected: (value) {
             if (value == 'edit') {
@@ -266,16 +370,11 @@ class _HomePageState extends State<HomePage> {
               _showDeleteChannelDialog(context, channel);
             }
           },
-          itemBuilder: (context) => [
-            PopupMenuItem(
-              value: 'edit',
-              child: Text(l10n.edit),
-            ),
-            PopupMenuItem(
-              value: 'delete',
-              child: Text(l10n.delete),
-            ),
-          ],
+          itemBuilder:
+              (context) => [
+                PopupMenuItem(value: 'edit', child: Text(l10n.edit)),
+                PopupMenuItem(value: 'delete', child: Text(l10n.delete)),
+              ],
         ),
       ),
     );

@@ -55,8 +55,9 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
             circleId: const CircleId('threshold'),
             center: LatLng(_currentLatitude, _currentLongitude),
             radius: _selectedThreshold.toDouble(),
-            fillColor:
-                Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+            fillColor: Theme.of(
+              context,
+            ).colorScheme.primary.withValues(alpha: 0.2),
             strokeColor: Theme.of(context).colorScheme.primary,
             strokeWidth: 2,
           ),
@@ -79,8 +80,9 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
 
     final centerLat =
         (visibleRegion.northeast.latitude + visibleRegion.southwest.latitude) /
-            2;
-    final centerLng = (visibleRegion.northeast.longitude +
+        2;
+    final centerLng =
+        (visibleRegion.northeast.longitude +
             visibleRegion.southwest.longitude) /
         2;
 
@@ -108,10 +110,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
       appBar: AppBar(
         title: Text(l10n.selectLocation),
         actions: [
-          TextButton(
-            onPressed: _onDonePressed,
-            child: Text(l10n.done),
-          ),
+          TextButton(onPressed: _onDonePressed, child: Text(l10n.done)),
         ],
       ),
       body: Stack(
@@ -133,10 +132,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
               size: 40,
               color: colors.primary,
               shadows: [
-                const Shadow(
-                  color: Colors.white,
-                  blurRadius: 4,
-                ),
+                const Shadow(color: Colors.white, blurRadius: 4),
                 Shadow(
                   color: Colors.black.withValues(alpha: 0.3),
                   blurRadius: 2,
@@ -189,17 +185,16 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                 value: _selectedThreshold,
                 decoration: const InputDecoration(
                   labelText: 'Notification Distance',
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   border: OutlineInputBorder(),
                   isDense: true,
                 ),
                 items: [
                   for (final int meters in [100, 200, 300, 400, 500, 600, 700])
-                    DropdownMenuItem(
-                      value: meters,
-                      child: Text('${meters}m'),
-                    ),
+                    DropdownMenuItem(value: meters, child: Text('${meters}m')),
                 ],
                 onChanged: (int? newValue) {
                   if (newValue != null) {
@@ -241,9 +236,9 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                   const SizedBox(height: 4),
                   Text(
                     'Notification distance: ${_selectedThreshold}m',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: colors.primary,
-                        ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodySmall?.copyWith(color: colors.primary),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -257,10 +252,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
 }
 
 class LocationResult {
-  const LocationResult({
-    required this.latitude,
-    required this.longitude,
-  });
+  const LocationResult({required this.latitude, required this.longitude});
 
   factory LocationResult.fromMap(Map<String, dynamic> map) {
     return LocationResult(

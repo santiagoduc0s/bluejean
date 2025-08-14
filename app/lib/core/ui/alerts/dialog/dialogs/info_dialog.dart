@@ -17,10 +17,7 @@ class InfoDialog extends StatelessWidget {
     final texts = context.textStyles;
 
     return AlertDialog(
-      title: Text(
-        message,
-        style: texts.bodyLarge,
-      ),
+      title: Text(message, style: texts.bodyLarge),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         FilledButton(

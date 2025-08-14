@@ -8,10 +8,7 @@ import 'package:lune/ui/listener_detail/widgets/listener_notifications_list.dart
 import 'package:provider/provider.dart';
 
 class ListenerDetailPage extends StatelessWidget {
-  const ListenerDetailPage({
-    required this.listener,
-    super.key,
-  });
+  const ListenerDetailPage({required this.listener, super.key});
 
   final ListenerEntity listener;
 
@@ -20,11 +17,12 @@ class ListenerDetailPage extends StatelessWidget {
     final l10n = context.l10n;
 
     return ChangeNotifierProvider(
-      create: (context) => ListenerDetailNotifier(
-        listenerNotificationRepository:
-            context.read<ListenerNotificationRepository>(),
-        listener: listener,
-      ),
+      create:
+          (context) => ListenerDetailNotifier(
+            listenerNotificationRepository:
+                context.read<ListenerNotificationRepository>(),
+            listener: listener,
+          ),
       child: DefaultTabController(
         length: 2,
         child: Column(
@@ -49,10 +47,7 @@ class ListenerDetailPage extends StatelessWidget {
             // Tab Views
             const Expanded(
               child: TabBarView(
-                children: [
-                  _InfoTab(),
-                  ListenerNotificationsList(),
-                ],
+                children: [_InfoTab(), ListenerNotificationsList()],
               ),
             ),
           ],
@@ -76,11 +71,7 @@ class _InfoTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _InfoRow(
-            icon: Icons.person,
-            label: l10n.name,
-            value: listener.name,
-          ),
+          _InfoRow(icon: Icons.person, label: l10n.name, value: listener.name),
           const SizedBox(height: 16),
           _InfoRow(
             icon: Icons.phone,
@@ -105,16 +96,18 @@ class _InfoTab extends StatelessWidget {
             icon: Icons.circle,
             label: l10n.status,
             value: listener.status,
-            valueColor: listener.status == 'active'
-                ? theme.colorScheme.primary
-                : theme.colorScheme.error,
+            valueColor:
+                listener.status == 'active'
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.error,
           ),
           if (listener.latitude != null && listener.longitude != null) ...[
             const SizedBox(height: 16),
             _InfoRow(
               icon: Icons.my_location,
               label: l10n.coordinates,
-              value: '${listener.latitude!.toStringAsFixed(6)}, '
+              value:
+                  '${listener.latitude!.toStringAsFixed(6)}, '
                   '${listener.longitude!.toStringAsFixed(6)}',
             ),
           ],
@@ -144,11 +137,7 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          color: theme.colorScheme.onSurfaceVariant,
-          size: 20,
-        ),
+        Icon(icon, color: theme.colorScheme.onSurfaceVariant, size: 20),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -163,9 +152,7 @@ class _InfoRow extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 value,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: valueColor,
-                ),
+                style: theme.textTheme.bodyLarge?.copyWith(color: valueColor),
               ),
             ],
           ),

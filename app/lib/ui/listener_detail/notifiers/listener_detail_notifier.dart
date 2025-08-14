@@ -43,10 +43,7 @@ class ListenerDetailNotifier extends ChangeNotifier {
 
     try {
       final notifications = await listenerNotificationRepository
-          .getNotificationsByListenerId(
-        listener.id,
-        page: _currentPage,
-      );
+          .getNotificationsByListenerId(listener.id, page: _currentPage);
 
       if (loadMore) {
         _notifications.addAll(notifications);

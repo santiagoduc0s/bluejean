@@ -8,8 +8,8 @@ class UpdateCurrentUserUsecase {
   UpdateCurrentUserUsecase({
     required AuthRepository authRepository,
     required RemoteStorageRepository remoteStorageRepository,
-  })  : _authRepository = authRepository,
-        _remoteStorageRepository = remoteStorageRepository;
+  }) : _authRepository = authRepository,
+       _remoteStorageRepository = remoteStorageRepository;
 
   final AuthRepository _authRepository;
   final RemoteStorageRepository _remoteStorageRepository;

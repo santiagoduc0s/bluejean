@@ -56,10 +56,7 @@ class AppGoRouter extends CustomRouter {
         SplashScreen.route(),
         PublicOnboardScreen.route(),
         SignInScreen.route(
-          routes: [
-            SignUpScreen.route(),
-            ForgotPasswordScreen.route(),
-          ],
+          routes: [SignUpScreen.route(), ForgotPasswordScreen.route()],
         ),
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
@@ -72,11 +69,12 @@ class AppGoRouter extends CustomRouter {
               if (authNotifier.isNotAuthenticated && index == 0) {
                 final dialog = context.read<CustomDialog>();
                 var wantToSignIn = await dialog.showWithoutContext<bool>(
-                  builder: (context) => ConfirmDialog(
-                    message: l10n.confirmSignInProfile,
-                    confirmText: l10n.iWantIt,
-                    cancelText: l10n.cancel,
-                  ),
+                  builder:
+                      (context) => ConfirmDialog(
+                        message: l10n.confirmSignInProfile,
+                        confirmText: l10n.iWantIt,
+                        cancelText: l10n.cancel,
+                      ),
                 );
 
                 wantToSignIn ??= false;
@@ -96,59 +94,55 @@ class AppGoRouter extends CustomRouter {
 
             return isPortrait
                 ? Scaffold(
-                    body: navigationShell,
-                    bottomNavigationBar: NavigationBar(
-                      selectedIndex: navigationShell.currentIndex,
-                      onDestinationSelected: onDestinationSelected,
-                      destinations: [
-                        NavigationDestination(
-                          icon: const Icon(Icons.person),
-                          label: l10n.profile,
-                        ),
-                        NavigationDestination(
-                          icon: const Icon(Icons.home),
-                          label: l10n.home,
-                        ),
-                        NavigationDestination(
-                          icon: const Icon(Icons.settings),
-                          label: l10n.settings,
-                        ),
-                      ],
-                    ),
-                  )
+                  body: navigationShell,
+                  bottomNavigationBar: NavigationBar(
+                    selectedIndex: navigationShell.currentIndex,
+                    onDestinationSelected: onDestinationSelected,
+                    destinations: [
+                      NavigationDestination(
+                        icon: const Icon(Icons.person),
+                        label: l10n.profile,
+                      ),
+                      NavigationDestination(
+                        icon: const Icon(Icons.home),
+                        label: l10n.home,
+                      ),
+                      NavigationDestination(
+                        icon: const Icon(Icons.settings),
+                        label: l10n.settings,
+                      ),
+                    ],
+                  ),
+                )
                 : Scaffold(
-                    body: Row(
-                      children: [
-                        NavigationRail(
-                          selectedIndex: navigationShell.currentIndex,
-                          onDestinationSelected: onDestinationSelected,
-                          labelType: NavigationRailLabelType.all,
-                          destinations: [
-                            NavigationRailDestination(
-                              icon: const Icon(Icons.person),
-                              label: Text(l10n.profile),
-                            ),
-                            NavigationRailDestination(
-                              icon: const Icon(Icons.home),
-                              label: Text(l10n.home),
-                            ),
-                            NavigationRailDestination(
-                              icon: const Icon(Icons.settings),
-                              label: Text(l10n.settings),
-                            ),
-                          ],
-                        ),
-                        Expanded(child: navigationShell),
-                      ],
-                    ),
-                  );
+                  body: Row(
+                    children: [
+                      NavigationRail(
+                        selectedIndex: navigationShell.currentIndex,
+                        onDestinationSelected: onDestinationSelected,
+                        labelType: NavigationRailLabelType.all,
+                        destinations: [
+                          NavigationRailDestination(
+                            icon: const Icon(Icons.person),
+                            label: Text(l10n.profile),
+                          ),
+                          NavigationRailDestination(
+                            icon: const Icon(Icons.home),
+                            label: Text(l10n.home),
+                          ),
+                          NavigationRailDestination(
+                            icon: const Icon(Icons.settings),
+                            label: Text(l10n.settings),
+                          ),
+                        ],
+                      ),
+                      Expanded(child: navigationShell),
+                    ],
+                  ),
+                );
           },
           branches: [
-            StatefulShellBranch(
-              routes: [
-                ProfileScreen.route(),
-              ],
-            ),
+            StatefulShellBranch(routes: [ProfileScreen.route()]),
             StatefulShellBranch(
               routes: [
                 HomeScreen.route(
@@ -227,9 +221,9 @@ class AppGoRouter extends CustomRouter {
 
       context.read<AuthNotifier>().initialize(data['user'] as UserEntity?);
 
-      context
-          .read<PreferenceNotifier>()
-          .initialize(data['preference'] as PreferenceEntity);
+      context.read<PreferenceNotifier>().initialize(
+        data['preference'] as PreferenceEntity,
+      );
     } catch (e, s) {
       AppLogger.instance.error(e.toString(), stackTrace: s);
     } finally {
@@ -241,10 +235,7 @@ class AppGoRouter extends CustomRouter {
     }
   }
 
-  FutureOr<String?> _redirect(
-    BuildContext context,
-    GoRouterState state,
-  ) async {
+  FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
     if (!_isInitialized) {
       await _initialize(context);
     }

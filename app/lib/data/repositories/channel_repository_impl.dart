@@ -4,9 +4,8 @@ import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class ChannelRepositoryImpl implements ChannelRepository {
-  ChannelRepositoryImpl({
-    required ApiClient apiClient,
-  }) : _apiClient = apiClient;
+  ChannelRepositoryImpl({required ApiClient apiClient})
+    : _apiClient = apiClient;
 
   final ApiClient _apiClient;
 
@@ -87,10 +86,7 @@ class ChannelRepositoryImpl implements ChannelRepository {
     if (description != null) body['description'] = description;
     if (status != null) body['status'] = status;
 
-    final response = await _apiClient.put(
-      '/api/v1/channels/$id',
-      body: body,
-    );
+    final response = await _apiClient.put('/api/v1/channels/$id', body: body);
 
     if (response.isSuccess) {
       final data = response.jsonBody['data'] as Map<String, dynamic>;

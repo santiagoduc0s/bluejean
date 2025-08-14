@@ -730,4 +730,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coordinates => 'Coordinates';
+
+  @override
+  String get tutorialLocationTitle => 'Location Tracking';
+
+  @override
+  String get tutorialLocationDescription =>
+      'Press this button to activate your location. The listeners of the activated channels will be notified when you are close to them.';
+
+  @override
+  String get tutorialAddChannelTitle => 'Add Channel';
+
+  @override
+  String get tutorialAddChannelDescription =>
+      'Press this button to create a new channel. Channels help you organize your listeners by routes or groups.';
+
+  @override
+  String get tutorialGotIt => 'Got it!';
 }

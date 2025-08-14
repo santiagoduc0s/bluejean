@@ -152,26 +152,26 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                             ListenerFormWidget(
                               listener: notifier.editingListener,
                               prefilledContact: _prefilledContact,
-                              onSave: (
-                                name,
-                                phoneNumber,
-                                address,
-                                latitude,
-                                longitude,
-                                thresholdMeters,
-                                status,
-                              ) =>
-                                  _saveListener(
-                                context,
-                                notifier,
-                                name,
-                                phoneNumber,
-                                address,
-                                latitude,
-                                longitude,
-                                thresholdMeters,
-                                status,
-                              ),
+                              onSave:
+                                  (
+                                    name,
+                                    phoneNumber,
+                                    address,
+                                    latitude,
+                                    longitude,
+                                    thresholdMeters,
+                                    status,
+                                  ) => _saveListener(
+                                    context,
+                                    notifier,
+                                    name,
+                                    phoneNumber,
+                                    address,
+                                    latitude,
+                                    longitude,
+                                    thresholdMeters,
+                                    status,
+                                  ),
                               onCancel: () => _cancelListenerForm(notifier),
                             ),
                             const SizedBox(height: 16),
@@ -179,14 +179,19 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                           ListenerListWidget(
                             listeners: notifier.listeners,
                             onAdd: () => _showAddListenerForm(notifier),
-                            onEdit: (listener) =>
-                                _showEditListenerForm(notifier, listener),
-                            onDelete: (listener) =>
-                                _deleteListener(notifier, listener),
-                            onImportFromContacts: () =>
-                                _importFromContacts(notifier),
-                            onTap: (listener) => 
-                                _navigateToListenerDetail(context, listener),
+                            onEdit:
+                                (listener) =>
+                                    _showEditListenerForm(notifier, listener),
+                            onDelete:
+                                (listener) =>
+                                    _deleteListener(notifier, listener),
+                            onImportFromContacts:
+                                () => _importFromContacts(notifier),
+                            onTap:
+                                (listener) => _navigateToListenerDetail(
+                                  context,
+                                  listener,
+                                ),
                           ),
                           const SizedBox(height: 24),
                         ],
@@ -215,19 +220,24 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                   Consumer<ChannelFormNotifier>(
                     builder: (context, notifier, child) {
                       return ElevatedButton(
-                        onPressed: notifier.isLoading
-                            ? null
-                            : () => _saveChannel(context, notifier),
-                        child: notifier.isLoading
-                            ? const SizedBox(
-                                height: 16,
-                                width: 16,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : Text(
-                                notifier.isEditMode ? l10n.update : l10n.create,
-                              ),
+                        onPressed:
+                            notifier.isLoading
+                                ? null
+                                : () => _saveChannel(context, notifier),
+                        child:
+                            notifier.isLoading
+                                ? const SizedBox(
+                                  height: 16,
+                                  width: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                                : Text(
+                                  notifier.isEditMode
+                                      ? l10n.update
+                                      : l10n.create,
+                                ),
                       );
                     },
                   ),
@@ -366,17 +376,14 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
+          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
         );
       }
     }
   }
 
   void _navigateToListenerDetail(
-    BuildContext context, 
+    BuildContext context,
     ListenerEntity listener,
   ) {
     context.pushNamed(ListenerDetailScreen.path, extra: listener);

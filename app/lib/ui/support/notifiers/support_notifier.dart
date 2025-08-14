@@ -13,10 +13,10 @@ class SupportNotifier extends ChangeNotifier {
     required RemoteStorageRepository remoteStorageRepository,
     required CustomSnackbar snackbar,
     required Localization localization,
-  })  : _supportRepository = supportRepository,
-        _remoteStorageRepository = remoteStorageRepository,
-        _snackbar = snackbar,
-        _localization = localization;
+  }) : _supportRepository = supportRepository,
+       _remoteStorageRepository = remoteStorageRepository,
+       _snackbar = snackbar,
+       _localization = localization;
 
   final SupportRepository _supportRepository;
   final RemoteStorageRepository _remoteStorageRepository;
@@ -29,22 +29,14 @@ class SupportNotifier extends ChangeNotifier {
   final FormGroup form = FormGroup({
     'email': FormControl<String>(
       value: '',
-      validators: [
-        Validators.required,
-        Validators.email,
-      ],
+      validators: [Validators.required, Validators.email],
     ),
-    'title': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
+    'title': FormControl<String>(value: '', validators: [Validators.required]),
     'description': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
-    'images': FormControl<List<XFile>>(
-      value: <XFile>[],
-    ),
+    'images': FormControl<List<XFile>>(value: <XFile>[]),
   });
 
   @override
@@ -85,10 +77,7 @@ class SupportNotifier extends ChangeNotifier {
         images: imageUrls,
       );
 
-      primarySnackbar(
-        _snackbar,
-        _localization.tr.ticketCreated,
-      );
+      primarySnackbar(_snackbar, _localization.tr.ticketCreated);
 
       form.reset();
     } catch (e, s) {

@@ -501,5 +501,15 @@
   "notificationsWillAppearHere": "Notifications will appear here when the bus is near this listener's location",
   "@notificationsWillAppearHere": {},
   "coordinates": "Coordinates",
-  "@coordinates": {}
+  "@coordinates": {},
+  "tutorialLocationTitle": "Location Tracking",
+  "@tutorialLocationTitle": {},
+  "tutorialLocationDescription": "Press this button to activate your location. The listeners of the activated channels will be notified when you are close to them.",
+  "@tutorialLocationDescription": {},
+  "tutorialAddChannelTitle": "Add Channel",
+  "@tutorialAddChannelTitle": {},
+  "tutorialAddChannelDescription": "Press this button to create a new channel. Channels help you organize your listeners by routes or groups.",
+  "@tutorialAddChannelDescription": {},
+  "tutorialGotIt": "Got it!",
+  "@tutorialGotIt": {}
 }

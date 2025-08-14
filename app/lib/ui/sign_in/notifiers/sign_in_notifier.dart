@@ -33,10 +33,8 @@ class SignInNotifier extends ChangeNotifier {
   final CustomSnackbar snackbar;
   final Localization localization;
   final CustomRouter router;
-  final void Function(
-    UserEntity user,
-    PreferenceEntity preference,
-  ) onSignInSuccess;
+  final void Function(UserEntity user, PreferenceEntity preference)
+  onSignInSuccess;
 
   final FormGroup form = FormGroup({
     'email': FormControl<String>(
@@ -67,15 +65,9 @@ class SignInNotifier extends ChangeNotifier {
     } on CancellOperationException {
       return;
     } on NoInternetConnectionException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.notConnected,
-      );
+      errorSnackbar(snackbar, localization.tr.notConnected);
     } catch (e, s) {
-      errorSnackbar(
-        snackbar,
-        localization.tr.generalError,
-      );
+      errorSnackbar(snackbar, localization.tr.generalError);
 
       logError(e, s);
     } finally {
@@ -99,15 +91,9 @@ class SignInNotifier extends ChangeNotifier {
     } on CancellOperationException {
       return;
     } on NoInternetConnectionException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.notConnected,
-      );
+      errorSnackbar(snackbar, localization.tr.notConnected);
     } catch (e, s) {
-      errorSnackbar(
-        snackbar,
-        localization.tr.generalError,
-      );
+      errorSnackbar(snackbar, localization.tr.generalError);
 
       logError(e, s);
     } finally {
@@ -140,35 +126,17 @@ class SignInNotifier extends ChangeNotifier {
 
       // router.pop();
     } on EmailNotVerifiedException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.signIn_emailDoesNotVerified,
-      );
+      errorSnackbar(snackbar, localization.tr.signIn_emailDoesNotVerified);
     } on InvalidCredentialException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.signIn_invalidCredential,
-      );
+      errorSnackbar(snackbar, localization.tr.signIn_invalidCredential);
     } on WrongPasswordException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.signIn_wrongPassword,
-      );
+      errorSnackbar(snackbar, localization.tr.signIn_wrongPassword);
     } on UserDisabledException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.signIn_userDisabled,
-      );
+      errorSnackbar(snackbar, localization.tr.signIn_userDisabled);
     } on NoInternetConnectionException {
-      errorSnackbar(
-        snackbar,
-        localization.tr.notConnected,
-      );
+      errorSnackbar(snackbar, localization.tr.notConnected);
     } catch (e, s) {
-      errorSnackbar(
-        snackbar,
-        localization.tr.generalError,
-      );
+      errorSnackbar(snackbar, localization.tr.generalError);
 
       logError(e, s);
     } finally {
@@ -194,9 +162,7 @@ class SignInNotifier extends ChangeNotifier {
   Future<void> goToForgotPassword() async {
     final email = await router.pushNamed<String>(
       ForgotPasswordScreen.path,
-      queryParameters: {
-        'email': form.control('email').value as String,
-      },
+      queryParameters: {'email': form.control('email').value as String},
     );
 
     if (email == null) return;

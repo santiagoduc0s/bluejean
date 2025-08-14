@@ -18,12 +18,5 @@ class ListenerNotificationEntity extends Equatable {
   final DateTime createdAt;
 
   @override
-  List<Object?> get props => [
-        id,
-        listenerId,
-        type,
-        title,
-        body,
-        createdAt,
-      ];
+  List<Object?> get props => [id, listenerId, type, title, body, createdAt];
 }

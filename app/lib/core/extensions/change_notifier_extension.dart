@@ -4,17 +4,11 @@ import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/utils/utils.dart';
 
 extension ChangeNotifierX on ChangeNotifier {
-  void logError(
-    Object error, [
-    StackTrace? stackTrace,
-  ]) {
+  void logError(Object error, [StackTrace? stackTrace]) {
     AppLogger.instance.error(error.toString(), stackTrace: stackTrace);
   }
 
-  void logDebug(
-    Object message, [
-    StackTrace? stackTrace,
-  ]) {
+  void logDebug(Object message, [StackTrace? stackTrace]) {
     AppLogger.instance.debug(message.toString(), stackTrace: stackTrace);
   }
 
@@ -23,12 +17,7 @@ extension ChangeNotifierX on ChangeNotifier {
     String text, [
     void Function()? onTap,
   ]) {
-    snackbar.show(
-      PrimarySnackBar(
-        text: text,
-        onTap: onTap,
-      ),
-    );
+    snackbar.show(PrimarySnackBar(text: text, onTap: onTap));
   }
 
   void errorSnackbar(
@@ -36,12 +25,7 @@ extension ChangeNotifierX on ChangeNotifier {
     String text, [
     void Function()? onTap,
   ]) {
-    snackbar.show(
-      ErrorSnackBar(
-        text: text,
-        onTap: onTap,
-      ),
-    );
+    snackbar.show(ErrorSnackBar(text: text, onTap: onTap));
   }
 
   Future<bool> dialogConfirm(
@@ -62,9 +46,6 @@ extension ChangeNotifierX on ChangeNotifier {
     required String message,
     required String confirmText,
   }) {
-    return dialog.info(
-      message: message,
-      confirmText: confirmText,
-    );
+    return dialog.info(message: message, confirmText: confirmText);
   }
 }

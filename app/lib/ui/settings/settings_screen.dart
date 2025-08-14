@@ -9,15 +9,13 @@ class SettingsScreen {
 
   static const path = '/settings';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (context) => SettingsNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return ChangeNotifierProvider(
+        create:
+            (context) => SettingsNotifier(
               onSignOut: () {
                 context.read<AuthNotifier>().signOut();
               },
@@ -31,9 +29,9 @@ class SettingsScreen {
               signOutUseCase: context.read(),
               deleteAccountUsecase: context.read(),
             )..initialize(),
-            child: const SettingsPage(),
-          );
-        },
-        routes: routes,
+        child: const SettingsPage(),
       );
+    },
+    routes: routes,
+  );
 }

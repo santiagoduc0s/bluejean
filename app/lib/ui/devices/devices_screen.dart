@@ -7,23 +7,22 @@ class DevicesScreen {
 
   static const path = '/devices';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) {
+  static GoRoute route({List<RouteBase> routes = const []}) {
     return GoRoute(
       path: path,
       name: path,
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (context) => DevicesNotifier(
-            deviceRepository: context.read(),
-            signOutUseCase: context.read(),
-            snackbar: context.read(),
-            localization: context.read(),
-            onSignOut: () {
-              context.read<AuthNotifier>().signOut();
-            },
-          )..loadDevices(),
+          create:
+              (context) => DevicesNotifier(
+                deviceRepository: context.read(),
+                signOutUseCase: context.read(),
+                snackbar: context.read(),
+                localization: context.read(),
+                onSignOut: () {
+                  context.read<AuthNotifier>().signOut();
+                },
+              )..loadDevices(),
           child: const DevicesPage(),
         );
       },

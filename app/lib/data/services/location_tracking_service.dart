@@ -4,9 +4,8 @@ import 'package:lune/data/services/permission_service.dart';
 import 'package:lune/domain/enums/enums.dart';
 
 class LocationTrackingService {
-  LocationTrackingService({
-    required PermissionService permissionService,
-  }) : _permissionService = permissionService;
+  LocationTrackingService({required PermissionService permissionService})
+    : _permissionService = permissionService;
 
   final PermissionService _permissionService;
 
@@ -27,11 +26,13 @@ class LocationTrackingService {
       return true;
     }
 
-    final permissionStatus =
-        await _permissionService.status(PermissionType.location);
+    final permissionStatus = await _permissionService.status(
+      PermissionType.location,
+    );
     if (permissionStatus != PermissionStatus.granted) {
-      final requestResult =
-          await _permissionService.request(PermissionType.location);
+      final requestResult = await _permissionService.request(
+        PermissionType.location,
+      );
 
       if (requestResult != PermissionStatus.granted) {
         await _permissionService.openSettings();
@@ -50,9 +51,7 @@ class LocationTrackingService {
 
       await BackgroundLocation.setAndroidConfiguration(10000);
 
-      await BackgroundLocation.startLocationService(
-        distanceFilter: 10,
-      );
+      await BackgroundLocation.startLocationService(distanceFilter: 10);
 
       BackgroundLocation.getLocationUpdates((location) {
         _positionStreamController?.add(location);
@@ -78,11 +77,13 @@ class LocationTrackingService {
   }
 
   Future<Location> getCurrentLocation() async {
-    final permissionStatus =
-        await _permissionService.status(PermissionType.location);
+    final permissionStatus = await _permissionService.status(
+      PermissionType.location,
+    );
     if (permissionStatus != PermissionStatus.granted) {
-      final requestResult =
-          await _permissionService.request(PermissionType.location);
+      final requestResult = await _permissionService.request(
+        PermissionType.location,
+      );
       if (requestResult != PermissionStatus.granted) {
         throw Exception('Location permission denied');
       }

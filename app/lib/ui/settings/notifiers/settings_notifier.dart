@@ -23,16 +23,16 @@ class SettingsNotifier extends ChangeNotifier {
     required PreferenceRepository userPreferenceRepository,
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUsecase deleteAccountUsecase,
-  })  : _localization = localization,
-        _snackbar = snackbar,
-        _dialog = dialog,
-        _saveTokenUseCase = saveTokenUseCase,
-        _permissionRepository = permissionRepository,
-        _onSignOut = onSignOut,
-        _authNotifier = authNotifier,
-        _userPreferenceRepository = userPreferenceRepository,
-        _signOutUseCase = signOutUseCase,
-        _deleteAccountUsecase = deleteAccountUsecase;
+  }) : _localization = localization,
+       _snackbar = snackbar,
+       _dialog = dialog,
+       _saveTokenUseCase = saveTokenUseCase,
+       _permissionRepository = permissionRepository,
+       _onSignOut = onSignOut,
+       _authNotifier = authNotifier,
+       _userPreferenceRepository = userPreferenceRepository,
+       _signOutUseCase = signOutUseCase,
+       _deleteAccountUsecase = deleteAccountUsecase;
 
   final PermissionRepository _permissionRepository;
   final SaveFcmTokenUseCase _saveTokenUseCase;

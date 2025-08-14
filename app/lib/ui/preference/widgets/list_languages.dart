@@ -18,7 +18,7 @@ class ListLanguages extends StatelessWidget {
         context.watch<PreferenceNotifier>().preference?.language;
 
     return SizedBox(
-      child: FilledButton.tonal(
+      child: FilledButton(
         onPressed: () async {
           var locale = await showModalBottomSheet<String?>(
             useRootNavigator: true,
@@ -52,9 +52,10 @@ class ListLanguages extends StatelessWidget {
                             color: colors.primary,
                           ),
                           title: Text(l10n.systemDefault),
-                          trailing: currentLocale == null
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == null
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('system');
                           },
@@ -65,9 +66,10 @@ class ListLanguages extends StatelessWidget {
                             style: TextStyle(fontSize: 6.space),
                           ),
                           title: Text(l10n.settings_languageEnglish),
-                          trailing: currentLocale == 'en'
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == 'en'
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('en');
                           },
@@ -78,9 +80,10 @@ class ListLanguages extends StatelessWidget {
                             style: TextStyle(fontSize: 6.space),
                           ),
                           title: Text(l10n.settings_languageSpanish),
-                          trailing: currentLocale == 'es'
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == 'es'
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('es');
                           },
@@ -102,7 +105,7 @@ class ListLanguages extends StatelessWidget {
 
           await context.read<PreferenceNotifier>().setLanguage(locale);
         },
-        style: buttonStyles.primaryFilledTonal,
+        style: buttonStyles.primaryFilled,
         child: Text(l10n.settings_language),
       ),
     );

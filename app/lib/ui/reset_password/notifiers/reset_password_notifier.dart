@@ -18,12 +18,12 @@ class ResetPasswordNotifier extends ChangeNotifier {
     required CustomSnackbar snackbar,
     required Localization localization,
     required CustomRouter router,
-  })  : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase,
-        _authRepository = authRepository,
-        _user = user,
-        _snackbar = snackbar,
-        _localization = localization,
-        _router = router;
+  }) : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase,
+       _authRepository = authRepository,
+       _user = user,
+       _snackbar = snackbar,
+       _localization = localization,
+       _router = router;
 
   final SignInWithEmailPasswordUseCase _signInWithEmailPasswordUseCase;
   final AuthRepository _authRepository;
@@ -36,17 +36,11 @@ class ResetPasswordNotifier extends ChangeNotifier {
     {
       'password': FormControl<String>(
         value: '',
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
+        validators: [Validators.required, Validators.minLength(8)],
       ),
       'newPassword': FormControl<String>(
         value: '',
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
+        validators: [Validators.required, Validators.minLength(8)],
       ),
       'repeatPassword': FormControl<String>(
         value: '',
@@ -89,27 +83,15 @@ class ResetPasswordNotifier extends ChangeNotifier {
         password: form.control('newPassword').value as String,
       );
 
-      primarySnackbar(
-        _snackbar,
-        _localization.tr.settings_passwordUpdated,
-      );
+      primarySnackbar(_snackbar, _localization.tr.settings_passwordUpdated);
 
       _router.pop();
     } on InvalidCredentialException {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.signIn_invalidCredential,
-      );
+      errorSnackbar(_snackbar, _localization.tr.signIn_invalidCredential);
     } on NoInternetConnectionException {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.notConnected,
-      );
+      errorSnackbar(_snackbar, _localization.tr.notConnected);
     } catch (e, s) {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.generalError,
-      );
+      errorSnackbar(_snackbar, _localization.tr.generalError);
 
       logError(e, s);
     } finally {
