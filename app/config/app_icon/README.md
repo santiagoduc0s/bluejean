@@ -15,6 +15,10 @@ fvm dart run icons_launcher:create --path android_icons_launcher.yaml --flavor m
 
 ### iOS
 
+1. run ./config/app_icon/regenerate_ios_icons.sh
+
+Or do manually 
+
 1. Go to ```ios/Runner/Assets.xcassets```
 2. Delete ```AppIcon-dev.appiconset```, ```AppIcon-stg.appiconset```, ```AppIcon.appiconset```
 3. 
