@@ -416,6 +416,8 @@
   "@noListenersAdded": {},
   "phoneNumberIsRequired": "El número de teléfono es requerido",
   "@phoneNumberIsRequired": {},
+  "phoneNumberInvalidFormat": "El número debe estar en formato internacional +1234567890 (código de país + número, sin espacios)",
+  "@phoneNumberInvalidFormat": {},
   "address": "Dirección",
   "@address": {},
   "setOnMap": "Ubicar en Mapa",

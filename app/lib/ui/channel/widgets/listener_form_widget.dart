@@ -85,6 +85,13 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
 
   static const String _googleApiKey = Env.googleApiKey;
 
+  // International phone number validation regex for format 
+  // +[country_code][number]
+  // Follows ITU-T E.164 standard: + followed by 1-3 digit 
+  //country code + 6-14 digits
+  // Total length: 7-15 digits (including country code)
+  static final RegExp _phoneRegex = RegExp(r'^\+[1-9]\d{6,14}$');
+
   @override
   void initState() {
     super.initState();
@@ -121,9 +128,16 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
 
   void _handleSave() {
     if (_formKey.currentState!.validate()) {
+      // Clean the phone number before saving
+      final cleanedPhoneNumber = _phoneController.text
+          .replaceAll(' ', '')
+          .replaceAll('-', '')
+          .replaceAll('(', '')
+          .replaceAll(')', '');
+
       widget.onSave(
         _nameController.text,
-        _phoneController.text,
+        cleanedPhoneNumber,
         _searchController.text.isEmpty ? null : _searchController.text,
         _latitude,
         _longitude,
@@ -285,13 +299,51 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                 decoration: InputDecoration(
                   labelText: l10n.phoneNumber,
                   border: const OutlineInputBorder(),
+                  hintText: '+1234567890',
+                  helperText: 'International format with country code',
+                  prefixIcon: const Icon(Icons.phone),
+                  errorMaxLines: 3,
                 ),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return l10n.phoneNumberIsRequired;
                   }
+
+                  // Remove any spaces, dashes, parentheses from the input
+                  final cleanedValue = value
+                      .replaceAll(' ', '')
+                      .replaceAll('-', '')
+                      .replaceAll('(', '')
+                      .replaceAll(')', '');
+
+                  // Check if the format matches international phone number
+                  if (!_phoneRegex.hasMatch(cleanedValue)) {
+                    return l10n.phoneNumberInvalidFormat;
+                  }
+
                   return null;
+                },
+                onChanged: (value) {
+                  // Auto-clean common formatting characters as user types
+                  final cleanedValue = value
+                      .replaceAll(' ', '')
+                      .replaceAll('-', '')
+                      .replaceAll('(', '')
+                      .replaceAll(')', '');
+
+                  if (cleanedValue != value) {
+                    final newPosition = cleanedValue.length;
+                    _phoneController.value = TextEditingValue(
+                      text: cleanedValue,
+                      selection: TextSelection.collapsed(
+                        offset:
+                            newPosition > cleanedValue.length
+                                ? cleanedValue.length
+                                : newPosition,
+                      ),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 16),
@@ -521,7 +573,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                     child: Text(l10n.cancel),
                   ),
                   const SizedBox(width: 8),
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: _handleSave,
                     child: Text(l10n.save),
                   ),

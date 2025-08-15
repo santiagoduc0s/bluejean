@@ -1220,6 +1220,12 @@ abstract class AppLocalizations {
   /// **'Phone number is required'**
   String get phoneNumberIsRequired;
 
+  /// No description provided for @phoneNumberInvalidFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must be in international format +1234567890 (country code + number, no spaces)'**
+  String get phoneNumberInvalidFormat;
+
   /// No description provided for @address.
   ///
   /// In en, this message translates to:

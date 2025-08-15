@@ -610,6 +610,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phoneNumberIsRequired => 'Phone number is required';
 
   @override
+  String get phoneNumberInvalidFormat =>
+      'Phone number must be in international format +1234567890 (country code + number, no spaces)';
+
+  @override
   String get address => 'Address';
 
   @override

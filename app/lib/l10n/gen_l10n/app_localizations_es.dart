@@ -612,6 +612,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get phoneNumberIsRequired => 'El número de teléfono es requerido';
 
   @override
+  String get phoneNumberInvalidFormat =>
+      'El número debe estar en formato internacional +1234567890 (código de país + número, sin espacios)';
+
+  @override
   String get address => 'Dirección';
 
   @override

@@ -349,9 +349,6 @@ class _AuthButtonsAnimatedRowState extends State<AuthButtonsAnimatedRow>
                     },
                     style: buttonStyles.primaryFilled.copyWith(
                       backgroundColor: WidgetStateProperty.all(colors.error),
-                      side: WidgetStateProperty.all(
-                        BorderSide(color: colors.surface),
-                      ),
                     ),
                     loaderColor: colors.error,
                     child: Row(

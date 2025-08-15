@@ -219,7 +219,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                   ),
                   Consumer<ChannelFormNotifier>(
                     builder: (context, notifier, child) {
-                      return ElevatedButton(
+                      return FilledButton(
                         onPressed:
                             notifier.isLoading
                                 ? null

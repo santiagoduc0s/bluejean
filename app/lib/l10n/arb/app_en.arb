@@ -416,6 +416,8 @@
   "@noListenersAdded": {},
   "phoneNumberIsRequired": "Phone number is required",
   "@phoneNumberIsRequired": {},
+  "phoneNumberInvalidFormat": "Phone number must be in international format +1234567890 (country code + number, no spaces)",
+  "@phoneNumberInvalidFormat": {},
   "address": "Address",
   "@address": {},
   "setOnMap": "Set on Map",
