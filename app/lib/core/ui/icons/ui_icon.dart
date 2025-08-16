@@ -5,4 +5,8 @@ import 'package:flutter/material.dart';
 abstract class UIIcon {
   /// Logo icon.
   Widget logo({double? size});
+
+  Widget downloadAndroid({double? width});
+
+  Widget downloadIOS({double? width});
 }

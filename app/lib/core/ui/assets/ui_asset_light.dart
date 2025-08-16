@@ -10,4 +10,10 @@ class UIAssetLight implements UIAsset {
 
   @override
   String get logo => Assets.light.images.logo.path;
+
+  @override
+  String get downloadAndroid => Assets.light.icons.downloadAndroid;
+
+  @override
+  String get downloadApple => Assets.light.icons.downloadApple;
 }

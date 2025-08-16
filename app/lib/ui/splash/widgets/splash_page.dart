@@ -10,6 +10,7 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final iconProvider = context.icons;
     final h = MediaQuery.of(context).size.height;
+    final colors = context.colors;
 
     return Scaffold(
       body: Center(
@@ -41,7 +42,8 @@ class SplashPage extends StatelessWidget {
               duration: 500.ms,
               curve: Curves.easeInOut,
             )
-
+            // ── Add shimmer effect ──────────────────────────────────
+            .shimmer(duration: 1200.ms, color: colors.primary)
             // ── 3. slide-out + fade-out ─────────────────────────────
             .then()
             .move(

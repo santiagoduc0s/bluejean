@@ -8,4 +8,8 @@ extension ContextExt on BuildContext {
 
   bool get isPortrait =>
       MediaQuery.of(this).orientation == Orientation.portrait;
+
+  bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
+
+  bool get isLightMode => Theme.of(this).brightness == Brightness.light;
 }
