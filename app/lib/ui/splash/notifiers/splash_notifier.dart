@@ -22,7 +22,7 @@ class SplashNotifier extends ChangeNotifier {
   Future<void> initialize() async {
     await Future.delayed(3800.ms, () {}); // Custom animation
 
-    if (kDebugMode) {
+    if (kIsWeb) {
       router.goNamed(WebLandingScreen.path);
       return;
     }

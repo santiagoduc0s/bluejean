@@ -225,7 +225,7 @@ class AppGoRouter extends CustomRouter {
 
       final delay = Future.delayed(2500.ms, () {}); // Min time native splash
 
-      if (kDebugMode) {
+      if (kIsWeb) {
         _isInitialized = true;
         return;
       }
@@ -265,7 +265,7 @@ class AppGoRouter extends CustomRouter {
       return null;
     }
 
-    if (kDebugMode) {
+    if (kIsWeb) {
       return null;
     }
 

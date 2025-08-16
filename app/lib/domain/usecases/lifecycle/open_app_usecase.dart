@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class OpenAppUseCase {
@@ -26,9 +27,11 @@ class OpenAppUseCase {
 
     final preference = await _preferenceRepository.getCurrentPreference();
 
-    final token = await _messagingRepository.getFCMToken();
+    if (!kIsWeb) {
+      final token = await _messagingRepository.getFCMToken();
 
-    await _deviceRepository.updateDevice(fcmToken: token);
+      await _deviceRepository.updateDevice(fcmToken: token);
+    }
 
     return {'device': device, 'user': user, 'preference': preference};
   }

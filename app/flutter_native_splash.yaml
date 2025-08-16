@@ -15,8 +15,8 @@ flutter_native_splash:
     image_dark: config/splash_screen/android/dark.png
     icon_background_color_dark: "#27282A"
 
-  color_web: "#f7f9ff"
-  color_dark_web: "#27282A"
+  color_web: "#fff8f3"
+  color_dark_web: "#18130b"
 
   image_web: config/splash_screen/web/light.png
   image_dark_web: config/splash_screen/web/dark.png
