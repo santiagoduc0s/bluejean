@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -14,6 +15,7 @@ import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/ui.dart';
+import 'package:lune/ui/web_landing/web_landing_screen.dart';
 import 'package:provider/provider.dart';
 
 /// To allow user without sing-in do the next:
@@ -52,123 +54,7 @@ class AppGoRouter extends CustomRouter {
       navigatorKey: AppGlobalKey.rootNavigatorKey,
       initialLocation: SplashScreen.path,
       debugLogDiagnostics: true,
-      routes: [
-        SplashScreen.route(),
-        PublicOnboardScreen.route(),
-        SignInScreen.route(
-          routes: [SignUpScreen.route(), ForgotPasswordScreen.route()],
-        ),
-        StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) {
-            final l10n = context.l10n;
-            final isPortrait =
-                MediaQuery.of(context).orientation == Orientation.portrait;
-
-            Future<void> onDestinationSelected(int index) async {
-              unawaited(HapticFeedback.selectionClick());
-              if (authNotifier.isNotAuthenticated && index == 0) {
-                final dialog = context.read<CustomDialog>();
-                var wantToSignIn = await dialog.showWithoutContext<bool>(
-                  builder:
-                      (context) => ConfirmDialog(
-                        message: l10n.confirmSignInProfile,
-                        confirmText: l10n.iWantIt,
-                        cancelText: l10n.cancel,
-                      ),
-                );
-
-                wantToSignIn ??= false;
-
-                if (wantToSignIn) {
-                  await pushNamed<void>(SignInScreen.path);
-                  if (authNotifier.isNotAuthenticated) return;
-                } else {
-                  return;
-                }
-              }
-              navigationShell.goBranch(
-                index,
-                initialLocation: index == navigationShell.currentIndex,
-              );
-            }
-
-            return isPortrait
-                ? Scaffold(
-                  body: navigationShell,
-                  bottomNavigationBar: NavigationBar(
-                    selectedIndex: navigationShell.currentIndex,
-                    onDestinationSelected: onDestinationSelected,
-                    destinations: [
-                      NavigationDestination(
-                        icon: const Icon(Icons.person),
-                        label: l10n.profile,
-                      ),
-                      NavigationDestination(
-                        icon: const Icon(Icons.home),
-                        label: l10n.home,
-                      ),
-                      NavigationDestination(
-                        icon: const Icon(Icons.settings),
-                        label: l10n.settings,
-                      ),
-                    ],
-                  ),
-                )
-                : Scaffold(
-                  body: Row(
-                    children: [
-                      NavigationRail(
-                        selectedIndex: navigationShell.currentIndex,
-                        onDestinationSelected: onDestinationSelected,
-                        labelType: NavigationRailLabelType.all,
-                        destinations: [
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.person),
-                            label: Text(l10n.profile),
-                          ),
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.home),
-                            label: Text(l10n.home),
-                          ),
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.settings),
-                            label: Text(l10n.settings),
-                          ),
-                        ],
-                      ),
-                      Expanded(child: navigationShell),
-                    ],
-                  ),
-                );
-          },
-          branches: [
-            StatefulShellBranch(routes: [ProfileScreen.route()]),
-            StatefulShellBranch(
-              routes: [
-                HomeScreen.route(
-                  routes: [
-                    ChannelFormScreen.route(),
-                    LocationPickerScreen.route(),
-                    ListenerDetailScreen.route(),
-                  ],
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                SettingsScreen.route(
-                  routes: [
-                    TermsConditionsScreen.route(),
-                    PrivacyPolicyScreen.route(),
-                    SupportScreen.route(),
-                    DevicesScreen.route(),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
+      routes: kIsWeb ? _buildWebRoutes() : _buildMobileRoutes(),
       redirect: _redirect,
     );
   }
@@ -185,6 +71,136 @@ class AppGoRouter extends CustomRouter {
     '${SignInScreen.path}${ForgotPasswordScreen.path}',
     PublicOnboardScreen.path,
   ];
+
+  List<RouteBase> _buildWebRoutes() {
+    return [
+      SplashScreen.route(),
+      WebLandingScreen.route(),
+      TermsConditionsScreen.route(),
+      PrivacyPolicyScreen.route(),
+      SupportScreen.route(),
+    ];
+  }
+
+  List<RouteBase> _buildMobileRoutes() {
+    return [
+      SplashScreen.route(),
+      PublicOnboardScreen.route(),
+      SignInScreen.route(
+        routes: [SignUpScreen.route(), ForgotPasswordScreen.route()],
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          final l10n = context.l10n;
+          final isPortrait =
+              MediaQuery.of(context).orientation == Orientation.portrait;
+
+          Future<void> onDestinationSelected(int index) async {
+            unawaited(HapticFeedback.selectionClick());
+            if (_authNotifier.isNotAuthenticated && index == 0) {
+              final dialog = context.read<CustomDialog>();
+              var wantToSignIn = await dialog.showWithoutContext<bool>(
+                builder:
+                    (context) => ConfirmDialog(
+                      message: l10n.confirmSignInProfile,
+                      confirmText: l10n.iWantIt,
+                      cancelText: l10n.cancel,
+                    ),
+              );
+
+              wantToSignIn ??= false;
+
+              if (wantToSignIn) {
+                await pushNamed<void>(SignInScreen.path);
+                if (_authNotifier.isNotAuthenticated) return;
+              } else {
+                return;
+              }
+            }
+            navigationShell.goBranch(
+              index,
+              initialLocation: index == navigationShell.currentIndex,
+            );
+          }
+
+          return isPortrait
+              ? Scaffold(
+                body: navigationShell,
+                bottomNavigationBar: NavigationBar(
+                  selectedIndex: navigationShell.currentIndex,
+                  onDestinationSelected: onDestinationSelected,
+                  destinations: [
+                    NavigationDestination(
+                      icon: const Icon(Icons.person),
+                      label: l10n.profile,
+                    ),
+                    NavigationDestination(
+                      icon: const Icon(Icons.home),
+                      label: l10n.home,
+                    ),
+                    NavigationDestination(
+                      icon: const Icon(Icons.settings),
+                      label: l10n.settings,
+                    ),
+                  ],
+                ),
+              )
+              : Scaffold(
+                body: Row(
+                  children: [
+                    NavigationRail(
+                      selectedIndex: navigationShell.currentIndex,
+                      onDestinationSelected: onDestinationSelected,
+                      labelType: NavigationRailLabelType.all,
+                      destinations: [
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.person),
+                          label: Text(l10n.profile),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.home),
+                          label: Text(l10n.home),
+                        ),
+                        NavigationRailDestination(
+                          icon: const Icon(Icons.settings),
+                          label: Text(l10n.settings),
+                        ),
+                      ],
+                    ),
+                    Expanded(child: navigationShell),
+                  ],
+                ),
+              );
+        },
+        branches: [
+          StatefulShellBranch(routes: [ProfileScreen.route()]),
+          StatefulShellBranch(
+            routes: [
+              HomeScreen.route(
+                routes: [
+                  ChannelFormScreen.route(),
+                  LocationPickerScreen.route(),
+                  ListenerDetailScreen.route(),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              SettingsScreen.route(
+                routes: [
+                  TermsConditionsScreen.route(),
+                  PrivacyPolicyScreen.route(),
+                  SupportScreen.route(),
+                  DevicesScreen.route(),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    ];
+  }
 
   Future<void> _initialize(BuildContext context) async {
     if (!context.mounted) return;
@@ -208,6 +224,11 @@ class AppGoRouter extends CustomRouter {
       final usecase = context.read<OpenAppUseCase>();
 
       final delay = Future.delayed(2500.ms, () {}); // Min time native splash
+
+      if (kDebugMode) {
+        _isInitialized = true;
+        return;
+      }
 
       final data = await usecase.call();
 
@@ -241,6 +262,10 @@ class AppGoRouter extends CustomRouter {
     }
 
     if (state.matchedLocation == SplashScreen.path) {
+      return null;
+    }
+
+    if (kDebugMode) {
       return null;
     }
 

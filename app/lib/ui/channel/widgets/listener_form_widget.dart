@@ -85,9 +85,9 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
 
   static const String _googleApiKey = Env.googleApiKey;
 
-  // International phone number validation regex for format 
+  // International phone number validation regex for format
   // +[country_code][number]
-  // Follows ITU-T E.164 standard: + followed by 1-3 digit 
+  // Follows ITU-T E.164 standard: + followed by 1-3 digit
   //country code + 6-14 digits
   // Total length: 7-15 digits (including country code)
   static final RegExp _phoneRegex = RegExp(r'^\+[1-9]\d{6,14}$');
@@ -573,10 +573,7 @@ class _ListenerFormWidgetState extends State<ListenerFormWidget> {
                     child: Text(l10n.cancel),
                   ),
                   const SizedBox(width: 8),
-                  FilledButton(
-                    onPressed: _handleSave,
-                    child: Text(l10n.save),
-                  ),
+                  FilledButton(onPressed: _handleSave, child: Text(l10n.save)),
                 ],
               ),
             ],

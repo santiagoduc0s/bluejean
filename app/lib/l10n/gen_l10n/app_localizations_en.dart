@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Lune';
+  String get appName => 'Bus Escolares';
 
   @override
   String get profile => 'Profile';
@@ -451,11 +451,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_birthday => 'Enter your birthday';
 
   @override
-  String get onboard_title => 'School Bus Tracker';
+  String get onboard_title => 'Bus Route Assistant';
 
   @override
   String get onboard_description =>
-      'Keep families informed when you\'re near their homes. This app automatically notifies parents via WhatsApp when the school bus is approaching their location.';
+      'Drive your school bus route while the app automatically notifies parents when you\'re approaching their pickup points. Simple, hands-free communication for drivers.';
 
   @override
   String get onboard_start => 'Get Started';
@@ -751,4 +751,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorialGotIt => 'Got it!';
+
+  @override
+  String get webKeyFeatures => 'Key Features';
+
+  @override
+  String get webSimpleRouteDriving => 'Simple Route Driving';
+
+  @override
+  String get webSimpleRouteDrivingDescription =>
+      'Just drive your route normally - the app handles everything automatically in the background';
+
+  @override
+  String get webHandsFreeOperation => 'Hands-Free Operation';
+
+  @override
+  String get webHandsFreeOperationDescription =>
+      'When you get close to student pickup points, parents are automatically notified - no action needed from you';
+
+  @override
+  String get webEasyRouteSetup => 'Easy Route Setup';
+
+  @override
+  String get webEasyRouteSetupDescription =>
+      'Set up your student pickup points once, then just drive - the app does the rest';
+
+  @override
+  String webCopyright(String appName) {
+    return '© 2025 $appName. All rights reserved.';
+  }
 }

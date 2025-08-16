@@ -9,7 +9,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appName => 'Lune';
+  String get appName => 'Bus Escolares';
 
   @override
   String get profile => 'Perfil';
@@ -453,11 +453,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get enter_birthday => 'Introduce tu cumpleaños';
 
   @override
-  String get onboard_title => 'Rastreador de Autobús Escolar';
+  String get onboard_title => 'Asistente de Ruta de Autobús';
 
   @override
   String get onboard_description =>
-      'Mantén a las familias informadas cuando estés cerca de sus hogares. Esta aplicación notifica automáticamente a los padres vía WhatsApp cuando el autobús escolar se acerca a su ubicación.';
+      'Conduce tu ruta de autobús escolar mientras la aplicación notifica automáticamente a los padres cuando te acercas a sus puntos de recogida. Comunicación simple y sin intervención manual para conductores.';
 
   @override
   String get onboard_start => 'Comenzar';
@@ -756,4 +756,33 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tutorialGotIt => '¡Entendido!';
+
+  @override
+  String get webKeyFeatures => 'Características Principales';
+
+  @override
+  String get webSimpleRouteDriving => 'Conducción de Ruta Simple';
+
+  @override
+  String get webSimpleRouteDrivingDescription =>
+      'Solo conduce tu ruta normalmente - la aplicación maneja todo automáticamente en segundo plano';
+
+  @override
+  String get webHandsFreeOperation => 'Operación Sin Intervención Manual';
+
+  @override
+  String get webHandsFreeOperationDescription =>
+      'Cuando te acercas a los puntos de recogida de estudiantes, los padres son notificados automáticamente - no necesitas hacer nada';
+
+  @override
+  String get webEasyRouteSetup => 'Configuración Fácil de Ruta';
+
+  @override
+  String get webEasyRouteSetupDescription =>
+      'Configura los puntos de recogida de estudiantes una vez, luego solo conduce - la aplicación hace el resto';
+
+  @override
+  String webCopyright(String appName) {
+    return '© 2025 $appName. Todos los derechos reservados.';
+  }
 }

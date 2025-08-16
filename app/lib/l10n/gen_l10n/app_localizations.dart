@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Lune'**
+  /// **'Bus Escolares'**
   String get appName;
 
   /// No description provided for @profile.
@@ -935,13 +935,13 @@ abstract class AppLocalizations {
   /// No description provided for @onboard_title.
   ///
   /// In en, this message translates to:
-  /// **'School Bus Tracker'**
+  /// **'Bus Route Assistant'**
   String get onboard_title;
 
   /// No description provided for @onboard_description.
   ///
   /// In en, this message translates to:
-  /// **'Keep families informed when you\'re near their homes. This app automatically notifies parents via WhatsApp when the school bus is approaching their location.'**
+  /// **'Drive your school bus route while the app automatically notifies parents when you\'re approaching their pickup points. Simple, hands-free communication for drivers.'**
   String get onboard_description;
 
   /// No description provided for @onboard_start.
@@ -1483,6 +1483,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Got it!'**
   String get tutorialGotIt;
+
+  /// No description provided for @webKeyFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Features'**
+  String get webKeyFeatures;
+
+  /// No description provided for @webSimpleRouteDriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple Route Driving'**
+  String get webSimpleRouteDriving;
+
+  /// No description provided for @webSimpleRouteDrivingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Just drive your route normally - the app handles everything automatically in the background'**
+  String get webSimpleRouteDrivingDescription;
+
+  /// No description provided for @webHandsFreeOperation.
+  ///
+  /// In en, this message translates to:
+  /// **'Hands-Free Operation'**
+  String get webHandsFreeOperation;
+
+  /// No description provided for @webHandsFreeOperationDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'When you get close to student pickup points, parents are automatically notified - no action needed from you'**
+  String get webHandsFreeOperationDescription;
+
+  /// No description provided for @webEasyRouteSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy Route Setup'**
+  String get webEasyRouteSetup;
+
+  /// No description provided for @webEasyRouteSetupDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your student pickup points once, then just drive - the app does the rest'**
+  String get webEasyRouteSetupDescription;
+
+  /// No description provided for @webCopyright.
+  ///
+  /// In en, this message translates to:
+  /// **'© 2025 {appName}. All rights reserved.'**
+  String webCopyright(String appName);
 }
 
 class _AppLocalizationsDelegate

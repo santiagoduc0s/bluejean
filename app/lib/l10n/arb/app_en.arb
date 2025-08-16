@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "Lune",
+  "appName": "Bus Escolares",
   "@appName": {},
   "profile": "Profile",
   "@profile": {},
@@ -308,9 +308,9 @@
   "@calculate": {},
   "enter_birthday": "Enter your birthday",
   "@enter_birthday": {},
-  "onboard_title": "School Bus Tracker",
+  "onboard_title": "Bus Route Assistant",
   "@onboard_title": {},
-  "onboard_description": "Keep families informed when you're near their homes. This app automatically notifies parents via WhatsApp when the school bus is approaching their location.",
+  "onboard_description": "Drive your school bus route while the app automatically notifies parents when you're approaching their pickup points. Simple, hands-free communication for drivers.",
   "@onboard_description": {},
   "onboard_start": "Get Started",
   "@onboard_start": {},
@@ -513,5 +513,27 @@
   "tutorialAddChannelDescription": "Press this button to create a new channel. Channels help you organize your listeners by routes or groups.",
   "@tutorialAddChannelDescription": {},
   "tutorialGotIt": "Got it!",
-  "@tutorialGotIt": {}
+  "@tutorialGotIt": {},
+  "webKeyFeatures": "Key Features",
+  "@webKeyFeatures": {},
+  "webSimpleRouteDriving": "Simple Route Driving",
+  "@webSimpleRouteDriving": {},
+  "webSimpleRouteDrivingDescription": "Just drive your route normally - the app handles everything automatically in the background",
+  "@webSimpleRouteDrivingDescription": {},
+  "webHandsFreeOperation": "Hands-Free Operation",
+  "@webHandsFreeOperation": {},
+  "webHandsFreeOperationDescription": "When you get close to student pickup points, parents are automatically notified - no action needed from you",
+  "@webHandsFreeOperationDescription": {},
+  "webEasyRouteSetup": "Easy Route Setup",
+  "@webEasyRouteSetup": {},
+  "webEasyRouteSetupDescription": "Set up your student pickup points once, then just drive - the app does the rest",
+  "@webEasyRouteSetupDescription": {},
+  "webCopyright": "© 2025 {appName}. All rights reserved.",
+  "@webCopyright": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  }
 }

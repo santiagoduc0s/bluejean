@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "appName": "Lune",
+  "appName": "Bus Escolares",
   "@appName": {},
   "profile": "Perfil",
   "@profile": {},
@@ -308,9 +308,9 @@
   "@calculate": {},
   "enter_birthday": "Introduce tu cumpleaños",
   "@enter_birthday": {},
-  "onboard_title": "Rastreador de Autobús Escolar",
+  "onboard_title": "Asistente de Ruta de Autobús",
   "@onboard_title": {},
-  "onboard_description": "Mantén a las familias informadas cuando estés cerca de sus hogares. Esta aplicación notifica automáticamente a los padres vía WhatsApp cuando el autobús escolar se acerca a su ubicación.",
+  "onboard_description": "Conduce tu ruta de autobús escolar mientras la aplicación notifica automáticamente a los padres cuando te acercas a sus puntos de recogida. Comunicación simple y sin intervención manual para conductores.",
   "@onboard_description": {},
   "onboard_start": "Comenzar",
   "@onboard_start": {},
@@ -513,5 +513,27 @@
   "tutorialAddChannelDescription": "Presiona este botón para crear un nuevo canal. Los canales te ayudan a organizar tus oyentes por rutas o grupos.",
   "@tutorialAddChannelDescription": {},
   "tutorialGotIt": "¡Entendido!",
-  "@tutorialGotIt": {}
+  "@tutorialGotIt": {},
+  "webKeyFeatures": "Características Principales",
+  "@webKeyFeatures": {},
+  "webSimpleRouteDriving": "Conducción de Ruta Simple",
+  "@webSimpleRouteDriving": {},
+  "webSimpleRouteDrivingDescription": "Solo conduce tu ruta normalmente - la aplicación maneja todo automáticamente en segundo plano",
+  "@webSimpleRouteDrivingDescription": {},
+  "webHandsFreeOperation": "Operación Sin Intervención Manual",
+  "@webHandsFreeOperation": {},
+  "webHandsFreeOperationDescription": "Cuando te acercas a los puntos de recogida de estudiantes, los padres son notificados automáticamente - no necesitas hacer nada",
+  "@webHandsFreeOperationDescription": {},
+  "webEasyRouteSetup": "Configuración Fácil de Ruta",
+  "@webEasyRouteSetup": {},
+  "webEasyRouteSetupDescription": "Configura los puntos de recogida de estudiantes una vez, luego solo conduce - la aplicación hace el resto",
+  "@webEasyRouteSetupDescription": {},
+  "webCopyright": "© 2025 {appName}. Todos los derechos reservados.",
+  "@webCopyright": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  }
 }
