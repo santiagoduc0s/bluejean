@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/fields/reactive_multi_image_picker_field.dart';
@@ -120,14 +121,16 @@ class SupportImagePickerField extends StatelessWidget {
                       label: Text(l10n.gallery),
                     ),
                   ),
-                  2.spaceX,
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: isProcessing ? null : pickFromCamera,
-                      icon: const Icon(Icons.camera_alt),
-                      label: Text(l10n.camera),
+                  if (!kIsWeb) ...{
+                    2.spaceX,
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: isProcessing ? null : pickFromCamera,
+                        icon: const Icon(Icons.camera_alt),
+                        label: Text(l10n.camera),
+                      ),
                     ),
-                  ),
+                  },
                 ],
               ),
             ],

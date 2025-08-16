@@ -2,4 +2,8 @@
 abstract class UIAsset {
   /// Brand logo.
   String get logo;
+
+  String get downloadAndroid;
+
+  String get downloadApple;
 }

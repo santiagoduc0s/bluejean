@@ -10,4 +10,10 @@ class UIAssetDark implements UIAsset {
 
   @override
   String get logo => Assets.dark.images.logo.path;
+
+  @override
+  String get downloadAndroid => Assets.dark.icons.downloadAndroid;
+
+  @override
+  String get downloadApple => Assets.dark.icons.downloadApple;
 }

@@ -47,11 +47,17 @@ class $AssetsLightGen {
 class $AssetsDarkIconsGen {
   const $AssetsDarkIconsGen();
 
+  /// File path: assets/dark/icons/download_android.svg
+  String get downloadAndroid => 'assets/dark/icons/download_android.svg';
+
+  /// File path: assets/dark/icons/download_apple.svg
+  String get downloadApple => 'assets/dark/icons/download_apple.svg';
+
   /// File path: assets/dark/icons/logo.svg
   String get logo => 'assets/dark/icons/logo.svg';
 
   /// List of all assets
-  List<String> get values => [logo];
+  List<String> get values => [downloadAndroid, downloadApple, logo];
 }
 
 class $AssetsDarkImagesGen {
@@ -70,11 +76,17 @@ class $AssetsDarkImagesGen {
 class $AssetsLightIconsGen {
   const $AssetsLightIconsGen();
 
+  /// File path: assets/light/icons/download_android.svg
+  String get downloadAndroid => 'assets/light/icons/download_android.svg';
+
+  /// File path: assets/light/icons/download_apple.svg
+  String get downloadApple => 'assets/light/icons/download_apple.svg';
+
   /// File path: assets/light/icons/logo.svg
   String get logo => 'assets/light/icons/logo.svg';
 
   /// List of all assets
-  List<String> get values => [logo];
+  List<String> get values => [downloadAndroid, downloadApple, logo];
 }
 
 class $AssetsLightImagesGen {
