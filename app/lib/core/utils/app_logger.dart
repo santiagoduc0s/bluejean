@@ -35,19 +35,26 @@ class AppLogger {
       case LogLevel.warning:
         logger.w(message, stackTrace: stackTrace);
       case LogLevel.error:
+        unawaited(
+          _sendLogToServer(
+            message: message,
+            type: level,
+            stackTrace: stackTrace?.toString(),
+            metadata: Map<String, dynamic>.from(metadata),
+          ),
+        );
         logger.e(message, stackTrace: stackTrace);
       case LogLevel.critical:
+        unawaited(
+          _sendLogToServer(
+            message: message,
+            type: level,
+            stackTrace: stackTrace?.toString(),
+            metadata: Map<String, dynamic>.from(metadata),
+          ),
+        );
         logger.f(message, stackTrace: stackTrace);
     }
-
-    unawaited(
-      _sendLogToServer(
-        message: message,
-        type: level,
-        stackTrace: stackTrace?.toString(),
-        metadata: Map<String, dynamic>.from(metadata),
-      ),
-    );
   }
 
   Future<void> _sendLogToServer({
