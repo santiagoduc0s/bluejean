@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use Twilio\Rest\Client;
 use Twilio\Exceptions\TwilioException;
 
@@ -42,6 +43,12 @@ class TwilioService
     public function sendWhatsApp(string $to, string $message): array
     {
         try {
+            Log::info('Sending WhatsApp message', [
+                'to' => $to,
+                'message_length' => strlen($message),
+                'from' => $this->fromNumber
+            ]);
+
             $twilioMessage = $this->twilio->messages->create(
                 to: 'whatsapp:' . $to,
                 options: [
@@ -50,7 +57,7 @@ class TwilioService
                 ]
             );
 
-            return [
+            $result = [
                 'success' => true,
                 'sid' => $twilioMessage->sid,
                 'status' => $twilioMessage->status,
@@ -58,13 +65,42 @@ class TwilioService
                 'message' => 'WhatsApp message sent successfully'
             ];
 
+            \App\Models\Log::createLog(
+                message: 'WhatsApp message sent successfully',
+                type: \App\Models\Log::TYPE_INFO,
+                metadata: [
+                    'to' => $to,
+                    'sid' => $twilioMessage->sid,
+                    'status' => $twilioMessage->status,
+                    'price' => $twilioMessage->price,
+                    'price_unit' => $twilioMessage->priceUnit,
+                    'direction' => $twilioMessage->direction,
+                    'uri' => $twilioMessage->uri,
+                    'date_sent' => $twilioMessage->dateSent?->format('Y-m-d H:i:s'),
+                    'date_updated' => $twilioMessage->dateUpdated?->format('Y-m-d H:i:s'),
+                    'body' => $twilioMessage->body
+                ],
+            );
+
+            return $result;
+
         } catch (TwilioException $e) {
-            \Log::error('Twilio WhatsApp error', [
-                'to' => $to,
-                'message' => $message,
-                'error' => $e->getMessage(),
-                'code' => $e->getCode()
-            ]);
+            \App\Models\Log::createLog(
+                message: 'WhatsApp message sent successfully',
+                type: \App\Models\Log::TYPE_ERROR,
+                metadata: [
+                    'to' => $to,
+                    'sid' => $twilioMessage->sid,
+                    'status' => $twilioMessage->status,
+                    'price' => $twilioMessage->price,
+                    'price_unit' => $twilioMessage->priceUnit,
+                    'direction' => $twilioMessage->direction,
+                    'uri' => $twilioMessage->uri,
+                    'date_sent' => $twilioMessage->dateSent?->format('Y-m-d H:i:s'),
+                    'date_updated' => $twilioMessage->dateUpdated?->format('Y-m-d H:i:s'),
+                    'body' => $twilioMessage->body
+                ],
+            );
 
             return [
                 'success' => false,

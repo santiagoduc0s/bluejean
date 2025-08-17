@@ -21,12 +21,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
         $isLocal = $this->app->environment('local');
 
         Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
-                   $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+            return true;
         });
     }
 
@@ -55,10 +50,26 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     protected function gate(): void
     {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+        Gate::define('viewTelescope', function ($user = null) {
+            // Allow in local environment
+            if ($this->app->environment('local')) {
+                return true;
+            }
+
+            // Check if user is authenticated via Filament admin panel
+            $adminGuard = auth('user_admin');
+
+            if ($adminGuard->check()) {
+                // User is authenticated with Filament admin panel
+                return true;
+            }
+
+            // Fallback: check if user is passed and is a UserAdmin instance
+            if ($user && $user instanceof \App\Models\UserAdmin) {
+                return true;
+            }
+
+            return false;
         });
     }
 }

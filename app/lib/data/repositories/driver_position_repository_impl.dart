@@ -48,11 +48,11 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
           final now = DateTime.now();
           if (_lastSentTime == null ||
               now.difference(_lastSentTime!).inSeconds >= 10) {
+            _lastSentTime = now;
             await storePosition(
               latitude: position.latitude!,
               longitude: position.longitude!,
             );
-            _lastSentTime = now;
           }
         } catch (e) {
           // Handle error silently or use proper logging
