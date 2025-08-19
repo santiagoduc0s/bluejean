@@ -45,4 +45,10 @@ return [
         'whatsapp_from' => env('TWILIO_WHATSAPP_FROM'), // e.g., whatsapp:+14155238886
     ],
 
+    'meta' => [
+        'access_token' => env('META_ACCESS_TOKEN'),
+        'phone_number_id' => env('META_PHONE_NUMBER_ID'),
+        'whatsapp_business_account_id' => env('META_WHATSAPP_BUSINESS_ACCOUNT_ID'),
+    ],
+
 ];

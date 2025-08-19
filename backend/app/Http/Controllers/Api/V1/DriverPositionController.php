@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\ProcessGeofencingNotifications;
+use App\Jobs\ProcessGeofencingNotificationsJob;
 use App\Models\DriverPosition;
 use Illuminate\Http\Request;
 
@@ -33,7 +33,7 @@ class DriverPositionController extends Controller
             'longitude' => $validated['longitude'],
         ]);
 
-        ProcessGeofencingNotifications::dispatchSync($driverPosition);
+        ProcessGeofencingNotificationsJob::dispatchSync($driverPosition);
 
         return response()->noContent();
     }

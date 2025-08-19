@@ -6,7 +6,7 @@ use App\Models\DriverPosition;
 use App\Models\Listener;
 use App\Models\ListenerNotification;
 use App\Services\GeolocationService;
-use App\Services\TwilioService;
+use App\Services\MetaService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Log;
  * Geofencing Notifications Job
  *
  * Processes geofencing notifications for driver positions.
+ * Sends WhatsApp notifications via Meta Business API using approved templates.
  * Can be run synchronously or asynchronously via queue.
  */
-class ProcessGeofencingNotifications implements ShouldQueue
+class ProcessGeofencingNotificationsJob implements ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
 
@@ -50,7 +51,7 @@ class ProcessGeofencingNotifications implements ShouldQueue
      * Execute the job.
      */
     public function handle(
-        TwilioService $twilioService,
+        MetaService $metaService,
         GeolocationService $geolocationService,
     ): void {
         $user = $this->driverPosition->user;
@@ -70,7 +71,7 @@ class ProcessGeofencingNotifications implements ShouldQueue
         foreach ($listeners as $listener) {
             $this->processListener(
                 listener: $listener,
-                twilioService: $twilioService,
+                metaService: $metaService,
                 geolocationService: $geolocationService,
             );
         }
@@ -78,7 +79,7 @@ class ProcessGeofencingNotifications implements ShouldQueue
 
     private function processListener(
         Listener $listener,
-        TwilioService $twilioService,
+        MetaService $metaService,
         GeolocationService $geolocationService,
     ): void {
         Log::info('Checking if within radius', [
@@ -102,7 +103,7 @@ class ProcessGeofencingNotifications implements ShouldQueue
             if ($listener->canSendNotification()) {
                 $this->createNotification(
                     listener: $listener,
-                    twilioService: $twilioService,
+                    metaService: $metaService,
                     geolocationService: $geolocationService,
                 );
             }
@@ -111,7 +112,7 @@ class ProcessGeofencingNotifications implements ShouldQueue
 
     private function createNotification(
         Listener $listener,
-        TwilioService $twilioService,
+        MetaService $metaService,
         GeolocationService $geolocationService,
     ): void {
         $distance = $geolocationService->calculateDistance(
@@ -123,41 +124,60 @@ class ProcessGeofencingNotifications implements ShouldQueue
 
         $formattedDistance = $geolocationService->formatDistance($distance);
 
-        $title = __('notifications.bus_near_title');
+        // $title = __('notifications.bus_near_title');
 
-        if ($listener->address) {
-            // $body = __('notifications.bus_near_body_with_address', [
-            $body = __('notifications.bus_near_body', [
-                'distance' => $formattedDistance,
-                'listener_name' => $listener->name,
-                // 'address' => $listener->address
-            ]);
-        } else {
-            $body = __('notifications.bus_near_body', [
-                'distance' => $formattedDistance,
-                'listener_name' => $listener->name
-            ]);
-        }
+        // if ($listener->address) {
+        //     // $body = __('notifications.bus_near_body_with_address', [
+        //     $body = __('notifications.bus_near_body', [
+        //         'distance' => $formattedDistance,
+        //         'listener_name' => $listener->name,
+        //         // 'address' => $listener->address
+        //     ]);
+        // } else {
+        //     $body = __('notifications.bus_near_body', [
+        //         'distance' => $formattedDistance,
+        //         'listener_name' => $listener->name
+        //     ]);
+        // }
+
+        $template = 'driver_approaching';
 
         ListenerNotification::create([
             'listener_id' => $listener->id,
-            'type' => 'go-outside',
-            'title' => $title,
-            'body' => $body,
+            'type' => $template,
         ]);
 
-        $message = "🚌 *{$title}*\n\n{$body}";
-
         try {
-            $twilioService->sendWhatsApp(
+            $result = $metaService->sendTemplate(
                 to: $listener->phone_number,
-                message: $message,
+                templateName: $template,
+                languageCode: 'es',
+                parameters: [$formattedDistance]
             );
+
+            if ($result['success']) {
+                Log::info('WhatsApp template notification sent successfully', [
+                    'phone' => $listener->phone_number,
+                    'template' => $template,
+                    'message_id' => $result['messages'][0]['id'] ?? null,
+                    'listener_id' => $listener->id,
+                    'distance' => $formattedDistance
+                ]);
+            } else {
+                Log::error('WhatsApp template notification failed', [
+                    'phone' => $listener->phone_number,
+                    'template' => $template,
+                    'error' => $result['error'] ?? 'Unknown error',
+                    'code' => $result['code'] ?? 'No code',
+                    'listener_id' => $listener->id
+                ]);
+            }
         } catch (\Exception $e) {
-            Log::error('WhatsApp notification failed', [
+            Log::error('WhatsApp notification exception', [
                 'phone' => $listener->phone_number,
-                'message' => $message,
-                'error' => $e->getMessage()
+                'template' => $template,
+                'error' => $e->getMessage(),
+                'listener_id' => $listener->id
             ]);
         }
     }
