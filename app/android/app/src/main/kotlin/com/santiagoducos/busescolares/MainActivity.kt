@@ -1,4 +1,4 @@
-package com.company.lune
+package com.santiagoducos.busescolares
 
 import io.flutter.embedding.android.FlutterActivity
 
