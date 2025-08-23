@@ -125,9 +125,19 @@ class HomeNotifier extends ChangeNotifier {
   }
 
   // Location tracking methods
-  Future<void> toggleLocationTracking() async {
+  Future<void> toggleLocationTracking({
+    String? notificationTitle,
+    String? notificationText,
+  }) async {
     try {
-      await _driverPositionRepository.toggleLocationTracking();
+      if (isLocationTracking) {
+        await _driverPositionRepository.stopLocationTracking();
+      } else {
+        await _driverPositionRepository.startLocationTracking(
+          notificationTitle: notificationTitle,
+          notificationText: notificationText,
+        );
+      }
       notifyListeners();
     } catch (e) {
       _error = e.toString();

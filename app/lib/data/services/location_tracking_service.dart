@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:background_location/background_location.dart';
+import 'dart:io';
+import 'package:geolocator/geolocator.dart';
 import 'package:lune/data/services/permission_service.dart';
 import 'package:lune/domain/enums/enums.dart';
 
@@ -9,19 +10,22 @@ class LocationTrackingService {
 
   final PermissionService _permissionService;
 
-  StreamController<Location>? _positionStreamController;
-  StreamSubscription<Location>? _locationSubscription;
+  StreamController<Position>? _positionStreamController;
+  StreamSubscription<Position>? _locationSubscription;
 
   bool _isTracking = false;
 
-  Stream<Location> get positionStream {
-    _positionStreamController ??= StreamController<Location>.broadcast();
+  Stream<Position> get positionStream {
+    _positionStreamController ??= StreamController<Position>.broadcast();
     return _positionStreamController!.stream;
   }
 
   bool get isTracking => _isTracking;
 
-  Future<bool> startTracking() async {
+  Future<bool> startTracking({
+    String? notificationTitle,
+    String? notificationText,
+  }) async {
     if (_isTracking) {
       return true;
     }
@@ -41,20 +45,41 @@ class LocationTrackingService {
     }
 
     try {
-      _positionStreamController ??= StreamController<Location>.broadcast();
+      _positionStreamController ??= StreamController<Position>.broadcast();
 
-      await BackgroundLocation.setAndroidNotification(
-        title: 'Location Tracking',
-        message: 'Tracking driver position in background',
-        icon: '@mipmap/ic_launcher',
-      );
+      late LocationSettings locationSettings;
+      
+      if (Platform.isAndroid) {
+        locationSettings = AndroidSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 10,
+          forceLocationManager: true,
+          intervalDuration: const Duration(seconds: 10),
+          foregroundNotificationConfig: ForegroundNotificationConfig(
+            notificationText: notificationText ?? 
+                'Bus Escolares is tracking the bus location',
+            notificationTitle: notificationTitle ?? 'Tracking Location',
+            enableWakeLock: true,
+          ),
+        );
+      } else if (Platform.isIOS) {
+        locationSettings = AppleSettings(
+          accuracy: LocationAccuracy.high,
+          activityType: ActivityType.automotiveNavigation,
+          distanceFilter: 10,
+          showBackgroundLocationIndicator: true,
+        );
+      } else {
+        locationSettings = const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 10,
+        );
+      }
 
-      await BackgroundLocation.setAndroidConfiguration(10000);
-
-      await BackgroundLocation.startLocationService(distanceFilter: 10);
-
-      BackgroundLocation.getLocationUpdates((location) {
-        _positionStreamController?.add(location);
+      _locationSubscription = Geolocator.getPositionStream(
+        locationSettings: locationSettings,
+      ).listen((Position position) {
+        _positionStreamController?.add(position);
       });
 
       _isTracking = true;
@@ -70,13 +95,12 @@ class LocationTrackingService {
       return;
     }
 
-    await BackgroundLocation.stopLocationService();
     await _locationSubscription?.cancel();
     _locationSubscription = null;
     _isTracking = false;
   }
 
-  Future<Location> getCurrentLocation() async {
+  Future<Position> getCurrentLocation() async {
     final permissionStatus = await _permissionService.status(
       PermissionType.location,
     );
@@ -90,12 +114,12 @@ class LocationTrackingService {
     }
 
     if (_isTracking) {
-      final completer = Completer<Location>();
-      late StreamSubscription<Location> subscription;
+      final completer = Completer<Position>();
+      late StreamSubscription<Position> subscription;
 
-      subscription = positionStream.listen((location) {
+      subscription = positionStream.listen((position) {
         if (!completer.isCompleted) {
-          completer.complete(location);
+          completer.complete(position);
           subscription.cancel();
         }
       });
@@ -110,24 +134,27 @@ class LocationTrackingService {
     }
 
     try {
-      final completer = Completer<Location>();
-
-      BackgroundLocation.getLocationUpdates((location) {
-        if (!completer.isCompleted) {
-          completer.complete(location);
-        }
-      });
-
-      await BackgroundLocation.startLocationService();
-
-      final location = await completer.future.timeout(
-        const Duration(seconds: 10),
-        onTimeout: () => throw Exception('Location request timeout'),
+      late LocationSettings locationSettings;
+      
+      if (Platform.isAndroid) {
+        locationSettings = AndroidSettings(
+          accuracy: LocationAccuracy.high,
+          forceLocationManager: true,
+        );
+      } else if (Platform.isIOS) {
+        locationSettings = AppleSettings(
+          accuracy: LocationAccuracy.high,
+          activityType: ActivityType.automotiveNavigation,
+        );
+      } else {
+        locationSettings = const LocationSettings(
+          accuracy: LocationAccuracy.high,
+        );
+      }
+      
+      return await Geolocator.getCurrentPosition(
+        locationSettings: locationSettings,
       );
-
-      await BackgroundLocation.stopLocationService();
-
-      return location;
     } catch (e) {
       throw Exception('Failed to get current location: $e');
     }
@@ -145,6 +172,5 @@ class LocationTrackingService {
   void dispose() {
     _locationSubscription?.cancel();
     _positionStreamController?.close();
-    BackgroundLocation.stopLocationService();
   }
 }

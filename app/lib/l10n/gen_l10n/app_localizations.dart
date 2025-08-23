@@ -1531,6 +1531,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'© 2025 {appName}. All rights reserved.'**
   String webCopyright(String appName);
+
+  /// No description provided for @locationTrackingNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking Location'**
+  String get locationTrackingNotificationTitle;
+
+  /// No description provided for @locationTrackingNotificationText.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus Escolares is tracking the bus location'**
+  String get locationTrackingNotificationText;
 }
 
 class _AppLocalizationsDelegate

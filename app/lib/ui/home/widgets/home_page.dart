@@ -226,7 +226,13 @@ class _HomePageState extends State<HomePage> {
               return FloatingActionButton(
                 key: _locationButtonKey,
                 heroTag: 'location',
-                onPressed: () => notifier.toggleLocationTracking(),
+                onPressed: () {
+                  final l10n = context.l10n;
+                  notifier.toggleLocationTracking(
+                    notificationTitle: l10n.locationTrackingNotificationTitle,
+                    notificationText: l10n.locationTrackingNotificationText,
+                  );
+                },
                 backgroundColor:
                     notifier.isLocationTracking ? colors.errorContainer : null,
                 child: Icon(

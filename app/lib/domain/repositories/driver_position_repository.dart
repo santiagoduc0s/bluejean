@@ -6,7 +6,10 @@ abstract class DriverPositionRepository {
 
   Future<void> storeCurrentPosition();
 
-  Future<bool> startLocationTracking();
+  Future<bool> startLocationTracking({
+    String? notificationTitle,
+    String? notificationText,
+  });
 
   Future<void> stopLocationTracking();
 

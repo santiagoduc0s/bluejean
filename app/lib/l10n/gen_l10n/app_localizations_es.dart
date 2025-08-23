@@ -785,4 +785,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String webCopyright(String appName) {
     return '© 2025 $appName. Todos los derechos reservados.';
   }
+
+  @override
+  String get locationTrackingNotificationTitle => 'Rastreando Ubicación';
+
+  @override
+  String get locationTrackingNotificationText =>
+      'Bus Escolares está rastreando la ubicación del autobús';
 }

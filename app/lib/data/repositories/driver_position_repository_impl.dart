@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:background_location/background_location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/data/services/location_tracking_service.dart';
 import 'package:lune/domain/repositories/driver_position_repository.dart';
@@ -13,7 +13,7 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
   final ApiClient _apiClient;
   final LocationTrackingService _locationTrackingService;
 
-  StreamSubscription<Location>? _positionSubscription;
+  StreamSubscription<Position>? _positionSubscription;
   DateTime? _lastSentTime;
 
   @override
@@ -31,18 +31,24 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
   Future<void> storeCurrentPosition() async {
     final position = await _locationTrackingService.getCurrentLocation();
     await storePosition(
-      latitude: position.latitude!,
-      longitude: position.longitude!,
+      latitude: position.latitude,
+      longitude: position.longitude,
     );
   }
 
   @override
-  Future<bool> startLocationTracking() async {
-    final started = await _locationTrackingService.startTracking();
+  Future<bool> startLocationTracking({
+    String? notificationTitle,
+    String? notificationText,
+  }) async {
+    final started = await _locationTrackingService.startTracking(
+      notificationTitle: notificationTitle,
+      notificationText: notificationText,
+    );
 
     if (started) {
       _positionSubscription = _locationTrackingService.positionStream.listen((
-        Location position,
+        Position position,
       ) async {
         try {
           final now = DateTime.now();
@@ -50,8 +56,8 @@ class DriverPositionRepositoryImpl implements DriverPositionRepository {
               now.difference(_lastSentTime!).inSeconds >= 10) {
             _lastSentTime = now;
             await storePosition(
-              latitude: position.latitude!,
-              longitude: position.longitude!,
+              latitude: position.latitude,
+              longitude: position.longitude,
             );
           }
         } catch (e) {

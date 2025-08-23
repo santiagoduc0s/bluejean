@@ -535,5 +535,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "locationTrackingNotificationTitle": "Rastreando Ubicación",
+  "@locationTrackingNotificationTitle": {},
+  "locationTrackingNotificationText": "Bus Escolares está rastreando la ubicación del autobús",
+  "@locationTrackingNotificationText": {}
 }
