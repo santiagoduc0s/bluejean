@@ -52,7 +52,8 @@ class LocationTrackingService {
       if (Platform.isAndroid) {
         locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 10,
+          // ignore: avoid_redundant_argument_values
+          distanceFilter: 0,
           forceLocationManager: true,
           intervalDuration: const Duration(seconds: 10),
           foregroundNotificationConfig: ForegroundNotificationConfig(
@@ -66,13 +67,15 @@ class LocationTrackingService {
         locationSettings = AppleSettings(
           accuracy: LocationAccuracy.high,
           activityType: ActivityType.automotiveNavigation,
-          distanceFilter: 10,
+          // ignore: avoid_redundant_argument_values
+          distanceFilter: 0,
           showBackgroundLocationIndicator: true,
         );
       } else {
         locationSettings = const LocationSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 10,
+          // ignore: avoid_redundant_argument_values
+          distanceFilter: 0,
         );
       }
 
