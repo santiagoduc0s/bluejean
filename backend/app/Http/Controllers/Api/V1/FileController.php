@@ -28,16 +28,36 @@ class FileController extends Controller
         $path = $this->sanitizePath($request->input('path'));
         $file = $request->file('file');
 
+        if (!$file || !$file->isValid()) {
+            return response()->json([
+                'error' => 'Invalid file upload'
+            ], 422);
+        }
+
         $mimeType = $file->getMimeType();
         $extension = $this->getExtensionFromMimeType($mimeType);
 
         $filename = time() . '_' . Str::random(10) . '.' . $extension;
 
-        $storedPath = Storage::disk('public')->putFileAs($path, $file, $filename);
+        $storedPath = Storage::putFileAs($path, $file, $filename);
+
+        \Log::info("File uploaded to {$storedPath} with MIME type {$mimeType}");
+
+        if (!$storedPath) {
+            return response()->json([
+                'error' => 'Failed to store file'
+            ], 500);
+        }
+
+        $url = Storage::url($storedPath);
 
         return response()->json([
-            'url' => asset('storage/' . $storedPath),
-            'path' => $storedPath
+            'success' => true,
+            'url' => $url,
+            'path' => $storedPath,
+            'filename' => $filename,
+            'size' => $file->getSize(),
+            'mime_type' => $mimeType
         ]);
     }
 
