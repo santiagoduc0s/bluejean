@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\ListenerController;
 use App\Http\Controllers\Api\V1\LogController;
 use App\Http\Controllers\Api\V1\PreferenceController;
 use App\Http\Controllers\Api\V1\SupportTicketController;
+use App\Http\Controllers\Api\V1\WhatsAppWebhookController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -40,6 +41,11 @@ Route::prefix('files')->group(function () {
 
 Route::prefix('logs')->group(function () {
     Route::post('/', [LogController::class, 'store']);
+});
+
+Route::prefix('whatsapp')->group(function () {
+    Route::get('/webhook', [WhatsAppWebhookController::class, 'verify']);
+    Route::post('/webhook', [WhatsAppWebhookController::class, 'webhook']);
 });
 
 

@@ -51,4 +51,9 @@ return [
         'whatsapp_business_account_id' => env('META_WHATSAPP_BUSINESS_ACCOUNT_ID'),
     ],
 
+    'whatsapp' => [
+        'verify_token' => env('WEBHOOK_VERIFY_TOKEN'),
+        'app_secret' => env('META_ACCESS_TOKEN'),
+    ],
+
 ];
