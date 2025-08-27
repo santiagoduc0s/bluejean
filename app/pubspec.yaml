@@ -1,6 +1,9 @@
 name: lune
 description: A Very Good Project created by Very Good CLI.
-version: 1.0.2+1
+# iOS
+version: 1.0.4+1
+# Android
+# version: 1.0.0+2
 publish_to: none
 
 environment:

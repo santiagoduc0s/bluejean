@@ -9,6 +9,7 @@ class PermissionService {
     PermissionType.camera: ph.Permission.camera,
     PermissionType.photos: ph.Permission.photos,
     PermissionType.location: ph.Permission.location,
+    PermissionType.locationAlways: ph.Permission.locationAlways,
     PermissionType.notifications: ph.Permission.notification,
     PermissionType.contacts: ph.Permission.contacts,
   };

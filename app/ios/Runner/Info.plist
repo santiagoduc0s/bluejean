@@ -36,9 +36,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to let you take a photo for your profile picture.</string>
 	<key>NSContactsUsageDescription</key>
-	<string>This app requires access to your contacts to allow you to link drivers with channels.</string>
+	<string>This app requires access to your contacts to allow you to create listeners by channels</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Contact access is used to select parent phone numbers from your contacts when linking listeners to your bus route channel</string>
+	<string>This app uses your photo library to choose a photo to set as your profile picture</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true />
 	<key>UILaunchStoryboardName</key>
@@ -83,7 +83,7 @@
 	</array>
 	<!-- End of the Google Sign-in Section -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location is used to show your current position on the map when setting up student pickup locations with notification areas</string>
+	<string>Location tracking is required to monitor your bus route and automatically send WhatsApp notifications to parents when you approach also used to show your current position on the map when setting up student pickup locations</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Location tracking is required to monitor your bus route and automatically send WhatsApp notifications to parents when you approach student pickup locations</string>
 	<key>NSLocationAlwaysUsageDescription</key>

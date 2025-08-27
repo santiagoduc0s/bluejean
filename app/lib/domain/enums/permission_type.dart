@@ -1,1 +1,8 @@
-enum PermissionType { camera, photos, location, notifications, contacts }
+enum PermissionType {
+  camera,
+  photos,
+  location,
+  locationAlways,
+  notifications,
+  contacts,
+}

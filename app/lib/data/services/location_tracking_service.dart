@@ -30,9 +30,11 @@ class LocationTrackingService {
       return true;
     }
 
+    // Request regular location permission (required)
     final permissionStatus = await _permissionService.status(
       PermissionType.location,
     );
+
     if (permissionStatus != PermissionStatus.granted) {
       final requestResult = await _permissionService.request(
         PermissionType.location,
@@ -44,11 +46,26 @@ class LocationTrackingService {
       }
     }
 
+    // Request background location permission (optional - continue if denied)
+    try {
+      final backgroundStatus = await _permissionService.status(
+        PermissionType.locationAlways,
+      );
+
+      if (backgroundStatus != PermissionStatus.granted) {
+        await _permissionService.request(PermissionType.locationAlways);
+        // Continue regardless of result - background permission is nice to have
+      }
+    } catch (e) {
+      // Background permission request failed, but continue anyway
+      // This is expected on some devices/OS versions
+    }
+
     try {
       _positionStreamController ??= StreamController<Position>.broadcast();
 
       late LocationSettings locationSettings;
-      
+
       if (Platform.isAndroid) {
         locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
@@ -57,7 +74,8 @@ class LocationTrackingService {
           forceLocationManager: true,
           intervalDuration: const Duration(seconds: 10),
           foregroundNotificationConfig: ForegroundNotificationConfig(
-            notificationText: notificationText ?? 
+            notificationText:
+                notificationText ??
                 'Bus Escolares is tracking the bus location',
             notificationTitle: notificationTitle ?? 'Tracking Location',
             enableWakeLock: true,
@@ -138,7 +156,7 @@ class LocationTrackingService {
 
     try {
       late LocationSettings locationSettings;
-      
+
       if (Platform.isAndroid) {
         locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
@@ -154,7 +172,7 @@ class LocationTrackingService {
           accuracy: LocationAccuracy.high,
         );
       }
-      
+
       return await Geolocator.getCurrentPosition(
         locationSettings: locationSettings,
       );
