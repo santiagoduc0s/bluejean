@@ -1,7 +1,7 @@
 name: lune
 description: A Very Good Project created by Very Good CLI.
 # iOS
-version: 1.0.4+1
+version: 1.0.5+1
 # Android
 # version: 1.0.0+2
 publish_to: none
@@ -72,3 +72,4 @@ flutter:
     - assets/dark/images/
     - assets/light/icons/
     - assets/light/images/
+    - shorebird.yaml

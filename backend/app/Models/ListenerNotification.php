@@ -12,6 +12,7 @@ class ListenerNotification extends Model
 
     protected $fillable = [
         'listener_id',
+        'driver_position_id',
         'type',
         'title',
         'body',

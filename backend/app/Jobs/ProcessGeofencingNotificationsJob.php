@@ -144,6 +144,7 @@ class ProcessGeofencingNotificationsJob implements ShouldQueue
 
         ListenerNotification::create([
             'listener_id' => $listener->id,
+            'driver_position_id' => $this->driverPosition->id,
             'type' => $template,
         ]);
 
