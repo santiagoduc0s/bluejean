@@ -340,6 +340,7 @@ class _HomePageState extends State<HomePage> {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
+        onTap: () => _navigateToChannelForm(context, channel: channel),
         leading: Icon(
           isActive ? Icons.radio_button_checked : Icons.radio_button_unchecked,
           color:
