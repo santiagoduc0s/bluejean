@@ -14,3 +14,6 @@ pubget:
 
 lang:
 	fvm flutter gen-l10n
+
+devices:
+	fvm flutter devices
