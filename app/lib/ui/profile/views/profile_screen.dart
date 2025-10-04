@@ -18,8 +18,6 @@ class ProfileScreen {
           return ChangeNotifierProvider(
             create: (context) => ProfileNotifier(
               updateCurrentUserUsecase: context.read(),
-              snackbar: context.read(),
-              localization: context.read(),
               authNotifier: context.read(),
             )..initialize(),
             child: const ProfilePage(),

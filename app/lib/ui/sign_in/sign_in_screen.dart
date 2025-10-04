@@ -38,8 +38,6 @@ class SignInScreen {
                   context.read<AuthNotifier>().setUser(user);
                   context.read<PreferenceNotifier>().initialize(preference);
                 },
-                snackbar: context.read(),
-                localization: context.read(),
                 router: context.read(),
               ),
               child: const SignInPage(),

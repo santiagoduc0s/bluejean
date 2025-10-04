@@ -79,13 +79,10 @@ class ProfilePage extends StatelessWidget {
                     return Column(
                       children: [
                         PhotoProfilePickerField(
-                          formControlName: 'photo',
-                          snackbar: context.read(),
-                          permissionRepository: context.read(),
-                          dialog: context.read(),
-                          localization: context.read(),
-                          imageQuality: context.read(),
-                        )
+                              formControlName: 'photo',
+                              permissionRepository: context.read(),
+                              imageQuality: context.read(),
+                            )
                             .animate()
                             .slideY(
                               duration: 700.ms,

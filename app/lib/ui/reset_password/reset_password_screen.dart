@@ -21,8 +21,6 @@ class ResetPasswordScreen {
               signInWithEmailPasswordUseCase: context.read(),
               authRepository: context.read(),
               user: context.read<AuthNotifier>().currentUser!,
-              localization: context.read(),
-              snackbar: context.read(),
               router: context.read(),
             ),
             child: const ResetPasswordPage(),

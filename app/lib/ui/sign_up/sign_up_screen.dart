@@ -19,8 +19,6 @@ class SignUpScreen {
             create: (context) => SignUpNotifier(
               signUpUseCase: context.read(),
               router: context.read(),
-              localization: context.read(),
-              snackbar: context.read(),
             ),
             child: const SignUpPage(),
           );

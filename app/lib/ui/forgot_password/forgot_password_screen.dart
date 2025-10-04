@@ -20,8 +20,6 @@ class ForgotPasswordScreen {
           return ChangeNotifierProvider(
             create: (context) => ForgotPasswordNotifier(
               forgotPasswordUseCase: context.read(),
-              snackbar: context.read(),
-              localization: context.read(),
               router: context.read(),
             )..init(email),
             child: const ForgotPasswordPage(),

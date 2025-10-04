@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
@@ -15,21 +13,15 @@ class ResetPasswordNotifier extends ChangeNotifier {
     required SignInWithEmailPasswordUseCase signInWithEmailPasswordUseCase,
     required AuthRepository authRepository,
     required UserEntity user,
-    required CustomSnackbar snackbar,
-    required Localization localization,
     required CustomRouter router,
-  })  : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase,
-        _authRepository = authRepository,
-        _user = user,
-        _snackbar = snackbar,
-        _localization = localization,
-        _router = router;
+  }) : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase,
+       _authRepository = authRepository,
+       _user = user,
+       _router = router;
 
   final SignInWithEmailPasswordUseCase _signInWithEmailPasswordUseCase;
   final AuthRepository _authRepository;
   final UserEntity _user;
-  final CustomSnackbar _snackbar;
-  final Localization _localization;
   final CustomRouter _router;
 
   final FormGroup form = FormGroup(
@@ -89,27 +81,15 @@ class ResetPasswordNotifier extends ChangeNotifier {
         password: form.control('newPassword').value as String,
       );
 
-      primarySnackbar(
-        _snackbar,
-        _localization.tr.settings_passwordUpdated,
-      );
+      primarySnackbar(localization.settings_passwordUpdated);
 
       _router.pop();
     } on InvalidCredentialException {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.signIn_invalidCredential,
-      );
+      errorSnackbar(localization.signIn_invalidCredential);
     } on NoInternetConnectionException {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.notConnected,
-      );
+      errorSnackbar(localization.notConnected);
     } catch (e, s) {
-      errorSnackbar(
-        _snackbar,
-        _localization.tr.generalError,
-      );
+      errorSnackbar(localization.generalError);
 
       logError(e, s);
     } finally {

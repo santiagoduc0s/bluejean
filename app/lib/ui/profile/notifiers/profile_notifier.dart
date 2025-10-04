@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/functions/functions.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
@@ -11,17 +10,11 @@ import 'package:reactive_forms/reactive_forms.dart';
 class ProfileNotifier extends ChangeNotifier {
   ProfileNotifier({
     required UpdateCurrentUserUsecase updateCurrentUserUsecase,
-    required CustomSnackbar snackbar,
-    required Localization localization,
     required AuthNotifier authNotifier,
-  })  : _localization = localization,
-        _updateCurrentUserUsecase = updateCurrentUserUsecase,
-        _snackbar = snackbar,
-        _authNotifier = authNotifier;
+  }) : _updateCurrentUserUsecase = updateCurrentUserUsecase,
+       _authNotifier = authNotifier;
 
   final UpdateCurrentUserUsecase _updateCurrentUserUsecase;
-  final CustomSnackbar _snackbar;
-  final Localization _localization;
   final AuthNotifier _authNotifier;
 
   bool _isUpdatingData = false;
@@ -111,9 +104,9 @@ class ProfileNotifier extends ChangeNotifier {
             : null,
       );
 
-      primarySnackbar(_snackbar, _localization.tr.profile_userUpdated);
+      primarySnackbar(localization.profile_userUpdated);
     } catch (e, s) {
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
       logError(e, s);
     } finally {
       __isUpdatingData(false);

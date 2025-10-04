@@ -16,12 +16,11 @@ class SupportScreen {
       name: path,
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (context) => SupportNotifier(
-            localization: context.read(),
-            supportRepository: context.read(),
-            snackbar: context.read(),
-            remoteStorageRepository: context.read(),
-          ),
+          create:
+              (context) => SupportNotifier(
+                supportRepository: context.read(),
+                remoteStorageRepository: context.read(),
+              ),
           child: const SupportPage(),
         );
       },

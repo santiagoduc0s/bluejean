@@ -15,15 +15,14 @@ class DevicesScreen {
       name: path,
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (context) => DevicesNotifier(
-            deviceRepository: context.read(),
-            signOutUseCase: context.read(),
-            snackbar: context.read(),
-            localization: context.read(),
-            onSignOut: () {
-              context.read<AuthNotifier>().signOut();
-            },
-          )..loadDevices(),
+          create:
+              (context) => DevicesNotifier(
+                deviceRepository: context.read(),
+                signOutUseCase: context.read(),
+                onSignOut: () {
+                  context.read<AuthNotifier>().signOut();
+                },
+              )..loadDevices(),
           child: const DevicesPage(),
         );
       },
