@@ -27,7 +27,7 @@ Future<XFile?> xFileFromUrl(String url) async {
       return XFile(file.path);
     }
   } catch (e, s) {
-    AppLogger.instance.error(e.toString(), stackTrace: s);
+    AppLoggerHelper.error(e.toString(), stackTrace: s);
     return null;
   }
 }
