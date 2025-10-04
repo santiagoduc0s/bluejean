@@ -14,20 +14,19 @@ enum LogLevel {
   critical,
 }
 
-class AppLogger {
-  AppLogger._singleton();
+class AppLoggerHelper {
+  AppLoggerHelper._();
 
-  AuthNotifier? authNotifier;
+  static AuthNotifier? authNotifier;
 
-  static final AppLogger instance = AppLogger._singleton();
-  final logger = Logger(
+  static final _logger = Logger(
     printer: PrettyPrinter(
       methodCount: 0,
       dateTimeFormat: DateTimeFormat.dateAndTime,
     ),
   );
 
-  Future<void> log(
+  static Future<void> log(
     String message, {
     required LogLevel level,
     StackTrace? stackTrace,
@@ -35,28 +34,35 @@ class AppLogger {
   }) async {
     switch (level) {
       case LogLevel.debug:
-        logger.d(message, stackTrace: stackTrace);
+        _logger.d(message, stackTrace: stackTrace);
       case LogLevel.info:
-        logger.i(message, stackTrace: stackTrace);
+        _logger.i(message, stackTrace: stackTrace);
       case LogLevel.warning:
-        logger.w(message, stackTrace: stackTrace);
+        _logger.w(message, stackTrace: stackTrace);
       case LogLevel.error:
-        logger.e(message, stackTrace: stackTrace);
+        unawaited(
+          _sendLogToServer(
+            message: message,
+            type: level,
+            stackTrace: stackTrace?.toString(),
+            metadata: Map<String, dynamic>.from(metadata),
+          ),
+        );
+        _logger.e(message, stackTrace: stackTrace);
       case LogLevel.critical:
-        logger.f(message, stackTrace: stackTrace);
+        unawaited(
+          _sendLogToServer(
+            message: message,
+            type: level,
+            stackTrace: stackTrace?.toString(),
+            metadata: Map<String, dynamic>.from(metadata),
+          ),
+        );
+        _logger.f(message, stackTrace: stackTrace);
     }
-
-    unawaited(
-      _sendLogToServer(
-        message: message,
-        type: level,
-        stackTrace: stackTrace?.toString(),
-        metadata: Map<String, dynamic>.from(metadata),
-      ),
-    );
   }
 
-  Future<void> _sendLogToServer({
+  static Future<void> _sendLogToServer({
     required String message,
     required LogLevel type,
     String? stackTrace,
@@ -90,7 +96,7 @@ class AppLogger {
     );
   }
 
-  String _logLevelToString(LogLevel level) {
+  static String _logLevelToString(LogLevel level) {
     switch (level) {
       case LogLevel.info:
         return 'info';
@@ -105,7 +111,7 @@ class AppLogger {
     }
   }
 
-  void debug(
+  static void debug(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
@@ -117,7 +123,7 @@ class AppLogger {
         metadata: metadata,
       );
 
-  void info(
+  static void info(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
@@ -129,7 +135,7 @@ class AppLogger {
         metadata: metadata,
       );
 
-  void warning(
+  static void warning(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
@@ -141,7 +147,7 @@ class AppLogger {
         metadata: metadata,
       );
 
-  void error(
+  static void error(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},
@@ -153,7 +159,7 @@ class AppLogger {
         metadata: metadata,
       );
 
-  void critical(
+  static void critical(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},

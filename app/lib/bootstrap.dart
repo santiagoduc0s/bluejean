@@ -19,7 +19,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
       FlutterError.onError = (FlutterErrorDetails details) {
-        AppLogger.instance.error(
+        AppLoggerHelper.error(
           'Flutter Error: ${details.exception}',
           stackTrace: details.stack,
           metadata: {
@@ -31,10 +31,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       };
 
       PlatformDispatcher.instance.onError = (error, stack) {
-        AppLogger.instance.critical(
-          error.toString(),
-          stackTrace: stack,
-        );
+        AppLoggerHelper.critical(error.toString(), stackTrace: stack);
         return true;
       };
 
@@ -46,14 +43,14 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         Env.environment == 'prod',
       );
 
-      AppLogger.instance.debug(Env.environment);
+      AppLoggerHelper.debug(Env.environment);
 
       AppProvider.init();
 
       runApp(MultiProvider(providers: providers, child: await builder()));
     },
     (error, stackTrace) {
-      AppLogger.instance.error(
+      AppLoggerHelper.error(
         'Zone Error: $error',
         stackTrace: stackTrace,
         metadata: {

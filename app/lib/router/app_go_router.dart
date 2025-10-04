@@ -192,7 +192,7 @@ class AppGoRouter extends CustomRouter {
     _isInitialized = true;
 
     try {
-      AppLogger.instance.authNotifier = context.read<AuthNotifier>();
+      AppLoggerHelper.authNotifier = context.read<AuthNotifier>();
 
       context.read<ApiClient>().onUnauthorized = () {
         context.read<AuthNotifier>().signOut();
@@ -222,7 +222,7 @@ class AppGoRouter extends CustomRouter {
         data['preference'] as PreferenceEntity,
       );
     } catch (e, s) {
-      AppLogger.instance.error(e.toString(), stackTrace: s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       _isInitialized = true;
 

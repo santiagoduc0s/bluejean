@@ -37,13 +37,13 @@ class ErrorSnackBarContent extends StatelessWidget {
 
     final bgColor = colorsProvider.error;
 
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 4.space,
-          vertical: 4.space,
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.space, vertical: 4.space),
+      child: InkWell(
+        onTap: () {
+          onTap?.call();
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
         child: Container(
           padding: EdgeInsets.only(
             left: 4.space,

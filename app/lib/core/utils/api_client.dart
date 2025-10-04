@@ -10,9 +10,7 @@ class ApiClient {
     required this.baseUrl,
     this.enableLogging = false,
     http.Client? client,
-    AppLogger? logger,
-  })  : _client = client ?? http.Client(),
-        _logger = logger ?? AppLogger.instance;
+  }) : _client = client ?? http.Client();
 
   final http.Client _client;
 
@@ -22,8 +20,6 @@ class ApiClient {
   late final String? Function() getAccessToken;
 
   final bool enableLogging;
-
-  final AppLogger _logger;
 
   Future<bool> get isNotAuthenticated async => !(await isAuthenticated());
 
@@ -71,7 +67,7 @@ class ApiClient {
       }
     }
 
-    _logger.debug(
+    AppLoggerHelper.debug(
       [
         'REQUEST >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
         'Method: $method',
@@ -94,7 +90,7 @@ class ApiClient {
       // ignore: empty_catches
     } catch (e) {}
 
-    _logger.debug(
+    AppLoggerHelper.debug(
       [
         'RESPONSE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<',
         'Status Code: ${response.statusCode}',

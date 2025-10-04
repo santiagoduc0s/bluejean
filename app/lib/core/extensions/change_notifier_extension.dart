@@ -4,18 +4,12 @@ import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/utils/utils.dart';
 
 extension ChangeNotifierX on ChangeNotifier {
-  void logError(
-    Object error, [
-    StackTrace? stackTrace,
-  ]) {
-    AppLogger.instance.error(error.toString(), stackTrace: stackTrace);
+  void logError(Object error, [StackTrace? stackTrace]) {
+    AppLoggerHelper.error(error.toString(), stackTrace: stackTrace);
   }
 
-  void logDebug(
-    Object message, [
-    StackTrace? stackTrace,
-  ]) {
-    AppLogger.instance.debug(message.toString(), stackTrace: stackTrace);
+  void logDebug(Object message, [StackTrace? stackTrace]) {
+    AppLoggerHelper.debug(message.toString(), stackTrace: stackTrace);
   }
 
   void primarySnackbar(
