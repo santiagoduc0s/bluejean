@@ -6,7 +6,6 @@ import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/home/home.dart';
 import 'package:lune/ui/public_onboard/public_onboard.dart';
-import 'package:lune/ui/web_landing/web_landing.dart';
 
 class SplashNotifier extends ChangeNotifier {
   SplashNotifier({
@@ -21,11 +20,6 @@ class SplashNotifier extends ChangeNotifier {
 
   Future<void> initialize() async {
     await Future.delayed(3800.ms, () {}); // Custom animation
-
-    if (kDebugMode) {
-      router.goNamed(WebLandingScreen.path);
-      return;
-    }
 
     final e = await localStorageService.getPOStatus();
     if (e == PublicOnboardStatus.unseen) {

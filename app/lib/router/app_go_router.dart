@@ -209,13 +209,8 @@ class AppGoRouter extends CustomRouter {
 
       final usecase = context.read<OpenAppUseCase>();
 
-
-      if (kIsWeb) {
-        return;
-      }
-
       final value = await Future.wait([
-        Future.delayed(100.ms, () {}), // Min time native splash
+        Future.delayed(300.ms, () {}), // Min time native splash
         usecase.call(),
       ]);
 

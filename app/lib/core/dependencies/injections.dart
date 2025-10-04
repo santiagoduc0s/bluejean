@@ -19,21 +19,16 @@ List<SingleChildWidget> providers = [
   Provider.value(value: AppProvider.get<LocalStorageService>()),
   Provider.value(value: AppProvider.get<PermissionService>()),
   Provider.value(value: AppProvider.get<DeviceInfoService>()),
-  Provider.value(value: AppProvider.get<LocationTrackingService>()),
   Provider.value(value: AppProvider.get<ApiClient>()),
 
   /// REPOSITORIES
   Provider.value(value: AppProvider.get<AuthRepository>()),
-  Provider.value(value: AppProvider.get<ChannelRepository>()),
-  Provider.value(value: AppProvider.get<ListenerRepository>()),
-  Provider.value(value: AppProvider.get<ListenerNotificationRepository>()),
   Provider.value(value: AppProvider.get<DeviceRepository>()),
   Provider.value(value: AppProvider.get<PreferenceRepository>()),
   Provider.value(value: AppProvider.get<PermissionRepository>()),
   Provider.value(value: AppProvider.get<MessagingRepository>()),
   Provider.value(value: AppProvider.get<SupportRepository>()),
   Provider.value(value: AppProvider.get<RemoteStorageRepository>()),
-  Provider.value(value: AppProvider.get<DriverPositionRepository>()),
 
   /// USE CASES
   Provider.value(value: AppProvider.get<SignInWithEmailPasswordUseCase>()),

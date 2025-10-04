@@ -36,10 +36,6 @@ class AppProvider {
     _getIt.registerLazySingleton(() => PermissionService());
     _getIt.registerLazySingleton(() => DeviceInfoService());
     _getIt.registerLazySingleton(
-      () =>
-          LocationTrackingService(permissionService: get<PermissionService>()),
-    );
-    _getIt.registerLazySingleton(
       () => ApiClient(baseUrl: Env.baseUrl, enableLogging: kDebugMode),
     );
 
@@ -49,15 +45,6 @@ class AppProvider {
         localStorageService: get<LocalStorageService>(),
         apiClient: get<ApiClient>(),
       ),
-    );
-    _getIt.registerLazySingleton<ChannelRepository>(
-      () => ChannelRepositoryImpl(apiClient: get<ApiClient>()),
-    );
-    _getIt.registerLazySingleton<ListenerRepository>(
-      () => ListenerRepositoryImpl(apiClient: get<ApiClient>()),
-    );
-    _getIt.registerLazySingleton<ListenerNotificationRepository>(
-      () => ListenerNotificationRepositoryImpl(apiClient: get<ApiClient>()),
     );
     _getIt.registerLazySingleton<DeviceRepository>(
       () => DeviceRepositoryImpl(
@@ -82,12 +69,6 @@ class AppProvider {
     );
     _getIt.registerLazySingleton<RemoteStorageRepository>(
       () => RemoteStorageRepositoryImpl(apiClient: get<ApiClient>()),
-    );
-    _getIt.registerLazySingleton<DriverPositionRepository>(
-      () => DriverPositionRepositoryImpl(
-        apiClient: get<ApiClient>(),
-        locationTrackingService: get<LocationTrackingService>(),
-      ),
     );
 
     // USE CASES
