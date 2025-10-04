@@ -6,7 +6,6 @@ import 'package:lune/core/form/fields/reactive_multi_image_picker_field.dart';
 import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/l10n/l10n.dart';
 
@@ -15,8 +14,6 @@ class SupportImagePickerField extends StatelessWidget {
     required this.formControlName,
     required this.permissionRepository,
     required this.dialog,
-    required this.localization,
-    required this.snackbar,
     super.key,
     this.maxImages = 10,
   });
@@ -25,8 +22,6 @@ class SupportImagePickerField extends StatelessWidget {
   final int maxImages;
   final PermissionRepository permissionRepository;
   final CustomDialog dialog;
-  final CustomSnackbar snackbar;
-  final Localization localization;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +31,8 @@ class SupportImagePickerField extends StatelessWidget {
       formControlName: formControlName,
       maxImages: maxImages,
       permissionRepository: permissionRepository,
-      dialog: dialog,
-      localization: localization,
       onError: (error) {
-        snackbar.show(ErrorSnackBar(text: l10n.generalError));
+        SnackbarHelper.error(l10n.generalError);
       },
       builder: (
         context,

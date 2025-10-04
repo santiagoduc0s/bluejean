@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/usecases.dart';
@@ -19,8 +17,6 @@ class SignInNotifier extends ChangeNotifier {
     required this.signInWithGoogleUseCase,
     required this.saveFcmTokenUseCase,
     required this.authRepository,
-    required this.snackbar,
-    required this.localization,
     required this.router,
     required this.onSignInSuccess,
   });
@@ -30,8 +26,6 @@ class SignInNotifier extends ChangeNotifier {
   final SignInWithGoogleUseCase signInWithGoogleUseCase;
   final SaveFcmTokenUseCase saveFcmTokenUseCase;
   final AuthRepository authRepository;
-  final CustomSnackbar snackbar;
-  final Localization localization;
   final CustomRouter router;
   final void Function(UserEntity user, PreferenceEntity preference)
   onSignInSuccess;
@@ -65,9 +59,9 @@ class SignInNotifier extends ChangeNotifier {
     } on CancellOperationException {
       return;
     } on NoInternetConnectionException {
-      errorSnackbar(snackbar, localization.tr.notConnected);
+      errorSnackbar(localization.notConnected);
     } catch (e, s) {
-      errorSnackbar(snackbar, localization.tr.generalError);
+      errorSnackbar(localization.generalError);
 
       logError(e, s);
     } finally {
@@ -91,9 +85,9 @@ class SignInNotifier extends ChangeNotifier {
     } on CancellOperationException {
       return;
     } on NoInternetConnectionException {
-      errorSnackbar(snackbar, localization.tr.notConnected);
+      errorSnackbar(localization.notConnected);
     } catch (e, s) {
-      errorSnackbar(snackbar, localization.tr.generalError);
+      errorSnackbar(localization.generalError);
 
       logError(e, s);
     } finally {
@@ -126,17 +120,17 @@ class SignInNotifier extends ChangeNotifier {
 
       // router.pop();
     } on EmailNotVerifiedException {
-      errorSnackbar(snackbar, localization.tr.signIn_emailDoesNotVerified);
+      errorSnackbar(localization.signIn_emailDoesNotVerified);
     } on InvalidCredentialException {
-      errorSnackbar(snackbar, localization.tr.signIn_invalidCredential);
+      errorSnackbar(localization.signIn_invalidCredential);
     } on WrongPasswordException {
-      errorSnackbar(snackbar, localization.tr.signIn_wrongPassword);
+      errorSnackbar(localization.signIn_wrongPassword);
     } on UserDisabledException {
-      errorSnackbar(snackbar, localization.tr.signIn_userDisabled);
+      errorSnackbar(localization.signIn_userDisabled);
     } on NoInternetConnectionException {
-      errorSnackbar(snackbar, localization.tr.notConnected);
+      errorSnackbar(localization.notConnected);
     } catch (e, s) {
-      errorSnackbar(snackbar, localization.tr.generalError);
+      errorSnackbar(localization.generalError);
 
       logError(e, s);
     } finally {

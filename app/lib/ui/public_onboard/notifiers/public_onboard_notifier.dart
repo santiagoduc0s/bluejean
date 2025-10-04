@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/router/router.dart';
@@ -11,15 +9,11 @@ class PublicOnboardNotifier extends ChangeNotifier {
   PublicOnboardNotifier({
     required this.localStorageService,
     required this.router,
-    required this.snackbar,
-    required this.localization,
   });
 
   LocalStorageService localStorageService;
 
   CustomRouter router;
-  CustomSnackbar snackbar;
-  Localization localization;
 
   late PublicOnboardStatus status;
 
@@ -42,7 +36,7 @@ class PublicOnboardNotifier extends ChangeNotifier {
 
       router.goNamed(HomeScreen.path);
     } catch (e, s) {
-      errorSnackbar(snackbar, localization.tr.generalError);
+      errorSnackbar(localization.generalError);
       logError(e, s);
     } finally {
       _setLoading(false);

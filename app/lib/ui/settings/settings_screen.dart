@@ -20,9 +20,6 @@ class SettingsScreen {
                 context.read<AuthNotifier>().signOut();
               },
               permissionRepository: context.read(),
-              dialog: context.read(),
-              snackbar: context.read(),
-              localization: context.read(),
               saveTokenUseCase: context.read(),
               authNotifier: context.read(),
               userPreferenceRepository: context.read(),

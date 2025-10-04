@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/extensions/change_notifier_extension.dart';
-import 'package:lune/core/ui/ui.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/usecases.dart';
@@ -10,19 +8,13 @@ class DevicesNotifier extends ChangeNotifier {
   DevicesNotifier({
     required DeviceRepository deviceRepository,
     required SignOutUseCase signOutUseCase,
-    required CustomSnackbar snackbar,
-    required Localization localization,
     required void Function() onSignOut,
   }) : _deviceRepository = deviceRepository,
        _signOutUseCase = signOutUseCase,
-       _snackbar = snackbar,
-       _localization = localization,
        _onSignOut = onSignOut;
 
   final DeviceRepository _deviceRepository;
   final SignOutUseCase _signOutUseCase;
-  final CustomSnackbar _snackbar;
-  final Localization _localization;
   final void Function() _onSignOut;
 
   List<DeviceEntity> _devices = [];
@@ -45,7 +37,7 @@ class DevicesNotifier extends ChangeNotifier {
       _currentDevice = await _deviceRepository.getCurrentDevice();
     } catch (e, s) {
       logError(e, s);
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -67,10 +59,10 @@ class DevicesNotifier extends ChangeNotifier {
       _devices.removeWhere((device) => device.id == deviceId);
       notifyListeners();
 
-      primarySnackbar(_snackbar, _localization.tr.deviceDeletedSuccessfully);
+      primarySnackbar(localization.deviceDeletedSuccessfully);
     } catch (e, s) {
       logError(e, s);
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
     }
   }
 }

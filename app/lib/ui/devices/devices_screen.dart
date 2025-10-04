@@ -17,8 +17,6 @@ class DevicesScreen {
               (context) => DevicesNotifier(
                 deviceRepository: context.read(),
                 signOutUseCase: context.read(),
-                snackbar: context.read(),
-                localization: context.read(),
                 onSignOut: () {
                   context.read<AuthNotifier>().signOut();
                 },

@@ -80,8 +80,6 @@ class SupportPage extends StatelessWidget {
                           maxImages: 5,
                           permissionRepository: context.read(),
                           dialog: context.read(),
-                          localization: context.read(),
-                          snackbar: context.read(),
                         ),
                       ],
                     ),

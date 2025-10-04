@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/core/ui/alerts/dialog/dialog.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
@@ -16,16 +13,11 @@ class SettingsNotifier extends ChangeNotifier {
     required void Function() onSignOut,
     required PermissionRepository permissionRepository,
     required SaveFcmTokenUseCase saveTokenUseCase,
-    required CustomDialog dialog,
-    required CustomSnackbar snackbar,
-    required Localization localization,
     required AuthNotifier authNotifier,
     required PreferenceRepository userPreferenceRepository,
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUsecase deleteAccountUsecase,
-  }) : _localization = localization,
-       _snackbar = snackbar,
-       _dialog = dialog,
+  }) : 
        _saveTokenUseCase = saveTokenUseCase,
        _permissionRepository = permissionRepository,
        _onSignOut = onSignOut,
@@ -36,9 +28,6 @@ class SettingsNotifier extends ChangeNotifier {
 
   final PermissionRepository _permissionRepository;
   final SaveFcmTokenUseCase _saveTokenUseCase;
-  final CustomDialog _dialog;
-  final CustomSnackbar _snackbar;
-  final Localization _localization;
   final AuthNotifier _authNotifier;
   final PreferenceRepository _userPreferenceRepository;
   final SignOutUseCase _signOutUseCase;
@@ -99,10 +88,9 @@ class SettingsNotifier extends ChangeNotifier {
 
         if (status == PermissionStatus.permanentlyDenied) {
           final shouldOpenSettings = await dialogConfirm(
-            _dialog,
-            message: _localization.tr.notificationsAreDisabled,
-            confirmText: _localization.tr.goToSettings,
-            cancelText: _localization.tr.cancel,
+            message: localization.notificationsAreDisabled,
+            confirmText: localization.goToSettings,
+            cancelText: localization.cancel,
           );
           if (shouldOpenSettings) {
             await _permissionRepository.openSettings();
@@ -143,7 +131,7 @@ class SettingsNotifier extends ChangeNotifier {
       notificationsEnabled = previousState;
       notifyListeners();
       logError(e, s);
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
     }
   }
 
@@ -155,10 +143,9 @@ class SettingsNotifier extends ChangeNotifier {
 
     try {
       final shouldDelete = await dialogConfirm(
-        _dialog,
-        message: _localization.tr.deleteAccountMessage,
-        confirmText: _localization.tr.yes,
-        cancelText: _localization.tr.cancel,
+        message: localization.deleteAccountMessage,
+        confirmText: localization.yes,
+        cancelText: localization.cancel,
       );
 
       if (!shouldDelete) return;
@@ -167,7 +154,7 @@ class SettingsNotifier extends ChangeNotifier {
       _onSignOut();
     } catch (e, s) {
       logError(e, s);
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
     } finally {
       isDeletingAccount = false;
       notifyListeners();

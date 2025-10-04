@@ -16,9 +16,7 @@ class SupportScreen {
         return ChangeNotifierProvider(
           create:
               (context) => SupportNotifier(
-                localization: context.read(),
                 supportRepository: context.read(),
-                snackbar: context.read(),
                 remoteStorageRepository: context.read(),
               ),
           child: const SupportPage(),

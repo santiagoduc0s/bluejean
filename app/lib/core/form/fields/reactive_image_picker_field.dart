@@ -11,8 +11,6 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
     required String formControlName,
     required this.builder,
     required this.permissionRepository,
-    required this.dialog,
-    required this.localization,
     super.key,
     this.imageQuality = 90,
     this.onError,
@@ -25,8 +23,6 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
                customBuilder: builder,
                onError: onError,
                permissionRepository: permissionRepository,
-               dialog: dialog,
-               localization: localization,
              ),
        );
 
@@ -43,8 +39,6 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
 
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
-  final CustomDialog dialog;
-  final Localization localization;
 }
 
 class _ImagePickerContent extends StatefulWidget {
@@ -53,8 +47,6 @@ class _ImagePickerContent extends StatefulWidget {
     required this.imageQuality,
     required this.customBuilder,
     required this.permissionRepository,
-    required this.dialog,
-    required this.localization,
     this.onError,
   });
 
@@ -71,8 +63,6 @@ class _ImagePickerContent extends StatefulWidget {
   customBuilder;
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
-  final CustomDialog dialog;
-  final Localization localization;
 
   @override
   State<_ImagePickerContent> createState() => _ImagePickerContentState();
@@ -95,13 +85,15 @@ class _ImagePickerContentState extends State<_ImagePickerContent> {
       if (!mounted) return;
 
       if (status == PermissionStatus.permanentlyDenied) {
-        final shouldOpen = await widget.dialog.confirm(
+        final tr = AppProvider.get<Localization>().tr;
+
+        final shouldOpen = await DialogHelper.confirm(
           message:
               source == ImageSource.camera
-                  ? widget.localization.tr.cameraIsDisabled
-                  : widget.localization.tr.galleryIsDisabled,
-          confirmText: widget.localization.tr.goToSettings,
-          cancelText: widget.localization.tr.cancel,
+                  ? tr.cameraIsDisabled
+                  : tr.galleryIsDisabled,
+          confirmText: tr.goToSettings,
+          cancelText: tr.cancel,
         );
 
         if (shouldOpen) {

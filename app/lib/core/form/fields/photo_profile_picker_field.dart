@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/fields/reactive_image_picker_field.dart';
-import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/l10n/l10n.dart';
 
@@ -15,9 +13,6 @@ class PhotoProfilePickerField extends StatelessWidget {
   const PhotoProfilePickerField({
     required this.permissionRepository,
     required this.formControlName,
-    required this.snackbar,
-    required this.dialog,
-    required this.localization,
     super.key,
     this.imageQuality,
     this.size,
@@ -25,12 +20,8 @@ class PhotoProfilePickerField extends StatelessWidget {
 
   final PermissionRepository permissionRepository;
   final String formControlName;
-  final CustomSnackbar snackbar;
   final int? imageQuality;
   final double? size;
-
-  final CustomDialog dialog;
-  final Localization localization;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +31,9 @@ class PhotoProfilePickerField extends StatelessWidget {
       formControlName: formControlName,
       imageQuality: imageQuality ?? 90,
       onError: (e) {
-        snackbar.show(ErrorSnackBar(text: l10n.generalError));
+        SnackbarHelper.error(l10n.generalError);
       },
       permissionRepository: permissionRepository,
-      dialog: dialog,
-      localization: localization,
       builder: (
         context,
         file,

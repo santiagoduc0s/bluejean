@@ -12,8 +12,6 @@ class ReactiveMultiImagePickerField
     required String formControlName,
     required this.builder,
     required this.permissionRepository,
-    required this.dialog,
-    required this.localization,
     super.key,
     this.imageQuality = 90,
     this.maxImages = 10,
@@ -28,8 +26,6 @@ class ReactiveMultiImagePickerField
                customBuilder: builder,
                onError: onError,
                permissionRepository: permissionRepository,
-               dialog: dialog,
-               localization: localization,
              ),
        );
 
@@ -47,8 +43,6 @@ class ReactiveMultiImagePickerField
 
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
-  final CustomDialog dialog;
-  final Localization localization;
 }
 
 class _MultiImagePickerContent extends StatefulWidget {
@@ -58,8 +52,6 @@ class _MultiImagePickerContent extends StatefulWidget {
     required this.maxImages,
     required this.customBuilder,
     required this.permissionRepository,
-    required this.dialog,
-    required this.localization,
     this.onError,
   });
 
@@ -77,8 +69,6 @@ class _MultiImagePickerContent extends StatefulWidget {
   customBuilder;
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
-  final CustomDialog dialog;
-  final Localization localization;
 
   @override
   State<_MultiImagePickerContent> createState() =>
@@ -105,14 +95,16 @@ class _MultiImagePickerContentState extends State<_MultiImagePickerContent> {
 
       if (!mounted) return;
 
+      final tr = AppProvider.get<Localization>().tr;
+
       if (status == PermissionStatus.permanentlyDenied) {
-        final shouldOpen = await widget.dialog.confirm(
+        final shouldOpen = await DialogHelper.confirm(
           message:
               source == ImageSource.camera
-                  ? widget.localization.tr.cameraIsDisabled
-                  : widget.localization.tr.galleryIsDisabled,
-          confirmText: widget.localization.tr.goToSettings,
-          cancelText: widget.localization.tr.cancel,
+                  ? tr.cameraIsDisabled
+                  : tr.galleryIsDisabled,
+          confirmText: tr.goToSettings,
+          cancelText: tr.cancel,
         );
 
         if (shouldOpen) {

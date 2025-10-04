@@ -2,24 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
 import 'package:lune/router/router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class SignUpNotifier extends ChangeNotifier {
-  SignUpNotifier({
-    required this.signUpUseCase,
-    required this.router,
-    required this.snackbar,
-    required this.localization,
-  });
+  SignUpNotifier({required this.signUpUseCase, required this.router});
 
   final SignUpUseCase signUpUseCase;
   final CustomRouter router;
-  final CustomSnackbar snackbar;
-  final Localization localization;
   bool isSigningUp = false;
 
   final form = FormGroup(
@@ -75,13 +66,13 @@ class SignUpNotifier extends ChangeNotifier {
         'password': form.control('password').value as String,
       });
     } on EmailAlreadyInUseException {
-      errorSnackbar(snackbar, localization.tr.signUp_emailAlreadyInUse);
+      errorSnackbar(localization.signUp_emailAlreadyInUse);
     } on WeakPasswordException {
-      errorSnackbar(snackbar, localization.tr.signUp_weakPassword);
+      errorSnackbar(localization.signUp_weakPassword);
     } on InvalidEmailFormatException {
-      errorSnackbar(snackbar, localization.tr.signUp_InvalidEmailFormat);
+      errorSnackbar(localization.signUp_InvalidEmailFormat);
     } catch (e, s) {
-      errorSnackbar(snackbar, localization.tr.generalError);
+      errorSnackbar(localization.generalError);
       logError(e, s);
     } finally {
       _setSigningUp(false);

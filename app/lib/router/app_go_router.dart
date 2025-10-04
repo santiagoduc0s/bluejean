@@ -225,7 +225,6 @@ class AppGoRouter extends CustomRouter {
 
       final usecase = context.read<OpenAppUseCase>();
 
-
       if (kIsWeb) {
         return;
       }

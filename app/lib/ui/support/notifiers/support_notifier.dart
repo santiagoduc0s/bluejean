@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lune/core/extensions/change_notifier_extension.dart';
-import 'package:lune/core/ui/ui.dart';
-import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -11,17 +9,11 @@ class SupportNotifier extends ChangeNotifier {
   SupportNotifier({
     required SupportRepository supportRepository,
     required RemoteStorageRepository remoteStorageRepository,
-    required CustomSnackbar snackbar,
-    required Localization localization,
   }) : _supportRepository = supportRepository,
-       _remoteStorageRepository = remoteStorageRepository,
-       _snackbar = snackbar,
-       _localization = localization;
+       _remoteStorageRepository = remoteStorageRepository;
 
   final SupportRepository _supportRepository;
   final RemoteStorageRepository _remoteStorageRepository;
-  final CustomSnackbar _snackbar;
-  final Localization _localization;
 
   bool _isCreatingTicket = false;
   bool get isCreatingTicket => _isCreatingTicket;
@@ -77,12 +69,12 @@ class SupportNotifier extends ChangeNotifier {
         images: imageUrls,
       );
 
-      primarySnackbar(_snackbar, _localization.tr.ticketCreated);
+      primarySnackbar(localization.ticketCreated);
 
       form.reset();
     } catch (e, s) {
       logError(e, s);
-      errorSnackbar(_snackbar, _localization.tr.generalError);
+      errorSnackbar(localization.generalError);
     } finally {
       _isCreatingTicket = false;
       notifyListeners();

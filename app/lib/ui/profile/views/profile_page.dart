@@ -76,10 +76,7 @@ class ProfilePage extends StatelessWidget {
                       children: [
                         PhotoProfilePickerField(
                               formControlName: 'photo',
-                              snackbar: context.read(),
                               permissionRepository: context.read(),
-                              dialog: context.read(),
-                              localization: context.read(),
                               imageQuality: context.read(),
                             )
                             .animate()

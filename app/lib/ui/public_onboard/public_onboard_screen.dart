@@ -20,9 +20,7 @@ class PublicOnboardScreen {
           create:
               (_) => PublicOnboardNotifier(
                 localStorageService: context.read(),
-                localization: context.read(),
                 router: context.read(),
-                snackbar: context.read(),
               ),
           child: const PublicOnboardPage(),
         ),
