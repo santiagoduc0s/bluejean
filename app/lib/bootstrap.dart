@@ -45,6 +45,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
       AppLogger.instance.debug(Env.environment);
 
+      AppProvider.init();
+
       runApp(MultiProvider(providers: providers, child: await builder()));
     },
     (error, stackTrace) {

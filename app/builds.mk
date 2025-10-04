@@ -10,6 +10,9 @@ build-web-prod:
 	make prod
 	fvm flutter build web --release --target lib/main_production.dart --dart-define-from-file env.json
 
+deploy-firebase-hosting:
+	firebase deploy --only hosting
+
 shorebird-release-ios-prod:
 	make prod
 	shorebird release ios --flavor production --target lib/main_production.dart --dart-define-from-file env.json

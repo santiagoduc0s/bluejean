@@ -205,6 +205,8 @@ class AppGoRouter extends CustomRouter {
   Future<void> _initialize(BuildContext context) async {
     if (!context.mounted) return;
 
+    _isInitialized = true;
+
     try {
       AppLogger.instance.authNotifier = context.read<AuthNotifier>();
 
@@ -223,26 +225,21 @@ class AppGoRouter extends CustomRouter {
 
       final usecase = context.read<OpenAppUseCase>();
 
-      final delay = Future.delayed(2500.ms, () {}); // Min time native splash
 
       if (kIsWeb) {
-        _isInitialized = true;
         return;
       }
 
-      final data = await usecase.call();
+      final value = await Future.wait([
+        Future.delayed(100.ms, () {}), // Min time native splash
+        usecase.call(),
+      ]);
 
-      /// I set _isInitialized because the AuthNotifier.initialize
-      /// fire another redirect callback
-      _isInitialized = true;
+      final data = value.last!;
 
-      await delay;
+      AppProvider.get<AuthNotifier>().initialize(data['user'] as UserEntity?);
 
-      if (!context.mounted) return;
-
-      context.read<AuthNotifier>().initialize(data['user'] as UserEntity?);
-
-      context.read<PreferenceNotifier>().initialize(
+      AppProvider.get<PreferenceNotifier>().initialize(
         data['preference'] as PreferenceEntity,
       );
     } catch (e, s) {
@@ -259,6 +256,7 @@ class AppGoRouter extends CustomRouter {
   FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
     if (!_isInitialized) {
       await _initialize(context);
+      return null;
     }
 
     if (state.matchedLocation == SplashScreen.path) {

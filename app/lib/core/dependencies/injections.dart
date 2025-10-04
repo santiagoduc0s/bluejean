@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:lune/core/config/config.dart';
 import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/data/services/services.dart';
@@ -13,41 +11,46 @@ import 'package:provider/single_child_widget.dart';
 
 List<SingleChildWidget> providers = [
   /// CORE
-  Provider.value(
-    value: AppDialog(() => AppGlobalKey.getRootContext()!) as CustomDialog,
-  ),
-  Provider.value(
-    value:
-        AppSnackbar(() => AppGlobalKey.getScaffoldMessengerState()!)
-            as CustomSnackbar,
-  ),
-  Provider.value(value: Localization(() => AppGlobalKey.getRootContext()!)),
+  Provider.value(value: AppProvider.get<CustomDialog>()),
+  Provider.value(value: AppProvider.get<CustomSnackbar>()),
+  Provider.value(value: AppProvider.get<Localization>()),
 
   /// SERVICES
-  Provider.value(value: LocalStorageService()),
-  Provider.value(value: PermissionService()),
-  Provider.value(value: DeviceInfoService()),
-  Provider.value(
-    value: LocationTrackingService(permissionService: PermissionService()),
-  ),
-  Provider.value(
-    value: ApiClient(baseUrl: Env.baseUrl, enableLogging: kDebugMode),
-  ),
+  Provider.value(value: AppProvider.get<LocalStorageService>()),
+  Provider.value(value: AppProvider.get<PermissionService>()),
+  Provider.value(value: AppProvider.get<DeviceInfoService>()),
+  Provider.value(value: AppProvider.get<LocationTrackingService>()),
+  Provider.value(value: AppProvider.get<ApiClient>()),
 
   /// REPOSITORIES
-  ...providerRepositories,
+  Provider.value(value: AppProvider.get<AuthRepository>()),
+  Provider.value(value: AppProvider.get<ChannelRepository>()),
+  Provider.value(value: AppProvider.get<ListenerRepository>()),
+  Provider.value(value: AppProvider.get<ListenerNotificationRepository>()),
+  Provider.value(value: AppProvider.get<DeviceRepository>()),
+  Provider.value(value: AppProvider.get<PreferenceRepository>()),
+  Provider.value(value: AppProvider.get<PermissionRepository>()),
+  Provider.value(value: AppProvider.get<MessagingRepository>()),
+  Provider.value(value: AppProvider.get<SupportRepository>()),
+  Provider.value(value: AppProvider.get<RemoteStorageRepository>()),
+  Provider.value(value: AppProvider.get<DriverPositionRepository>()),
 
   /// USE CASES
-  ...providerUseCases,
+  Provider.value(value: AppProvider.get<SignInWithEmailPasswordUseCase>()),
+  Provider.value(value: AppProvider.get<SignInWithAppleUseCase>()),
+  Provider.value(value: AppProvider.get<SignInWithGoogleUseCase>()),
+  Provider.value(value: AppProvider.get<SignUpUseCase>()),
+  Provider.value(value: AppProvider.get<ForgotPasswordUseCase>()),
+  Provider.value(value: AppProvider.get<UpdateCurrentUserUsecase>()),
+  Provider.value(value: AppProvider.get<SignOutUseCase>()),
+  Provider.value(value: AppProvider.get<DeleteAccountUsecase>()),
+  Provider.value(value: AppProvider.get<SaveFcmTokenUseCase>()),
+  Provider.value(value: AppProvider.get<OpenAppUseCase>()),
 
   /// GLOBAL NOTIFIERS
-  ChangeNotifierProvider(create: (context) => AuthNotifier()),
-  ChangeNotifierProvider(
-    create:
-        (context) =>
-            PreferenceNotifier(userPreferenceRepository: context.read()),
-  ),
+  ChangeNotifierProvider.value(value: AppProvider.get<AuthNotifier>()),
+  ChangeNotifierProvider.value(value: AppProvider.get<PreferenceNotifier>()),
 
   /// ROUTER
-  Provider(create: (context) => AppGoRouter(context.read()) as CustomRouter),
+  Provider.value(value: AppProvider.get<CustomRouter>()),
 ];
