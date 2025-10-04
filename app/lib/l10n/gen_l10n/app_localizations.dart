@@ -1543,6 +1543,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bus Escolares is tracking the bus location'**
   String get locationTrackingNotificationText;
+
+  /// No description provided for @webHowToUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started in Seconds'**
+  String get webHowToUse;
+
+  /// No description provided for @webHowToUseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Learn how to set up and use Bus Escolares with our simple tutorial videos. Get started with creating channels, adding listeners, and tracking your routes.'**
+  String get webHowToUseDescription;
 }
 
 class _AppLocalizationsDelegate

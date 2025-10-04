@@ -539,5 +539,9 @@
   "locationTrackingNotificationTitle": "Tracking Location",
   "@locationTrackingNotificationTitle": {},
   "locationTrackingNotificationText": "Bus Escolares is tracking the bus location",
-  "@locationTrackingNotificationText": {}
+  "@locationTrackingNotificationText": {},
+  "webHowToUse": "Get Started in Seconds",
+  "@webHowToUse": {},
+  "webHowToUseDescription": "Learn how to set up and use Bus Escolares with our simple tutorial videos. Get started with creating channels, adding listeners, and tracking your routes.",
+  "@webHowToUseDescription": {}
 }

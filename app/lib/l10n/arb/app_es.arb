@@ -539,5 +539,9 @@
   "locationTrackingNotificationTitle": "Rastreando Ubicación",
   "@locationTrackingNotificationTitle": {},
   "locationTrackingNotificationText": "Bus Escolares está rastreando la ubicación del autobús",
-  "@locationTrackingNotificationText": {}
+  "@locationTrackingNotificationText": {},
+  "webHowToUse": "Comienza en segundos",
+  "@webHowToUse": {},
+  "webHowToUseDescription": "Aprende cómo configurar y usar Bus Escolares con nuestros videos tutoriales simples. Comienza creando canales, agregando oyentes y rastreando tus rutas.",
+  "@webHowToUseDescription": {}
 }

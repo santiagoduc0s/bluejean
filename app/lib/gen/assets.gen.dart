@@ -44,6 +44,16 @@ class $AssetsLightGen {
   $AssetsLightImagesGen get images => const $AssetsLightImagesGen();
 }
 
+class $AssetsVideosGen {
+  const $AssetsVideosGen();
+
+  /// File path: assets/videos/download.mp4
+  String get download => 'assets/videos/download.mp4';
+
+  /// List of all assets
+  List<String> get values => [download];
+}
+
 class $AssetsDarkIconsGen {
   const $AssetsDarkIconsGen();
 
@@ -108,6 +118,11 @@ class Assets {
   static const $AssetsDarkGen dark = $AssetsDarkGen();
   static const $AssetsFilesGen files = $AssetsFilesGen();
   static const $AssetsLightGen light = $AssetsLightGen();
+  static const $AssetsVideosGen videos = $AssetsVideosGen();
+  static const String shorebird = 'shorebird.yaml';
+
+  /// List of all assets
+  static List<String> get values => [shorebird];
 }
 
 class AssetGenImage {

@@ -792,4 +792,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get locationTrackingNotificationText =>
       'Bus Escolares está rastreando la ubicación del autobús';
+
+  @override
+  String get webHowToUse => 'Comienza en segundos';
+
+  @override
+  String get webHowToUseDescription =>
+      'Aprende cómo configurar y usar Bus Escolares con nuestros videos tutoriales simples. Comienza creando canales, agregando oyentes y rastreando tus rutas.';
 }

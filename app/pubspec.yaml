@@ -1,9 +1,9 @@
 name: lune
 description: A Very Good Project created by Very Good CLI.
 # iOS
-version: 1.0.5+1
+version: 1.0.6+1
 # Android
-# version: 1.0.0+2
+# version: 1.0.0+3
 publish_to: none
 
 environment:
@@ -46,6 +46,7 @@ dependencies:
   tutorial_coach_mark: ^1.2.8
   url_launcher: ^6.3.1
   uuid: ^4.5.1
+  video_player: ^2.9.2
 
 dev_dependencies:
   build_runner: ^2.4.15
@@ -73,3 +74,4 @@ flutter:
     - assets/light/icons/
     - assets/light/images/
     - shorebird.yaml
+    - assets/videos/
