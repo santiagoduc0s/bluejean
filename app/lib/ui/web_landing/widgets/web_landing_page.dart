@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:go_router/go_router.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
 import 'package:lune/l10n/l10n.dart';
@@ -236,7 +235,6 @@ class _WebHeroText extends StatelessWidget {
                 )
               else
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     InkWell(
                       onTap: () async {
@@ -414,50 +412,55 @@ class _WebVideoTutorialsSection extends StatelessWidget {
           const SizedBox(width: double.infinity),
           Text(
             'Configura tu ruta en simples pasos',
-            style: isMobile
-                ? textTheme.headlineLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colors.onSurface,
-                  )
-                : textTheme.displaySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: colors.onSurface,
-                  ),
+            style:
+                isMobile
+                    ? textTheme.headlineLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onSurface,
+                    )
+                    : textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onSurface,
+                    ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: isMobile ? 32 : 48),
           if (isMobile)
-            Column(
+            const Column(
               children: [
                 _VideoTutorialCard(
                   videoPath: 'assets/videos/map.mp4',
-                  title: 'Selecciona la ubicación de tu cliente, y marca el rango en el cual le llega la notificación',
+                  title:
+                      'Selecciona la ubicación de tu cliente, y marca el rango en el cual le llega la notificación',
                   isMobile: true,
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
                 _VideoTutorialCard(
                   videoPath: 'assets/videos/notifications.mp4',
-                  title: 'Tus clientes recibirán una notificación de que estás cerca de ellos',
+                  title:
+                      'Tus clientes recibirán una notificación de que estás cerca de ellos',
                   isMobile: true,
                 ),
               ],
             )
           else
-            Row(
+            const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: _VideoTutorialCard(
                     videoPath: 'assets/videos/map.mp4',
-                    title: 'Selecciona la ubicación de tu cliente, y marca el rango en el cual le llega la notificación',
+                    title:
+                        'Selecciona la ubicación de tu cliente, y marca el rango en el cual le llega la notificación',
                     isMobile: false,
                   ),
                 ),
-                const SizedBox(width: 32),
+                SizedBox(width: 32),
                 Expanded(
                   child: _VideoTutorialCard(
                     videoPath: 'assets/videos/notifications.mp4',
-                    title: 'Tus clientes recibirán una notificación de que estás cerca de ellos',
+                    title:
+                        'Tus clientes recibirán una notificación de que estás cerca de ellos',
                     isMobile: false,
                   ),
                 ),
@@ -498,9 +501,7 @@ class _VideoTutorialCard extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxHeight: 600,
-          ),
+          constraints: const BoxConstraints(maxHeight: 600),
           child: AspectRatio(
             aspectRatio: 9 / 16,
             child: Container(
@@ -517,9 +518,7 @@ class _VideoTutorialCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Center(
-                  child: _VideoPlayer(videoPath: videoPath),
-                ),
+                child: Center(child: _VideoPlayer(videoPath: videoPath)),
               ),
             ),
           ),
@@ -841,7 +840,14 @@ class _VideoPlayerState extends State<_VideoPlayer> {
 
   Future<void> _initializeVideo() async {
     try {
-      _controller = VideoPlayerController.asset(widget.videoPath);
+      _controller = VideoPlayerController.asset(
+        widget.videoPath,
+        videoPlayerOptions: VideoPlayerOptions(
+          mixWithOthers: true,
+          allowBackgroundPlayback: false,
+        ),
+      );
+
       await _controller.initialize();
 
       // Enable looping for continuous playback
@@ -849,11 +855,8 @@ class _VideoPlayerState extends State<_VideoPlayer> {
       // Mute video for autoplay (required by browsers)
       _controller.setVolume(0);
 
-      _controller.addListener(() {
-        if (mounted) {
-          setState(() {});
-        }
-      });
+      // Only listen to specific states instead of all updates
+      _controller.addListener(_videoListener);
 
       if (mounted) {
         setState(() {
@@ -861,9 +864,6 @@ class _VideoPlayerState extends State<_VideoPlayer> {
         });
         // Auto-play the video
         await _controller.play();
-        debugPrint('Video initialized successfully');
-        debugPrint('Video duration: ${_controller.value.duration}');
-        debugPrint('Video size: ${_controller.value.size}');
       }
     } catch (e) {
       debugPrint('Error initializing video: $e');
@@ -875,8 +875,21 @@ class _VideoPlayerState extends State<_VideoPlayer> {
     }
   }
 
+  void _videoListener() {
+    // Only rebuild when video state changes (not on every frame)
+    if (!mounted) return;
+
+    final value = _controller.value;
+    if (value.hasError) {
+      setState(() {
+        _errorMessage = value.errorDescription;
+      });
+    }
+  }
+
   @override
   void dispose() {
+    _controller.removeListener(_videoListener);
     _controller.dispose();
     super.dispose();
   }
@@ -946,13 +959,15 @@ class _VideoPlayerState extends State<_VideoPlayer> {
       );
     }
 
-    return SizedBox.expand(
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: _controller.value.size.width,
-          height: _controller.value.size.height,
-          child: VideoPlayer(_controller),
+    return RepaintBoundary(
+      child: SizedBox.expand(
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SizedBox(
+            width: _controller.value.size.width,
+            height: _controller.value.size.height,
+            child: VideoPlayer(_controller),
+          ),
         ),
       ),
     );
