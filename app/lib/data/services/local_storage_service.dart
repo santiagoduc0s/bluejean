@@ -1,12 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 import 'package:lune/domain/enums/enums.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  Box<dynamic>? _box;
+  SharedPreferences? _prefs;
 
-  static const _boxName = 'localStorage';
   static const _keyTheme = 'themeMode';
   static const _keyScale = 'textScaler';
   static const _keyLocale = 'locale';
@@ -14,54 +11,48 @@ class LocalStorageService {
   static const _accessToken = 'accessToken';
   static const _homeTutorialShown = 'homeTutorialShown';
 
-  Future<Box<dynamic>> box() async {
-    if (_box == null) {
-      await initialize();
-    }
-    return _box!;
-  }
-
-  Future<void> initialize() async {
-    if (kIsWeb) {
-      Hive.init('');
-    } else {
-      final appDocumentDir = await getApplicationDocumentsDirectory();
-      Hive.init(appDocumentDir.path);
-    }
-
-    _box = await Hive.openBox(_boxName);
+  Future<SharedPreferences> _getPrefs() async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs!;
   }
 
   Future<String?> getThemeModeKey() async {
-    return (await box()).get(_keyTheme) as String?;
+    final prefs = await _getPrefs();
+    return prefs.getString(_keyTheme);
   }
 
   Future<double?> getTextScaler() async {
-    return (await box()).get(_keyScale) as double?;
+    final prefs = await _getPrefs();
+    return prefs.getDouble(_keyScale);
   }
 
   Future<String?> getLocaleCode() async {
-    return (await box()).get(_keyLocale) as String?;
+    final prefs = await _getPrefs();
+    return prefs.getString(_keyLocale);
   }
 
   Future<void> setThemeModeKey(String key) async {
-    return (await box()).put(_keyTheme, key);
+    final prefs = await _getPrefs();
+    await prefs.setString(_keyTheme, key);
   }
 
   Future<void> setTextScaler(double scaler) async {
-    return (await box()).put(_keyScale, scaler);
+    final prefs = await _getPrefs();
+    await prefs.setDouble(_keyScale, scaler);
   }
 
   Future<void> setLocaleCode(String? code) async {
+    final prefs = await _getPrefs();
     if (code != null) {
-      return (await box()).put(_keyLocale, code);
+      await prefs.setString(_keyLocale, code);
     } else {
-      return (await box()).delete(_keyLocale);
+      await prefs.remove(_keyLocale);
     }
   }
 
   Future<PublicOnboardStatus> getPOStatus() async {
-    final publicOnboardStatusRaw = (await box()).get(_publicOnboard) as String?;
+    final prefs = await _getPrefs();
+    final publicOnboardStatusRaw = prefs.getString(_publicOnboard);
 
     if (publicOnboardStatusRaw == 'seen') {
       return PublicOnboardStatus.seen;
@@ -73,31 +64,46 @@ class LocalStorageService {
   }
 
   Future<void> setPOStatus(PublicOnboardStatus status) async {
+    final prefs = await _getPrefs();
     switch (status) {
       case PublicOnboardStatus.seen:
-        await (await box()).put(_publicOnboard, 'seen');
+        await prefs.setString(_publicOnboard, 'seen');
       case PublicOnboardStatus.unseen:
-        await (await box()).put(_publicOnboard, 'unseen');
+        await prefs.setString(_publicOnboard, 'unseen');
     }
   }
 
   Future<String?> getAccessToken() async {
-    return (await box()).get(_accessToken) as String?;
+    final prefs = await _getPrefs();
+    return prefs.getString(_accessToken);
   }
 
   Future<void> setAccessToken(String? token) async {
+    final prefs = await _getPrefs();
     if (token != null) {
-      return (await box()).put(_accessToken, token);
+      await prefs.setString(_accessToken, token);
     } else {
-      return (await box()).delete(_accessToken);
+      await prefs.remove(_accessToken);
     }
   }
 
   Future<bool> getHomeTutorialShown() async {
-    return (await box()).get(_homeTutorialShown, defaultValue: false) as bool;
+    final prefs = await _getPrefs();
+    return prefs.getBool(_homeTutorialShown) ?? false;
   }
 
   Future<void> setHomeTutorialShown(bool shown) async {
-    return (await box()).put(_homeTutorialShown, shown);
+    final prefs = await _getPrefs();
+    await prefs.setBool(_homeTutorialShown, shown);
+  }
+
+  Future<String?> getDeviceId() async {
+    final prefs = await _getPrefs();
+    return prefs.getString('deviceId');
+  }
+
+  Future<void> setDeviceId(String deviceId) async {
+    final prefs = await _getPrefs();
+    await prefs.setString('deviceId', deviceId);
   }
 }
