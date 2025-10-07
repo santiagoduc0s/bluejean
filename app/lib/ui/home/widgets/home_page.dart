@@ -339,6 +339,7 @@ class _HomePageState extends State<HomePage> {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
+      clipBehavior: Clip.antiAlias,
       child: ListTile(
         onTap: () => _navigateToChannelForm(context, channel: channel),
         leading: Icon(

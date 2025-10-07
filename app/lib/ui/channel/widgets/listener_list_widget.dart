@@ -66,6 +66,7 @@ class ListenerListWidget extends StatelessWidget {
           )
         else
           Card(
+            clipBehavior: Clip.antiAlias,
             child: ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

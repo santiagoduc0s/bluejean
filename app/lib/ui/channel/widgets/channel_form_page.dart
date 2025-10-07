@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/channel/notifiers/notifiers.dart';
@@ -349,13 +350,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
       final contacts = await notifier.getContacts();
 
       if (contacts.isEmpty) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('No contacts with phone numbers found'),
-            ),
-          );
-        }
+        SnackbarHelper.error('No contacts with phone numbers found');
         return;
       }
 
@@ -374,11 +369,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
         });
       }
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
-        );
-      }
+      SnackbarHelper.error('Error: $e');
     }
   }
 
