@@ -74,6 +74,7 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
           ),
         ),
         child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: const EdgeInsets.all(16),
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -121,11 +122,37 @@ class _ChannelFormPageState extends State<ChannelFormPage> {
                             items: [
                               DropdownMenuItem(
                                 value: 'active',
-                                child: Text(l10n.active),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      decoration: BoxDecoration(
+                                        color: colors.primary,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(l10n.active),
+                                  ],
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 'inactive',
-                                child: Text(l10n.inactive),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      decoration: BoxDecoration(
+                                        color: colors.onSurface.withValues(alpha: 0.6),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text(l10n.inactive),
+                                  ],
+                                ),
                               ),
                             ],
                             onChanged: (String? newValue) {

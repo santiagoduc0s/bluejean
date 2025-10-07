@@ -46,19 +46,21 @@ class LocationTrackingService {
       }
     }
 
-    // Request background location permission (optional - continue if denied)
-    try {
-      final backgroundStatus = await _permissionService.status(
-        PermissionType.locationAlways,
-      );
+    // Request background location permission on iOS 
+    // (required for background tracking)
+    // On Android, foreground service is sufficient
+    if (Platform.isIOS) {
+      try {
+        final backgroundStatus = await _permissionService.status(
+          PermissionType.locationAlways,
+        );
 
-      if (backgroundStatus != PermissionStatus.granted) {
-        await _permissionService.request(PermissionType.locationAlways);
-        // Continue regardless of result - background permission is nice to have
+        if (backgroundStatus != PermissionStatus.granted) {
+          await _permissionService.request(PermissionType.locationAlways);
+        }
+      } catch (e) {
+        // Background permission request failed, but continue anyway
       }
-    } catch (e) {
-      // Background permission request failed, but continue anyway
-      // This is expected on some devices/OS versions
     }
 
     try {
