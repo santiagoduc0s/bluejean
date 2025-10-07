@@ -14,12 +14,11 @@ class DeviceInfoService {
   final LocalStorageService _localStorageService;
 
   Future<String> getDeviceId({bool force = false}) async {
-    final box = await _localStorageService.box();
-    var existingId = box.get('deviceId') as String?;
+    var existingId = await _localStorageService.getDeviceId();
 
     if (force || existingId == null) {
       existingId = const Uuid().v4();
-      await box.put('deviceId', existingId);
+      await _localStorageService.setDeviceId(existingId);
     }
 
     return existingId;
