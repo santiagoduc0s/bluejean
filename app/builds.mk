@@ -8,7 +8,7 @@ build-android-prod:
 
 build-web-prod:
 	make prod
-	fvm flutter build web --release --target lib/main_production.dart --dart-define-from-file env.json
+	fvm flutter build web --release --tree-shake-icons --target lib/main_production.dart --dart-define-from-file env.json
 
 deploy-firebase-hosting:
 	firebase deploy --only hosting
