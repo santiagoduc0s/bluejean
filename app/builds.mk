@@ -15,7 +15,7 @@ deploy-firebase-hosting:
 
 shorebird-release-ios-prod:
 	make prod
-	shorebird release ios --flavor production --target lib/main_production.dart --dart-define-from-file env.json
+	shorebird release ios --flavor production --target lib/main_production.dart --dart-define-from-file env.json --flutter-version=$(FLUTTER_VERSION)
 
 shorebird-preview-ios-prod:
 	make prod
@@ -31,7 +31,7 @@ shorebird-patch-ios-prod-version:
 
 shorebird-release-android-prod:
 	make prod
-	shorebird release android -- --flavor production --target lib/main_production.dart --dart-define-from-file env.json
+	shorebird release android --flavor production --target lib/main_production.dart --dart-define-from-file env.json --flutter-version=$(FLUTTER_VERSION)
 
 shorebird-preview-android-prod:
 	make prod
