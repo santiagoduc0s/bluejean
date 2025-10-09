@@ -57,24 +57,6 @@ php artisan migrate          # Run database migrations
 php artisan serve            # Start development server
 ```
 
-**Development with all services:**
-```bash
-composer run dev             # Starts server, queue, logs, and vite concurrently
-```
-
-**Testing:**
-```bash
-composer run test            # Clear config and run tests
-php artisan test            # Run PHPUnit/Pest tests
-```
-
-**Frontend Assets:**
-```bash
-npm install                  # Install Node dependencies
-npm run dev                  # Start Vite development server
-npm run build               # Build production assets
-```
-
 ## Architecture Overview
 
 ### Flutter App Architecture
@@ -133,139 +115,6 @@ Standard Laravel 12 application structure with API-first design:
 
 ### Database Schema
 
-The database schema follows a dual-context design supporting both authenticated users and anonymous devices:
-
-```mermaid
-erDiagram
-    users {
-        bigint id PK
-        bigint preference_id FK "nullable, unique"
-        string name "nullable"
-        string email "nullable"
-        string photo "nullable"
-        string remember_token "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    preferences {
-        bigint id PK
-        string theme "nullable"
-        string language "nullable"
-        double text_scaler "nullable"
-        boolean notifications_are_enabled "default false"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    devices {
-        bigint id PK
-        bigint user_id FK "nullable"
-        bigint preference_id FK "unique"
-        bigint personal_access_tokens_id FK "nullable"
-        string identifier "unique"
-        string fcm_token "nullable"
-        string model
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    personal_access_tokens {
-        bigint id PK
-        string tokenable_type
-        bigint tokenable_id
-        text name
-        string token "unique, 64 chars"
-        text abilities "nullable"
-        timestamp last_used_at "nullable"
-        timestamp expires_at "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    user_providers {
-        bigint id PK
-        bigint user_id FK
-        string provider
-        string provider_id
-        string provider_email "nullable"
-        string password "nullable"
-        timestamp email_verified_at "nullable"
-        json provider_data "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    firebase_notifications {
-        bigint id PK
-        uuid batch_id
-        bigint user_id FK "nullable"
-        bigint device_id FK "nullable"
-        string fcm_token "nullable"
-        string title
-        text body
-        json data "nullable"
-        string status "default pending"
-        string firebase_message_id "nullable"
-        text error_message "nullable"
-        timestamp sent_at "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    support_tickets {
-        bigint id PK
-        string email
-        string title
-        text description
-        json files "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    logs {
-        bigint id PK
-        text message
-        string type "default info"
-        longtext stack_trace "nullable"
-        json metadata "nullable"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    password_reset_tokens {
-        string email PK
-        string token
-        timestamp created_at "nullable"
-    }
-
-    sessions {
-        string id PK
-        bigint user_id FK "nullable"
-        string ip_address "nullable, 45 chars"
-        text user_agent "nullable"
-        longtext payload
-        integer last_activity
-    }
-
-    %% Core Relationships
-    users ||--o| preferences : "has one (nullable)"
-    devices ||--|| preferences : "has one (required)"
-    devices }o--o| users : "belongs to (nullable)"
-    devices }o--o| personal_access_tokens : "belongs to (nullable)"
-    
-    %% Authentication Relationships
-    users ||--o{ user_providers : "has many"
-    personal_access_tokens }o--|| users : "tokenable (polymorphic)"
-    
-    %% Notification Relationships
-    firebase_notifications }o--o| users : "belongs to (nullable)"
-    firebase_notifications }o--o| devices : "belongs to (nullable)"
-    
-    %% Session Relationships
-    sessions }o--o| users : "belongs to (nullable)"
-```
-
 **Core Entity Relationships:**
 - Users have an optional one-to-one relationship with preferences
 - Devices have a required one-to-one relationship with preferences  
@@ -278,16 +127,11 @@ erDiagram
 
 **Notification System:**
 - Firebase notifications can target either users or devices directly
-- Comprehensive tracking with batch IDs, status, and error handling
 
 **Support Features:**
 - Standalone support tickets and application logs
-- Password reset tokens for authentication
 
 ## API Design Patterns
-
-### Dual-Context Architecture
-The API supports both authenticated and anonymous contexts for devices and preferences:
 
 **Anonymous Access (device-based):**
 - `GET /devices/by-identifier` - Get device by identifier
@@ -298,12 +142,6 @@ The API supports both authenticated and anonymous contexts for devices and prefe
 - `GET /devices/me` - Get current user's device
 - `GET /preferences/me` - Get current user's preferences
 - Requires Bearer token authentication
-
-### Authentication Flow
-1. Users can use the app anonymously with device-based storage
-2. When signing in, device gets linked to user account
-3. User preferences override device preferences when authenticated
-4. Sign out unlinks device but preserves device-based data
 
 ## Environment Configuration
 
@@ -350,7 +188,6 @@ All data access follows the repository pattern:
 - Use `fvm` (Flutter Version Management) for Flutter commands
 - The app uses flavors for different environments with Makefile automation
 - Code generation is required for assets and localizations (`make runner`)
-- Backend uses Pest for testing framework
 - Database relationships: Users have devices, devices have preferences
 - Device linking: Devices can be anonymous or linked to authenticated users
 - API responses use Laravel Resource classes for consistent formatting
