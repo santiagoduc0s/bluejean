@@ -6,13 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:lune/core/config/config.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 
-enum LogLevel {
-  debug,
-  info,
-  warning,
-  error,
-  critical,
-}
+enum LogLevel { debug, info, warning, error, critical }
 
 class AppLoggerHelper {
   AppLoggerHelper._();
@@ -80,19 +74,23 @@ class AppLoggerHelper {
       if (email != null) extraData['user_email'] = email;
     }
 
-    await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: jsonEncode({
-        'message': message,
-        'type': _logLevelToString(type),
-        'stack_trace': stackTrace,
-        'metadata': {...?metadata, ...extraData},
-        'environment': Env.environment,
-      }),
+    unawaited(
+      http
+          .post(
+            url,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: jsonEncode({
+              'message': message,
+              'type': _logLevelToString(type),
+              'stack_trace': stackTrace,
+              'metadata': {...?metadata, ...extraData},
+              'environment': Env.environment,
+            }),
+          )
+          .catchError((_) => http.Response('Error', 500)),
     );
   }
 
@@ -115,59 +113,54 @@ class AppLoggerHelper {
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.debug,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.debug,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   static void info(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.info,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.info,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   static void warning(
     String message, {
     StackTrace? stackTrace,
     Map<String, Object> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.warning,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.warning,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   static void error(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.error,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.error,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 
   static void critical(
     String message, {
     StackTrace? stackTrace,
     Map<String, dynamic> metadata = const {},
-  }) =>
-      log(
-        message,
-        level: LogLevel.critical,
-        stackTrace: stackTrace,
-        metadata: metadata,
-      );
+  }) => log(
+    message,
+    level: LogLevel.critical,
+    stackTrace: stackTrace,
+    metadata: metadata,
+  );
 }
