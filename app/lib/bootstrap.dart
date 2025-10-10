@@ -53,9 +53,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       AppLoggerHelper.error(
         'Zone Error: $error',
         stackTrace: stackTrace,
-        metadata: {
-          'zone': Zone.current.toString(),
-        },
+        metadata: {'zone': Zone.current.toString()},
       );
     },
   );

@@ -15,7 +15,7 @@ enum ButtonType {
   outlined,
 
   /// text
-  text;
+  text,
 }
 
 class LoadingButton extends StatelessWidget {
@@ -66,7 +66,8 @@ class LoadingButton extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    final loaderIndicator = loader ??
+    final loaderIndicator =
+        loader ??
         SizedBox(
           width: 24,
           height: 24,

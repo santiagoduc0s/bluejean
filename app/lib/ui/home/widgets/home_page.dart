@@ -23,9 +23,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        child: Center(
-          child: Text(l10n.home),
-        ),
+        child: Center(child: Text(l10n.home)),
       ),
     );
   }

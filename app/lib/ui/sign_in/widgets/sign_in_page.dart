@@ -42,9 +42,7 @@ class SignInPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 4.space,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 4.space),
               child: Column(
                 children: [
                   SizedBox(height: 8.space),
@@ -77,9 +75,11 @@ class SignInPage extends StatelessWidget {
                             children: [
                               TextButton(
                                 child: Text(l10n.forgotMyPassword),
-                                onPressed: () => context
-                                    .read<SignInNotifier>()
-                                    .goToForgotPassword(),
+                                onPressed:
+                                    () =>
+                                        context
+                                            .read<SignInNotifier>()
+                                            .goToForgotPassword(),
                               ),
                             ],
                           ),
@@ -147,9 +147,7 @@ class SignInPage extends StatelessWidget {
 }
 
 class SignInWithAppleButton extends StatelessWidget {
-  const SignInWithAppleButton({
-    super.key,
-  });
+  const SignInWithAppleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -164,18 +162,16 @@ class SignInWithAppleButton extends StatelessWidget {
       width: UISpacing.infinity,
       child: OutlinedButton(
         style: buttons.primaryOutlined,
-        onPressed: isSingingWithEmailAndPassword
-            ? null
-            : () {
-                context.read<SignInNotifier>().signInWithApple();
-              },
+        onPressed:
+            isSingingWithEmailAndPassword
+                ? null
+                : () {
+                  context.read<SignInNotifier>().signInWithApple();
+                },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.apple,
-              size: 5.5.space,
-            ),
+            Icon(Icons.apple, size: 5.5.space),
             SizedBox(width: 2.space),
             Text(l10n.signInWithApple),
           ],
@@ -186,9 +182,7 @@ class SignInWithAppleButton extends StatelessWidget {
 }
 
 class SignUpWithGoogleButton extends StatelessWidget {
-  const SignUpWithGoogleButton({
-    super.key,
-  });
+  const SignUpWithGoogleButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -203,11 +197,12 @@ class SignUpWithGoogleButton extends StatelessWidget {
       width: UISpacing.infinity,
       child: OutlinedButton(
         style: buttons.primaryOutlined,
-        onPressed: isSingingWithEmailAndPassword
-            ? null
-            : () {
-                context.read<SignInNotifier>().signInWithGoogle();
-              },
+        onPressed:
+            isSingingWithEmailAndPassword
+                ? null
+                : () {
+                  context.read<SignInNotifier>().signInWithGoogle();
+                },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

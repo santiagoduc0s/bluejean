@@ -5,9 +5,9 @@ class SignInWithEmailPasswordUseCase {
     required AuthRepository authRepository,
     required DeviceRepository deviceRepository,
     required PreferenceRepository userPreferenceRepository,
-  })  : _authRepository = authRepository,
-        _deviceRepository = deviceRepository,
-        _userPreferenceRepository = userPreferenceRepository;
+  }) : _authRepository = authRepository,
+       _deviceRepository = deviceRepository,
+       _userPreferenceRepository = userPreferenceRepository;
 
   final AuthRepository _authRepository;
   final DeviceRepository _deviceRepository;
@@ -27,9 +27,6 @@ class SignInWithEmailPasswordUseCase {
     final user = await _authRepository.currentUser();
     final preference = await _userPreferenceRepository.getCurrentPreference();
 
-    return {
-      'user': user,
-      'preference': preference,
-    };
+    return {'user': user, 'preference': preference};
   }
 }

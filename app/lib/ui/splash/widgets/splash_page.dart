@@ -17,7 +17,6 @@ class SplashPage extends StatelessWidget {
         child: iconProvider
             .logo(size: 30.space)
             .animate()
-
             // ── 1. slide-in + fade-in ────────────────────────────────
             .move(
               begin: Offset(0, -h * .2),
@@ -26,7 +25,6 @@ class SplashPage extends StatelessWidget {
               duration: 800.ms,
             )
             .fadeIn(duration: 800.ms)
-
             // ── 2. breathing pulse (scale 1 → 1.1 → 1) ──────────────
             .then()
             .scale(

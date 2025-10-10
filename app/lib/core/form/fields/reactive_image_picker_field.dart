@@ -34,7 +34,8 @@ class ReactiveImagePickerField extends ReactiveFormField<XFile?, XFile?> {
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     VoidCallback removeImage,
-  ) builder;
+  )
+  builder;
 
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
@@ -58,7 +59,8 @@ class _ImagePickerContent extends StatefulWidget {
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     VoidCallback removeImage,
-  ) customBuilder;
+  )
+  customBuilder;
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
 
@@ -72,9 +74,10 @@ class _ImagePickerContentState extends State<_ImagePickerContent> {
   Future<void> _pickImage(ImageSource source) async {
     setState(() => _isProcessing = true);
 
-    final permissionType = source == ImageSource.camera
-        ? PermissionType.camera
-        : PermissionType.photos;
+    final permissionType =
+        source == ImageSource.camera
+            ? PermissionType.camera
+            : PermissionType.photos;
 
     try {
       var status = await widget.permissionRepository.check(permissionType);

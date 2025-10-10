@@ -6,15 +6,12 @@ class TermsConditionsScreen {
 
   static const path = '/terms-conditions';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return const TermsConditionsPage();
-        },
-        routes: routes,
-      );
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return const TermsConditionsPage();
+    },
+    routes: routes,
+  );
 }

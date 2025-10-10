@@ -38,7 +38,8 @@ class ReactiveMultiImagePickerField
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     void Function(int index) removeImage,
-  ) builder;
+  )
+  builder;
 
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
@@ -64,7 +65,8 @@ class _MultiImagePickerContent extends StatefulWidget {
     VoidCallback pickFromGallery,
     VoidCallback pickFromCamera,
     void Function(int index) removeImage,
-  ) customBuilder;
+  )
+  customBuilder;
   final void Function(Object error)? onError;
   final PermissionRepository permissionRepository;
 
@@ -83,9 +85,10 @@ class _MultiImagePickerContentState extends State<_MultiImagePickerContent> {
 
     setState(() => _isProcessing = true);
 
-    final permissionType = source == ImageSource.camera
-        ? PermissionType.camera
-        : PermissionType.photos;
+    final permissionType =
+        source == ImageSource.camera
+            ? PermissionType.camera
+            : PermissionType.photos;
 
     try {
       var status = await widget.permissionRepository.check(permissionType);

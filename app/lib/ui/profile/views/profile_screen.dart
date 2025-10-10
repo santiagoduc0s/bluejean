@@ -8,21 +8,19 @@ class ProfileScreen {
 
   static const path = '/profile';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (context) => ProfileNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return ChangeNotifierProvider(
+        create:
+            (context) => ProfileNotifier(
               updateCurrentUserUsecase: context.read(),
               authNotifier: context.read(),
             )..initialize(),
-            child: const ProfilePage(),
-          );
-        },
-        routes: routes,
+        child: const ProfilePage(),
       );
+    },
+    routes: routes,
+  );
 }

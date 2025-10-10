@@ -9,9 +9,7 @@ class SplashScreen {
 
   static const path = '/splash';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) {
+  static GoRoute route({List<RouteBase> routes = const []}) {
     return GoRoute(
       path: path,
       name: path,
@@ -20,11 +18,12 @@ class SplashScreen {
           key: state.pageKey,
           child: ChangeNotifierProvider(
             lazy: false,
-            create: (context) => SplashNotifier(
-              authRepository: context.read(),
-              localStorageService: context.read(),
-              router: context.read(),
-            )..initialize(),
+            create:
+                (context) => SplashNotifier(
+                  authRepository: context.read(),
+                  localStorageService: context.read(),
+                  router: context.read(),
+                )..initialize(),
             child: const SplashPage(),
           ),
         );

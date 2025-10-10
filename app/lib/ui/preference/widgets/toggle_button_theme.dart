@@ -14,11 +14,7 @@ class ToggleButtonTheme extends StatelessWidget {
 
     return ToggleButtons(
       borderRadius: BorderRadius.circular(2.space),
-      isSelected: [
-        theme == 'light',
-        theme == 'dark',
-        theme == null,
-      ],
+      isSelected: [theme == 'light', theme == 'dark', theme == null],
       onPressed: (int index) {
         switch (index) {
           case 0:

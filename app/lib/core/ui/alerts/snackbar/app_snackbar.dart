@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
 
 class AppSnackbar extends CustomSnackbar {
-  AppSnackbar(
-    this.scaffoldMessenger,
-  );
+  AppSnackbar(this.scaffoldMessenger);
 
   final ScaffoldMessengerState Function() scaffoldMessenger;
 

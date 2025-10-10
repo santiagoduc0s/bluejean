@@ -15,13 +15,13 @@ class UIInputStyleLight implements UIInputStyle {
 
   @override
   InputDecoration get primary => InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: uiColor.onSurfaceVariant),
-          borderRadius: BorderRadius.circular(3.space),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: uiColor.primary),
-          borderRadius: BorderRadius.circular(3.space),
-        ),
-      );
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: uiColor.onSurfaceVariant),
+      borderRadius: BorderRadius.circular(3.space),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: uiColor.primary),
+      borderRadius: BorderRadius.circular(3.space),
+    ),
+  );
 }

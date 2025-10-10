@@ -20,9 +20,7 @@ class NotificationsSettings extends StatelessWidget {
       color: colors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.space),
-        side: BorderSide(
-          color: colors.primary.withValues(alpha: 0.2),
-        ),
+        side: BorderSide(color: colors.primary.withValues(alpha: 0.2)),
       ),
       child: Padding(
         padding: EdgeInsets.all(4.space),

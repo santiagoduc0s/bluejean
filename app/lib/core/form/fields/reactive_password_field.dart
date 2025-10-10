@@ -41,13 +41,11 @@ class _ReactivePasswordFieldState extends State<ReactivePasswordField> {
         suffixIcon: ExcludeFocus(
           child: AnimatedSwitcher(
             duration: const Duration(milliseconds: 300),
-            transitionBuilder: (child, animation) => ScaleTransition(
-              scale: animation,
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
-            ),
+            transitionBuilder:
+                (child, animation) => ScaleTransition(
+                  scale: animation,
+                  child: FadeTransition(opacity: animation, child: child),
+                ),
             child: IconButton(
               key: ValueKey<bool>(_obscureText),
               icon: Icon(

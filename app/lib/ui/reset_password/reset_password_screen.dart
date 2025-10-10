@@ -9,23 +9,21 @@ class ResetPasswordScreen {
 
   static const path = '/reset-password';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (context) => ResetPasswordNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return ChangeNotifierProvider(
+        create:
+            (context) => ResetPasswordNotifier(
               signInWithEmailPasswordUseCase: context.read(),
               authRepository: context.read(),
               user: context.read<AuthNotifier>().currentUser!,
               router: context.read(),
             ),
-            child: const ResetPasswordPage(),
-          );
-        },
-        routes: routes,
+        child: const ResetPasswordPage(),
       );
+    },
+    routes: routes,
+  );
 }

@@ -65,23 +65,23 @@ class PublicOnboardPage extends StatelessWidget {
                         //     ),
                         SizedBox(height: 6.space),
                         Text(
-                          l10n.onboard_title,
-                          style: textStyles.headlineMedium.copyWith(
-                            color: colors.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
+                              l10n.onboard_title,
+                              style: textStyles.headlineMedium.copyWith(
+                                color: colors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
                             .animate()
                             .fadeIn(delay: 400.ms)
                             .slideY(begin: 0.3, end: 0),
                         SizedBox(height: 3.space),
                         Text(
-                          l10n.onboard_description,
-                          textAlign: TextAlign.center,
-                          style: textStyles.bodyLarge.copyWith(
-                            color: colors.onSurface.withValues(alpha: 0.7),
-                          ),
-                        )
+                              l10n.onboard_description,
+                              textAlign: TextAlign.center,
+                              style: textStyles.bodyLarge.copyWith(
+                                color: colors.onSurface.withValues(alpha: 0.7),
+                              ),
+                            )
                             .animate()
                             .fadeIn(delay: 600.ms)
                             .slideY(begin: 0.3, end: 0),

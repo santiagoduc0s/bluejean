@@ -29,16 +29,12 @@ class ResetPasswordPage extends StatelessWidget {
     final l10n = context.l10n;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.forgotPassword_title),
-      ),
+      appBar: AppBar(title: Text(l10n.forgotPassword_title)),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 4.space,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 4.space),
               child: Column(
                 children: [
                   SizedBox(height: 4.space),

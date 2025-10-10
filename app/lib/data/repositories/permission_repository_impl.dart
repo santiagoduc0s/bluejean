@@ -3,9 +3,8 @@ import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class PermissionRepositoryImpl implements PermissionRepository {
-  PermissionRepositoryImpl({
-    required PermissionService service,
-  }) : _service = service;
+  PermissionRepositoryImpl({required PermissionService service})
+    : _service = service;
 
   final PermissionService _service;
 

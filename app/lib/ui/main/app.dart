@@ -52,9 +52,10 @@ class App extends StatelessWidget {
           final textScaler = prefs?.textScaler;
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
-              textScaler: textScaler != null
-                  ? TextScaler.linear(textScaler)
-                  : MediaQuery.of(context).textScaler,
+              textScaler:
+                  textScaler != null
+                      ? TextScaler.linear(textScaler)
+                      : MediaQuery.of(context).textScaler,
             ),
             child: child!,
           );

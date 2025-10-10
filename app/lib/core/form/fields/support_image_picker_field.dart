@@ -45,10 +45,7 @@ class SupportImagePickerField extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.attachImages,
-              style: context.textStyles.labelLarge,
-            ),
+            Text(l10n.attachImages, style: context.textStyles.labelLarge),
             1.spaceY,
             Text(
               '${l10n.maxImages}: $maxImages',
@@ -85,8 +82,9 @@ class SupportImagePickerField extends StatelessWidget {
                               onTap: () => removeImage(index),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: context.colors.error
-                                      .withValues(alpha: 0.8),
+                                  color: context.colors.error.withValues(
+                                    alpha: 0.8,
+                                  ),
                                   shape: BoxShape.circle,
                                 ),
                                 padding: const EdgeInsets.all(4),

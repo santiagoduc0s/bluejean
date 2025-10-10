@@ -21,22 +21,14 @@ class SupportNotifier extends ChangeNotifier {
   final FormGroup form = FormGroup({
     'email': FormControl<String>(
       value: '',
-      validators: [
-        Validators.required,
-        Validators.email,
-      ],
+      validators: [Validators.required, Validators.email],
     ),
-    'title': FormControl<String>(
-      value: '',
-      validators: [Validators.required],
-    ),
+    'title': FormControl<String>(value: '', validators: [Validators.required]),
     'description': FormControl<String>(
       value: '',
       validators: [Validators.required],
     ),
-    'images': FormControl<List<XFile>>(
-      value: <XFile>[],
-    ),
+    'images': FormControl<List<XFile>>(value: <XFile>[]),
   });
 
   @override

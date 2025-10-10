@@ -8,8 +8,8 @@ class PreferenceRepositoryImpl implements PreferenceRepository {
   PreferenceRepositoryImpl({
     required DeviceInfoService deviceInfoService,
     required ApiClient apiClient,
-  })  : _deviceInfoService = deviceInfoService,
-        _apiClient = apiClient;
+  }) : _deviceInfoService = deviceInfoService,
+       _apiClient = apiClient;
 
   final DeviceInfoService _deviceInfoService;
   final ApiClient _apiClient;
@@ -28,9 +28,7 @@ class PreferenceRepositoryImpl implements PreferenceRepository {
 
     final response = await _apiClient.get(
       '/api/v1/preferences/by-device',
-      queryParameters: {
-        'identifier': deviceId,
-      },
+      queryParameters: {'identifier': deviceId},
     );
 
     if (response.isSuccess) {

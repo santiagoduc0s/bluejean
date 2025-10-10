@@ -109,7 +109,9 @@ class ApiClient {
     final requestHeaders = {...(await getHeaders()), ...?additionalHeaders};
 
     _logRequest('GET', uri, requestHeaders);
-    final response = await _client.get(uri, headers: requestHeaders);
+    final response = await _client
+        .get(uri, headers: requestHeaders)
+        .timeout(const Duration(seconds: 20));
     _logResponse(response);
 
     return _handleResponse(response);
@@ -125,11 +127,9 @@ class ApiClient {
     final jsonBody = body != null ? json.encode(body) : null;
 
     _logRequest('POST', uri, requestHeaders, jsonBody);
-    final response = await _client.post(
-      uri,
-      headers: requestHeaders,
-      body: jsonBody,
-    );
+    final response = await _client
+        .post(uri, headers: requestHeaders, body: jsonBody)
+        .timeout(const Duration(seconds: 20));
     _logResponse(response);
 
     return _handleResponse(response);
@@ -145,11 +145,9 @@ class ApiClient {
     final jsonBody = body != null ? json.encode(body) : null;
 
     _logRequest('PUT', uri, requestHeaders, jsonBody);
-    final response = await _client.put(
-      uri,
-      headers: requestHeaders,
-      body: jsonBody,
-    );
+    final response = await _client
+        .put(uri, headers: requestHeaders, body: jsonBody)
+        .timeout(const Duration(seconds: 20));
     _logResponse(response);
 
     return _handleResponse(response);
@@ -165,11 +163,9 @@ class ApiClient {
     final jsonBody = body != null ? json.encode(body) : null;
 
     _logRequest('DELETE', uri, requestHeaders, jsonBody);
-    final response = await _client.delete(
-      uri,
-      headers: requestHeaders,
-      body: jsonBody,
-    );
+    final response = await _client
+        .delete(uri, headers: requestHeaders, body: jsonBody)
+        .timeout(const Duration(seconds: 20));
     _logResponse(response);
 
     return _handleResponse(response);
@@ -180,9 +176,9 @@ class ApiClient {
     final cleanEndpoint =
         endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
 
-    return Uri.parse('$url$cleanEndpoint').replace(
-      queryParameters: queryParameters,
-    );
+    return Uri.parse(
+      '$url$cleanEndpoint',
+    ).replace(queryParameters: queryParameters);
   }
 
   void dispose() {

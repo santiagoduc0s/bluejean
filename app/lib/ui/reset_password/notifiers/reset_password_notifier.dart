@@ -28,17 +28,11 @@ class ResetPasswordNotifier extends ChangeNotifier {
     {
       'password': FormControl<String>(
         value: '',
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
+        validators: [Validators.required, Validators.minLength(8)],
       ),
       'newPassword': FormControl<String>(
         value: '',
-        validators: [
-          Validators.required,
-          Validators.minLength(8),
-        ],
+        validators: [Validators.required, Validators.minLength(8)],
       ),
       'repeatPassword': FormControl<String>(
         value: '',

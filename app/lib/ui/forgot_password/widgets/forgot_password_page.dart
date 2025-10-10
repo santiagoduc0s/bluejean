@@ -38,16 +38,11 @@ class ForgotPasswordPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 4.space,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 4.space),
               child: Column(
                 children: [
                   SizedBox(height: 8.space),
-                  Hero(
-                    tag: 'logo',
-                    child: iconProvider.logo(size: 40.space),
-                  ),
+                  Hero(tag: 'logo', child: iconProvider.logo(size: 40.space)),
                   SizedBox(height: 4.space),
                   ReactiveForm(
                     formGroup: form,

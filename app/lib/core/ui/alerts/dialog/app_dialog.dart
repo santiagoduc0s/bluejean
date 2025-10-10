@@ -15,27 +15,22 @@ class AppDialog extends CustomDialog {
   }) async {
     final result = await show<bool>(
       context: context(),
-      builder: (_) => ConfirmDialog(
-        title: title,
-        message: message,
-        confirmText: confirmText,
-        cancelText: cancelText,
-      ),
+      builder:
+          (_) => ConfirmDialog(
+            title: title,
+            message: message,
+            confirmText: confirmText,
+            cancelText: cancelText,
+          ),
     );
     return result != null && result == true;
   }
 
   @override
-  Future<void> info({
-    required String message,
-    required String confirmText,
-  }) {
+  Future<void> info({required String message, required String confirmText}) {
     return show<void>(
       context: context(),
-      builder: (_) => InfoDialog(
-        message: message,
-        confirmText: confirmText,
-      ),
+      builder: (_) => InfoDialog(message: message, confirmText: confirmText),
     );
   }
 

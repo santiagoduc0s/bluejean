@@ -23,10 +23,7 @@ class ForgotPasswordUseCase {
       throw InvalidEmailException();
     }
 
-    return _authRepository.forgotPassword(
-      email: email,
-      phone: phone,
-    );
+    return _authRepository.forgotPassword(email: email, phone: phone);
   }
 
   bool _isValidPhone(String phone) {

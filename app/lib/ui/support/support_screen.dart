@@ -8,9 +8,7 @@ class SupportScreen {
 
   static const path = '/support';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) {
+  static GoRoute route({List<RouteBase> routes = const []}) {
     return GoRoute(
       path: path,
       name: path,

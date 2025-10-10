@@ -21,25 +21,26 @@ class DevicesPage extends StatelessWidget {
     Widget body;
     if (notifier.devices.isEmpty) {
       body = Center(
-        child: notifier.isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.devices_other,
-                    size: 64,
-                    color: colors.onSurfaceVariant,
-                  ),
-                  2.spaceY,
-                  Text(
-                    l10n.noDevicesFound,
-                    style: textStyles.titleMedium.copyWith(
+        child:
+            notifier.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.devices_other,
+                      size: 64,
                       color: colors.onSurfaceVariant,
                     ),
-                  ),
-                ],
-              ),
+                    2.spaceY,
+                    Text(
+                      l10n.noDevicesFound,
+                      style: textStyles.titleMedium.copyWith(
+                        color: colors.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
       );
     } else {
       body = RefreshIndicator(
@@ -54,8 +55,9 @@ class DevicesPage extends StatelessWidget {
             return _DeviceCard(
               device: device,
               isCurrentDevice: isCurrentDevice,
-              onDelete: () =>
-                  _showDeleteDeviceDialog(context, device, isCurrentDevice),
+              onDelete:
+                  () =>
+                      _showDeleteDeviceDialog(context, device, isCurrentDevice),
             );
           },
         ),
@@ -63,9 +65,7 @@ class DevicesPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.manageDevices),
-      ),
+      appBar: AppBar(title: Text(l10n.manageDevices)),
       body: body,
     );
   }
@@ -76,17 +76,18 @@ class DevicesPage extends StatelessWidget {
     bool isCurrentDevice,
   ) async {
     final l10n = context.l10n;
-    final message = isCurrentDevice
-        ? '${l10n.deleteDeviceConfirmation}\n\n'
-            '${l10n.deleteCurrentDeviceWarning}'
-        : l10n.deleteDeviceConfirmation;
+    final message =
+        isCurrentDevice
+            ? '${l10n.deleteDeviceConfirmation}\n\n'
+                '${l10n.deleteCurrentDeviceWarning}'
+            : l10n.deleteDeviceConfirmation;
 
     final result = await context.read<CustomDialog>().confirm(
-          title: l10n.deleteDevice,
-          message: message,
-          confirmText: l10n.delete,
-          cancelText: l10n.cancel,
-        );
+      title: l10n.deleteDevice,
+      message: message,
+      confirmText: l10n.delete,
+      cancelText: l10n.cancel,
+    );
 
     if (result && context.mounted) {
       await context.read<DevicesNotifier>().deleteDevice(device.id);
@@ -136,9 +137,10 @@ class _DeviceCard extends StatelessWidget {
                               ? device.model
                               : 'Unknown Device',
                           style: textStyles.titleMedium.copyWith(
-                            color: isCurrentDevice
-                                ? colors.onPrimaryContainer
-                                : null,
+                            color:
+                                isCurrentDevice
+                                    ? colors.onPrimaryContainer
+                                    : null,
                           ),
                         ),
                       ),
@@ -148,9 +150,10 @@ class _DeviceCard extends StatelessWidget {
                   Text(
                     'Added: ${device.createdAt.day}/${device.createdAt.month}/${device.createdAt.year}',
                     style: textStyles.bodySmall.copyWith(
-                      color: isCurrentDevice
-                          ? colors.onPrimaryContainer
-                          : colors.onSurfaceVariant,
+                      color:
+                          isCurrentDevice
+                              ? colors.onPrimaryContainer
+                              : colors.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -158,10 +161,7 @@ class _DeviceCard extends StatelessWidget {
             ),
             IconButton(
               onPressed: onDelete,
-              icon: Icon(
-                Icons.delete,
-                color: colors.error,
-              ),
+              icon: Icon(Icons.delete, color: colors.error),
               tooltip: context.l10n.deleteDevice,
             ),
           ],

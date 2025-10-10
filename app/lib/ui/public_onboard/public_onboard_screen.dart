@@ -9,26 +9,24 @@ class PublicOnboardScreen {
 
   static const path = '/public-onboard';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        pageBuilder: (context, state) {
-          return RouteAnimation.slideDownToUpTransition(
-            duration: const Duration(milliseconds: 1500),
-            key: state.pageKey,
-            child: ChangeNotifierProvider<PublicOnboardNotifier>(
-              create: (_) => PublicOnboardNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    pageBuilder: (context, state) {
+      return RouteAnimation.slideDownToUpTransition(
+        duration: const Duration(milliseconds: 1500),
+        key: state.pageKey,
+        child: ChangeNotifierProvider<PublicOnboardNotifier>(
+          create:
+              (_) => PublicOnboardNotifier(
                 localStorageService: context.read(),
                 router: context.read(),
               ),
-              child: const PublicOnboardPage(),
-            ),
-            curve: Curves.elasticInOut,
-          );
-        },
-        routes: routes,
+          child: const PublicOnboardPage(),
+        ),
+        curve: Curves.elasticInOut,
       );
+    },
+    routes: routes,
+  );
 }

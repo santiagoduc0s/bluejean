@@ -4,9 +4,8 @@ import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/remote_storage_repository.dart';
 
 class RemoteStorageRepositoryImpl implements RemoteStorageRepository {
-  RemoteStorageRepositoryImpl({
-    required ApiClient apiClient,
-  }) : _apiClient = apiClient;
+  RemoteStorageRepositoryImpl({required ApiClient apiClient})
+    : _apiClient = apiClient;
 
   final ApiClient _apiClient;
 

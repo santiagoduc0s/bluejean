@@ -28,15 +28,10 @@ class ProfileNotifier extends ChangeNotifier {
 
   final FormGroup _form = FormGroup({
     'photo': FormControl<XFile?>(),
-    'name': FormControl<String>(
-      value: '',
-    ),
+    'name': FormControl<String>(value: ''),
     'email': FormControl<String>(
       value: '',
-      validators: [
-        Validators.email,
-        Validators.required,
-      ],
+      validators: [Validators.email, Validators.required],
     ),
   });
   FormGroup get form => _form;
@@ -97,11 +92,12 @@ class ProfileNotifier extends ChangeNotifier {
       await _updateCurrentUserUsecase.call(
         name: _form.control('name').value as String?,
         email: _form.control('email').value as String?,
-        photo: hasPhotoChanged
-            ? (photo != null
-                ? NullableParameter(await photo.readAsBytes())
-                : NullableParameter(null))
-            : null,
+        photo:
+            hasPhotoChanged
+                ? (photo != null
+                    ? NullableParameter(await photo.readAsBytes())
+                    : NullableParameter(null))
+                : null,
       );
 
       primarySnackbar(localization.profile_userUpdated);

@@ -7,9 +7,7 @@ class DevicesScreen {
 
   static const path = '/devices';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) {
+  static GoRoute route({List<RouteBase> routes = const []}) {
     return GoRoute(
       path: path,
       name: path,

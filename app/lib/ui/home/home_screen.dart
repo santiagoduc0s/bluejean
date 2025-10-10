@@ -8,19 +8,15 @@ class HomeScreen {
 
   static const path = '/home';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (context) => HomeNotifier(
-            ),
-            child: const HomePage(),
-          );
-        },
-        routes: routes,
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return ChangeNotifierProvider(
+        create: (context) => HomeNotifier(),
+        child: const HomePage(),
       );
+    },
+    routes: routes,
+  );
 }

@@ -44,9 +44,7 @@ class SignUpPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 4.space,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: 4.space),
               child: Column(
                 children: [
                   SizedBox(height: 8.space),

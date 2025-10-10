@@ -31,11 +31,7 @@ class ToggleTextScale extends StatelessWidget {
             context.read<PreferenceNotifier>().setTextScaler(2);
         }
       },
-      children: const [
-        Text('1'),
-        Text('1.5'),
-        Text('2'),
-      ],
+      children: const [Text('1'), Text('1.5'), Text('2')],
     );
   }
 }

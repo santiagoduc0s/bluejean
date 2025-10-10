@@ -17,8 +17,7 @@ class SettingsNotifier extends ChangeNotifier {
     required PreferenceRepository userPreferenceRepository,
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUsecase deleteAccountUsecase,
-  }) : 
-       _saveTokenUseCase = saveTokenUseCase,
+  }) : _saveTokenUseCase = saveTokenUseCase,
        _permissionRepository = permissionRepository,
        _onSignOut = onSignOut,
        _authNotifier = authNotifier,

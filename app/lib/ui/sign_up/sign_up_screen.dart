@@ -8,21 +8,19 @@ class SignUpScreen {
 
   static const path = '/sign-up';
 
-  static GoRoute route({
-    List<RouteBase> routes = const [],
-  }) =>
-      GoRoute(
-        path: path,
-        name: path,
-        builder: (context, state) {
-          return ChangeNotifierProvider(
-            create: (context) => SignUpNotifier(
+  static GoRoute route({List<RouteBase> routes = const []}) => GoRoute(
+    path: path,
+    name: path,
+    builder: (context, state) {
+      return ChangeNotifierProvider(
+        create:
+            (context) => SignUpNotifier(
               signUpUseCase: context.read(),
               router: context.read(),
             ),
-            child: const SignUpPage(),
-          );
-        },
-        routes: routes,
+        child: const SignUpPage(),
       );
+    },
+    routes: routes,
+  );
 }

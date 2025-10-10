@@ -52,9 +52,10 @@ class ListLanguages extends StatelessWidget {
                             color: colors.primary,
                           ),
                           title: Text(l10n.systemDefault),
-                          trailing: currentLocale == null
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == null
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('system');
                           },
@@ -65,9 +66,10 @@ class ListLanguages extends StatelessWidget {
                             style: TextStyle(fontSize: 6.space),
                           ),
                           title: Text(l10n.settings_languageEnglish),
-                          trailing: currentLocale == 'en'
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == 'en'
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('en');
                           },
@@ -78,9 +80,10 @@ class ListLanguages extends StatelessWidget {
                             style: TextStyle(fontSize: 6.space),
                           ),
                           title: Text(l10n.settings_languageSpanish),
-                          trailing: currentLocale == 'es'
-                              ? Icon(Icons.check, color: colors.primary)
-                              : null,
+                          trailing:
+                              currentLocale == 'es'
+                                  ? Icon(Icons.check, color: colors.primary)
+                                  : null,
                           onTap: () {
                             context.pop('es');
                           },

@@ -27,10 +27,8 @@ class SignInNotifier extends ChangeNotifier {
   final SaveFcmTokenUseCase saveFcmTokenUseCase;
   final AuthRepository authRepository;
   final CustomRouter router;
-  final void Function(
-    UserEntity user,
-    PreferenceEntity preference,
-  ) onSignInSuccess;
+  final void Function(UserEntity user, PreferenceEntity preference)
+  onSignInSuccess;
 
   final FormGroup form = FormGroup({
     'email': FormControl<String>(
@@ -158,9 +156,7 @@ class SignInNotifier extends ChangeNotifier {
   Future<void> goToForgotPassword() async {
     final email = await router.pushNamed<String>(
       ForgotPasswordScreen.path,
-      queryParameters: {
-        'email': form.control('email').value as String,
-      },
+      queryParameters: {'email': form.control('email').value as String},
     );
 
     if (email == null) return;

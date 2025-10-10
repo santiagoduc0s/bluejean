@@ -19,10 +19,7 @@ class RouteAnimation {
           curve: curve,
         );
 
-        return FadeTransition(
-          opacity: curvedAnimation,
-          child: child,
-        );
+        return FadeTransition(opacity: curvedAnimation, child: child);
       },
       transitionDuration: duration,
       reverseTransitionDuration: duration,
@@ -82,10 +79,7 @@ class RouteAnimation {
             end: Offset.zero,
           ).animate(curvedAnimation),
           child: FadeTransition(
-            opacity: Tween<double>(
-              begin: 0,
-              end: 1,
-            ).animate(curvedAnimation),
+            opacity: Tween<double>(begin: 0, end: 1).animate(curvedAnimation),
             child: child,
           ),
         );

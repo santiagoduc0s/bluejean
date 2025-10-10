@@ -6,10 +6,10 @@ class OpenAppUseCase {
     required PreferenceRepository preferenceRepository,
     required AuthRepository authRepository,
     required MessagingRepository messagingRepository,
-  })  : _deviceRepository = deviceRepository,
-        _preferenceRepository = preferenceRepository,
-        _authRepository = authRepository,
-        _messagingRepository = messagingRepository;
+  }) : _deviceRepository = deviceRepository,
+       _preferenceRepository = preferenceRepository,
+       _authRepository = authRepository,
+       _messagingRepository = messagingRepository;
 
   final DeviceRepository _deviceRepository;
   final PreferenceRepository _preferenceRepository;
@@ -30,10 +30,6 @@ class OpenAppUseCase {
 
     await _deviceRepository.updateDevice(fcmToken: token);
 
-    return {
-      'device': device,
-      'user': user,
-      'preference': preference,
-    };
+    return {'device': device, 'user': user, 'preference': preference};
   }
 }
