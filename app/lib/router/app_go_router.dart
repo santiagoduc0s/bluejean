@@ -45,9 +45,6 @@ class AppGoRouter extends CustomRouter {
     AppSession.instance.initialize(authNotifier);
 
     router = GoRouter(
-      observers: [
-        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-      ],
       refreshListenable: _authNotifier,
       navigatorKey: AppGlobalKey.rootNavigatorKey,
       initialLocation: SplashScreen.path,
