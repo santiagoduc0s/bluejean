@@ -35,8 +35,6 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to let you take a photo for your profile picture.</string>
-	<key>NSContactsUsageDescription</key>
-	<string>This app requires access to your contacts to allow you to link drivers with channels.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses your photo library so you can choose a photo to set as your profile picture.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -62,25 +60,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>GIDClientID</key>
-	<!-- TODO Replace this value: -->
-	<!-- Copied from GoogleService-Info.plist key CLIENT_ID -->
-	<string>712925472773-fkjpq85h61ohb024h3lg89h8l1oorquo.apps.googleusercontent.com</string>
-	<!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
-	<!-- Google Sign-in Section -->
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<!-- TODO Replace this value: -->
-				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-				<string>com.googleusercontent.apps.712925472773-fkjpq85h61ohb024h3lg89h8l1oorquo</string>
-			</array>
-		</dict>
-	</array>
-	<!-- End of the Google Sign-in Section -->
 </dict>
 </plist>
