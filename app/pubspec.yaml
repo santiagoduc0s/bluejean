@@ -12,6 +12,7 @@ dependencies:
   firebase_analytics: ^11.4.6
   firebase_core: ^3.13.1
   firebase_messaging: ^15.2.6
+  flame: ^1.32.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
@@ -67,3 +68,4 @@ flutter:
     - assets/dark/images/
     - assets/light/icons/
     - assets/light/images/
+    - assets/images/game/

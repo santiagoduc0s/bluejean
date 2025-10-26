@@ -1,4 +1,5 @@
 export 'auth/auth.dart';
+export 'card_game/card_game.dart';
 export 'devices/devices.dart';
 export 'forgot_password/forgot_password.dart';
 export 'home/home.dart';
@@ -8,7 +9,6 @@ export 'privacy_policy/privacy_policy.dart';
 export 'profile/profile.dart';
 export 'public_onboard/public_onboard.dart';
 export 'reset_password/reset_password.dart';
-export 'settings/settings.dart';
 export 'sign_in/sign_in.dart';
 export 'sign_up/sign_up.dart';
 export 'splash/splash.dart';

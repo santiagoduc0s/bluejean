@@ -1,18 +1,15 @@
 import 'dart:async';
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/session/session.dart';
 import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/utils/utils.dart';
-import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
-import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/router/router.dart';
+import 'package:lune/ui/settings/settings_screen.dart';
 import 'package:lune/ui/ui.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +42,7 @@ class AppGoRouter extends CustomRouter {
     AppSession.instance.initialize(authNotifier);
 
     router = GoRouter(
-      refreshListenable: _authNotifier,
+      // refreshListenable: _authNotifier,
       navigatorKey: AppGlobalKey.rootNavigatorKey,
       initialLocation: SplashScreen.path,
       debugLogDiagnostics: true,
@@ -55,6 +52,7 @@ class AppGoRouter extends CustomRouter {
         SignInScreen.route(
           routes: [SignUpScreen.route(), ForgotPasswordScreen.route()],
         ),
+        TrucoGameScreen.route(),
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
             final l10n = context.l10n;
@@ -194,20 +192,20 @@ class AppGoRouter extends CustomRouter {
         return context.read<AuthRepository>().accessToken;
       };
 
-      final usecase = context.read<OpenAppUseCase>();
+      // final usecase = context.read<OpenAppUseCase>();
 
-      final value = await Future.wait([
-        Future.delayed(300.ms, () {}), // Min time native splash
-        usecase.call(),
-      ]);
+      // final value = await Future.wait([
+      //   Future.delayed(300.ms, () {}), // Min time native splash
+      //   usecase.call(),
+      // ]);
 
-      final data = value.last!;
+      // final data = value.last!;
 
-      AppProvider.get<AuthNotifier>().initialize(data['user'] as UserEntity?);
+      // AppProvider.get<AuthNotifier>().initialize(data['user'] as UserEntity?);
 
-      AppProvider.get<PreferenceNotifier>().initialize(
-        data['preference'] as PreferenceEntity,
-      );
+      // AppProvider.get<PreferenceNotifier>().initialize(
+      //   data['preference'] as PreferenceEntity,
+      // );
     } catch (e, s) {
       AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
@@ -225,23 +223,25 @@ class AppGoRouter extends CustomRouter {
       return null;
     }
 
-    if (state.matchedLocation == SplashScreen.path) {
-      return null;
-    }
-
-    final isAuthenticated = _authNotifier.isAuthenticated;
-
-    final isPublicRoute = publicRoutes.contains(state.matchedLocation);
-
-    if (!isAuthenticated && !isPublicRoute) {
-      return SignInScreen.path;
-    }
-
-    if (isPublicRoute && isAuthenticated) {
-      return HomeScreen.path;
-    }
-
     return null;
+
+    // if (state.matchedLocation == SplashScreen.path) {
+    //   return null;
+    // }
+
+    // final isAuthenticated = _authNotifier.isAuthenticated;
+
+    // final isPublicRoute = publicRoutes.contains(state.matchedLocation);
+
+    // if (!isAuthenticated && !isPublicRoute) {
+    //   return SignInScreen.path;
+    // }
+
+    // if (isPublicRoute && isAuthenticated) {
+    //   return HomeScreen.path;
+    // }
+
+    // return null;
   }
 
   @override

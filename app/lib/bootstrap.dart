@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:flame/flame.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lune/core/config/config.dart';
 import 'package:lune/core/dependencies/dependencies.dart';
 import 'package:lune/core/utils/utils.dart';
-import 'package:lune/firebase_options.dart';
+// import 'package:lune/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
@@ -35,17 +36,20 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         return true;
       };
 
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      // await Firebase.initializeApp(
+      //   options: DefaultFirebaseOptions.currentPlatform,
+      // );
 
-      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
-        Env.environment == 'prod',
-      );
+      // await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
+      //   Env.environment == 'prod',
+      // );
 
       AppLoggerHelper.debug(Env.environment);
 
       AppProvider.init();
+
+      await Flame.device.fullScreen();
+      await Flame.device.setLandscape();
 
       runApp(MultiProvider(providers: providers, child: await builder()));
     },

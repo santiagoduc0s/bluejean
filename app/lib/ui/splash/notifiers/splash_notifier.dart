@@ -6,6 +6,7 @@ import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/home/home.dart';
 import 'package:lune/ui/public_onboard/public_onboard.dart';
+import 'package:lune/ui/ui.dart';
 
 class SplashNotifier extends ChangeNotifier {
   SplashNotifier({
@@ -26,6 +27,6 @@ class SplashNotifier extends ChangeNotifier {
       return router.goNamed(PublicOnboardScreen.path);
     }
 
-    router.goNamed(HomeScreen.path);
+    router.goNamed(TrucoGameScreen.path);
   }
 }
