@@ -1,6 +1,3 @@
-import 'dart:io' show Platform;
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/fields/fields.dart';
@@ -119,12 +116,6 @@ class SignInPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 4.space),
-                  if (!kIsWeb && Platform.isIOS) ...[
-                    const SignInWithAppleButton(),
-                    SizedBox(height: 4.space),
-                  ],
-                  const SignUpWithGoogleButton(),
-                  SizedBox(height: 4.space),
                   SizedBox(
                     width: UISpacing.infinity,
                     child: LoadingButton(
@@ -141,80 +132,6 @@ class SignInPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class SignInWithAppleButton extends StatelessWidget {
-  const SignInWithAppleButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final buttons = context.buttonStyles;
-    final l10n = context.l10n;
-
-    final isSingingWithEmailAndPassword = context.select(
-      (SignInNotifier notifier) => notifier.isSigningIn,
-    );
-
-    return SizedBox(
-      width: UISpacing.infinity,
-      child: OutlinedButton(
-        style: buttons.primaryOutlined,
-        onPressed:
-            isSingingWithEmailAndPassword
-                ? null
-                : () {
-                  context.read<SignInNotifier>().signInWithApple();
-                },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.apple, size: 5.5.space),
-            SizedBox(width: 2.space),
-            Text(l10n.signInWithApple),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SignUpWithGoogleButton extends StatelessWidget {
-  const SignUpWithGoogleButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final buttons = context.buttonStyles;
-    final l10n = context.l10n;
-
-    final isSingingWithEmailAndPassword = context.select(
-      (SignInNotifier notifier) => notifier.isSigningIn,
-    );
-
-    return SizedBox(
-      width: UISpacing.infinity,
-      child: OutlinedButton(
-        style: buttons.primaryOutlined,
-        onPressed:
-            isSingingWithEmailAndPassword
-                ? null
-                : () {
-                  context.read<SignInNotifier>().signInWithGoogle();
-                },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.network(
-              'https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png',
-              height: 4.2.space,
-              width: 4.2.space,
-            ),
-            SizedBox(width: 2.space),
-            Text(l10n.signInWithGoogle),
-          ],
-        ),
       ),
     );
   }

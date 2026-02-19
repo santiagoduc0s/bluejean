@@ -4,190 +4,113 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Flutter mobile application with Laravel backend
+Flutter mobile application with Laravel backend.
 
-- `app/` - Flutter mobile application
-- `backend/` - Laravel API backend
+- `app/` - Flutter mobile application (Flutter 3.35.4 via fvm)
+- `backend/` - Laravel 12 API backend
 
 ## Development Commands
 
 ### Flutter App (app/)
 
-**Environment Management:**
-```bash
-make dev                     # Switch to development environment
-make stg                     # Switch to staging environment  
-make prod                    # Switch to production environment
-```
+All Flutter commands must use `fvm` prefix. Run make targets from `app/` directory.
 
-**Setup and Dependencies:**
 ```bash
-cd app/
+# Environment switching (copies env-specific config files)
+make dev / make stg / make prod
+
+# Setup
 fvm flutter pub get          # Install dependencies
-make runner                  # Run build_runner (code generation)
-```
+make runner                  # Run build_runner (code generation for assets/l10n)
 
-**Building:**
-```bash
-make build-android-prod      # Build Android production APK
-make build-ios-prod-ipa      # Build iOS production IPA
-make build-web-prod          # Build web production
-```
-
-**Testing and Quality:**
-```bash
+# Testing
 fvm flutter test --coverage --test-randomize-ordering-seed random
-make lint                    # Run dart fix, format, and analyze
-make clean                   # Clean Flutter project
-```
+fvm flutter test path/to/test_file.dart   # Run single test
 
-**Localization:**
-```bash
-fvm flutter gen-l10n
+# Quality
+make lint                    # dart fix + format + analyze (uses very_good_analysis)
+
+# Localization
+fvm flutter gen-l10n         # Generate from ARB files in lib/l10n/
+
+# Building
+make build-android-prod      # Android production APK
+make build-ios-prod-ipa      # iOS production IPA
+make build-web-prod          # Web production
 ```
 
 ### Laravel Backend (backend/)
 
-**Development:**
 ```bash
-cd backend/
 composer install             # Install PHP dependencies
 php artisan storage:link     # Create storage symlink (one time)
 php artisan migrate          # Run database migrations
 php artisan serve            # Start development server
+
+# Testing (PestPHP)
+php artisan test             # Run all tests
+php artisan test --filter=TestName  # Run specific test
+
+# Admin panel
+php artisan user-admin:create --name="Name" --email="email" --password="pass"
 ```
+
+**Required setup:** Place `serviceAccountKey.json` (Firebase) in backend root.
 
 ## Architecture Overview
 
 ### Flutter App Architecture
 
-The Flutter app follows **Clean Architecture** with clear separation of concerns:
+Clean Architecture with four layers:
 
-**Core Layer (`lib/core/`):**
-- `config/` - App configuration and environment variables
-- `dependencies/` - Dependency injection setup using Provider
-- `extensions/` - Dart extensions and utilities
-- `theme/` - Material theme configuration
-- `utils/` - Utility functions including ApiClient for HTTP requests
+- **Core (`lib/core/`)** - Config, DI, extensions, theme, utilities
+- **Domain (`lib/domain/`)** - Entities, repository interfaces, use cases, enums
+- **Data (`lib/data/`)** - Models (JSON mapping), repository implementations, device/storage/permission services
+- **Presentation (`lib/ui/`)** - Feature-based screens and widgets
 
-**Domain Layer (`lib/domain/`):**
-- `entities/` - Business entities (User, Device, Preference)
-- `repositories/` - Repository interfaces
-- `usecases/` - Business logic use cases
-- `enums/` - Domain enumerations
+**Dependency Injection:** GetIt service locator (`AppProvider` in `lib/core/dependencies/`) registers all services, repositories, use cases, and notifiers. Provider package is used for state management (ChangeNotifier) at the widget tree level, not for DI.
 
-**Data Layer (`lib/data/`):**
-- `models/` - Data models that map to/from JSON
-- `repositories/` - Repository implementations with API integration
-- `services/` - External service integrations (device info, local storage, permissions)
+**State Management:** ChangeNotifier classes (AuthNotifier, PreferenceNotifier) exposed via Provider. Global session state via `AppSession.instance` singleton.
 
-**Presentation Layer (`lib/ui/`):**
-- Feature-based organization (auth/, home/, profile/, settings/, etc.)
-- Each feature contains screens and related widgets
-- State management using Provider pattern
+**Navigation:** GoRouter with StatefulShellRoute for bottom/rail navigation. Routes redirect based on AuthNotifier authentication state.
 
-**Key Technologies:**
-- State Management: Provider pattern with Provider for dependency injection
-- Navigation: GoRouter with authentication-aware routing
-- HTTP Client: Custom ApiClient with token management and 401 handling
-- Localization support (English/Spanish)
-- Environment-based configuration (dev/staging/prod)
+**HTTP:** Custom `ApiClient` with automatic token management, 401 handling, and request logging.
 
 ### Laravel Backend Architecture
 
-Standard Laravel 12 application structure with API-first design:
+API-first Laravel with versioned routes (`/api/v1/`). Authentication via Laravel Sanctum.
 
-**Key Components:**
-- `app/Models/` - Eloquent models (User, Device, Preference)
-- `app/Http/Controllers/Api/V1/` - Versioned API controllers
-- `app/Policies/` - Authorization policies for resource access
-- `app/Http/Resources/` - API response transformers
-- `database/migrations/` - Database schema definitions
-- `routes/api_v1.php` - API route definitions
-
-**API Structure:**
-- RESTful API with version prefix (`/api/v1/`)
-- Laravel Sanctum for authentication
-- Consistent resource naming:
-  - `/me` for current authenticated user's resources
-  - `/by-identifier` or `/by-device` for anonymous device-based access
-- Separate public and protected route groups
+- `app/Http/Controllers/Api/V1/` - API controllers
+- `app/Policies/` - Authorization policies
+- `app/Http/Resources/` - Response transformers
+- `app/Services/` - OAuth services (Apple, Google)
+- `app/Filament/` - Admin panel (Filament v3)
+- `routes/api_v1.php` - All API route definitions
 
 ### Database Schema
 
-**Core Entity Relationships:**
-- Users have an optional one-to-one relationship with preferences
-- Devices have a required one-to-one relationship with preferences  
-- Devices can optionally belong to a user (supporting anonymous device usage)
-
-**Authentication System:**
-- Multiple authentication providers per user via `user_providers`
-- Personal access tokens for API authentication (Laravel Sanctum)
-- Session management with optional user association
-
-**Notification System:**
-- Firebase notifications can target either users or devices directly
-
-**Support Features:**
-- Standalone support tickets and application logs
+- Users have optional preferences (one-to-one)
+- Devices have required preferences (one-to-one)
+- Devices optionally belong to a user (anonymous device support)
+- Multiple auth providers per user via `user_providers`
+- Firebase notifications target users or devices
 
 ## API Design Patterns
 
-**Anonymous Access (device-based):**
-- `GET /devices/by-identifier` - Get device by identifier
-- `GET /preferences/by-device` - Get device preferences
-- Requires device identifier for access
+Dual-context access pattern — repositories auto-select endpoints based on auth state:
 
-**Authenticated Access (user-based):**
-- `GET /devices/me` - Get current user's device
-- `GET /preferences/me` - Get current user's preferences
-- Requires Bearer token authentication
+- **Anonymous (device-based):** `/devices/by-identifier`, `/preferences/by-device` — requires device identifier
+- **Authenticated (user-based):** `/devices/me`, `/preferences/me` — requires Bearer token
 
 ## Environment Configuration
 
-### Flutter App Environments
+Three environments (dev/stg/prod) in `app/environments/`, each with Firebase config, env.json (BASE_URL, SERVER_CLIENT_ID), and platform manifests. Switching environments (`make dev/stg/prod`) copies these files into place.
 
-The app supports multiple environments managed through Makefiles:
-- Development (`environments/dev/`)
-- Staging (`environments/stg/`) 
-- Production (`environments/prod/`)
+## Key Patterns
 
-Each environment has its own:
-- Firebase configuration files
-- Environment JSON files
-- Platform-specific manifests
-
-### API Client Configuration
-
-The `ApiClient` class handles HTTP requests with:
-- Automatic token management
-- 401 unauthorized response handling with callbacks
-- Request/response logging with JSON formatting
-- Authentication state detection
-
-## Repository Pattern Implementation
-
-All data access follows the repository pattern:
-
-**Repository Interfaces** (`lib/domain/repositories/`):
-- Define contracts for data operations
-- Abstract away implementation details
-
-**Repository Implementations** (`lib/data/repositories/`):
-- `AuthRepositoryImpl` - User authentication via API
-- `DeviceRepositoryImpl` - Device management with dual-context support
-- `PreferenceRepositoryImpl` - User/device preferences
-- `RemoteStorageRepositoryImpl` - File upload to Laravel backend
-
-**Key Pattern:** Repositories automatically choose appropriate endpoints based on authentication state, providing seamless experience for both anonymous and authenticated users.
-
-**Global Session Access:** Use `AppSession.instance` to access current user data globally in repository implementations when needed.
-
-## Key Development Notes
-
-- Use `fvm` (Flutter Version Management) for Flutter commands
-- The app uses flavors for different environments with Makefile automation
-- Code generation is required for assets and localizations (`make runner`)
-- Database relationships: Users have devices, devices have preferences
-- Device linking: Devices can be anonymous or linked to authenticated users
+- Always use `fvm flutter` instead of plain `flutter`
+- Code generation required after changing assets or adding localizations (`make runner`)
+- Repositories choose anonymous vs authenticated endpoints automatically
+- Use `AppSession.instance` for global session access in repositories
+- Shorebird integration for OTA code patching (see `app/builds.mk`)
 - API responses use Laravel Resource classes for consistent formatting

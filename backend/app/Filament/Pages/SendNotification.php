@@ -5,7 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\User;
 use App\Repositories\Contracts\MessagingRepositoryInterface;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Pages\Page;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Log;
 
 class SendNotification extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-paper-airplane';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
 
     protected static ?string $navigationLabel = 'Send Notification';
     
-    protected static ?string $navigationGroup = 'Push Notifications';
+    protected static string|\UnitEnum|null $navigationGroup = 'Push Notifications';
 
-    protected static string $view = 'filament.pages.send-notification';
+    protected string $view = 'filament.pages.send-notification';
 
     public ?array $data = [];
 
@@ -28,9 +28,9 @@ class SendNotification extends Page
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\Section::make('Notification Content')
                     ->schema([

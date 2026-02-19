@@ -1,10 +1,10 @@
 lint:
-	dart fix --apply
-	dart format .
+	fvm dart fix --apply
+	fvm dart format .
 	fvm flutter analyze
 
 runner:
-	dart run build_runner build
+	fvm dart run build_runner build
 
 clean:
 	fvm flutter clean

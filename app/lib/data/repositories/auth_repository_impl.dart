@@ -1,15 +1,11 @@
 import 'dart:async';
 
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:lune/core/config/config.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/data/models/user_model.dart';
 import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl({
     required LocalStorageService localStorageService,
@@ -163,89 +159,6 @@ class AuthRepositoryImpl extends AuthRepository {
       clearSession();
     } else {
       throw Exception('Failed to delete user account');
-    }
-  }
-
-  @override
-  Future<void> signInWithApple() async {
-    final isAvailable = await SignInWithApple.isAvailable();
-
-    if (!isAvailable) {
-      throw Exception('Apple Sign-In is not available on this device');
-    }
-
-    try {
-      final credential = await SignInWithApple.getAppleIDCredential(
-        scopes: [AppleIDAuthorizationScopes.email],
-      );
-
-      final identityToken = credential.identityToken;
-
-      if (identityToken == null) {
-        throw Exception('Failed to get Apple identity token');
-      }
-
-      final response = await _apiClient.post(
-        '/api/v1/auth/sign-in-with-provider',
-        body: {'provider': 'apple', 'id_token': identityToken},
-      );
-
-      if (response.isSuccess) {
-        final data = response.jsonBody;
-        final token = data['token'] as String;
-
-        saveSession(accessToken: token);
-        return;
-      }
-
-      throw Exception('Apple Sign-In failed: ${response.jsonBody}');
-    } on SignInWithAppleAuthorizationException catch (e) {
-      if (e.code == AuthorizationErrorCode.canceled) {
-        throw CancellOperationException();
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> signInWithGoogle() async {
-    try {
-      final instance = GoogleSignIn.instance;
-
-      await instance.initialize(
-        serverClientId:
-            Env.serverClientId.isNotEmpty ? Env.serverClientId : null,
-      );
-
-      final googleUser = await instance.authenticate();
-
-      final auth = googleUser.authentication;
-      final idToken = auth.idToken;
-
-      if (idToken == null) {
-        throw Exception('Failed to get Google ID token');
-      }
-
-      final response = await _apiClient.post(
-        '/api/v1/auth/sign-in-with-provider',
-        body: {'provider': 'google', 'id_token': idToken},
-      );
-
-      if (response.isSuccess) {
-        final data = response.jsonBody;
-        final token = data['token'] as String;
-
-        saveSession(accessToken: token);
-        return;
-      }
-
-      throw Exception('Google Sign-In failed: ${response.jsonBody}');
-    } on GoogleSignInException catch (e) {
-      if (e.code == GoogleSignInExceptionCode.canceled) {
-        throw CancellOperationException();
-      }
-      rethrow;
     }
   }
 

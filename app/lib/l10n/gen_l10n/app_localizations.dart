@@ -512,24 +512,6 @@ abstract class AppLocalizations {
   /// **'I forgot my password'**
   String get forgotMyPassword;
 
-  /// No description provided for @signInWithGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Google'**
-  String get signInWithGoogle;
-
-  /// No description provided for @signInWithApple.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Apple'**
-  String get signInWithApple;
-
-  /// No description provided for @signInWithFacebook.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign In with Facebook'**
-  String get signInWithFacebook;
-
   /// No description provided for @connected.
   ///
   /// In en, this message translates to:

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -37,10 +36,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
-      );
-
-      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(
-        Env.environment == 'prod',
       );
 
       AppLoggerHelper.debug(Env.environment);

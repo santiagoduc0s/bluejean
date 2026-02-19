@@ -53,27 +53,21 @@ class SettingsNotifier extends ChangeNotifier {
       await checkNotificationPermission();
     }
 
-    if (!kIsWeb) {
-      unawaited(_saveTokenUseCase.call().catchError((_) {}));
-    }
+    unawaited(_saveTokenUseCase.call().catchError((_) {}));
   }
 
   Future<void> checkNotificationPermission() async {
     final pref = await _userPreferenceRepository.getCurrentPreference();
-    if (!kIsWeb) {
-      final status = await _permissionRepository.check(
-        PermissionType.notifications,
-      );
+    final status = await _permissionRepository.check(
+      PermissionType.notifications,
+    );
 
-      notificationsEnabled =
-          pref.notificationsAreEnabled && status == PermissionStatus.granted;
+    notificationsEnabled =
+        pref.notificationsAreEnabled && status == PermissionStatus.granted;
 
-      if (!hasListeners) return;
+    if (!hasListeners) return;
 
-      notifyListeners();
-    } else {
-      notificationsEnabled = pref.notificationsAreEnabled;
-    }
+    notifyListeners();
   }
 
   Future<void> setNotificationsEnabled(bool value) async {

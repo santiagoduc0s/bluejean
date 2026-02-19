@@ -13,8 +13,6 @@ import 'package:reactive_forms/reactive_forms.dart';
 class SignInNotifier extends ChangeNotifier {
   SignInNotifier({
     required this.signInWithEmailPasswordUseCase,
-    required this.signInWithAppleUseCase,
-    required this.signInWithGoogleUseCase,
     required this.saveFcmTokenUseCase,
     required this.authRepository,
     required this.router,
@@ -22,8 +20,6 @@ class SignInNotifier extends ChangeNotifier {
   });
 
   final SignInWithEmailPasswordUseCase signInWithEmailPasswordUseCase;
-  final SignInWithAppleUseCase signInWithAppleUseCase;
-  final SignInWithGoogleUseCase signInWithGoogleUseCase;
   final SaveFcmTokenUseCase saveFcmTokenUseCase;
   final AuthRepository authRepository;
   final CustomRouter router;
@@ -42,58 +38,6 @@ class SignInNotifier extends ChangeNotifier {
   });
 
   bool isSigningIn = false;
-
-  Future<void> signInWithApple() async {
-    if (isSigningIn) return;
-
-    _setSigningIn(true);
-
-    try {
-      final data = await signInWithAppleUseCase.call();
-      await saveFcmTokenUseCase.call();
-
-      onSignInSuccess(
-        data['user'] as UserEntity,
-        data['preference'] as PreferenceEntity,
-      );
-    } on CancellOperationException {
-      return;
-    } on NoInternetConnectionException {
-      errorSnackbar(localization.notConnected);
-    } catch (e, s) {
-      errorSnackbar(localization.generalError);
-
-      logError(e, s);
-    } finally {
-      _setSigningIn(false);
-    }
-  }
-
-  Future<void> signInWithGoogle() async {
-    if (isSigningIn) return;
-
-    _setSigningIn(true);
-
-    try {
-      final data = await signInWithGoogleUseCase.call();
-      await saveFcmTokenUseCase.call();
-
-      onSignInSuccess(
-        data['user'] as UserEntity,
-        data['preference'] as PreferenceEntity,
-      );
-    } on CancellOperationException {
-      return;
-    } on NoInternetConnectionException {
-      errorSnackbar(localization.notConnected);
-    } catch (e, s) {
-      errorSnackbar(localization.generalError);
-
-      logError(e, s);
-    } finally {
-      _setSigningIn(false);
-    }
-  }
 
   Future<void> signInWithEmailAndPassword() async {
     if (!form.valid) {

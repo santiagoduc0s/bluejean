@@ -6,7 +6,7 @@ use App\Filament\Resources\UserAdminResource\Pages;
 use App\Filament\Resources\UserAdminResource\RelationManagers;
 use App\Models\UserAdmin;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,11 +17,11 @@ class UserAdminResource extends Resource
 {
     protected static ?string $model = UserAdmin::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()

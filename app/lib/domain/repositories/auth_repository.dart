@@ -17,10 +17,6 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<void> signInWithApple();
-
-  Future<void> signInWithGoogle();
-
   Future<void> forgotPassword({String? email, String? phone});
 
   Future<void> updatePassword({required String password});

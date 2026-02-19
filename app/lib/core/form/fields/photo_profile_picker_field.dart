@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart'; // added to check kIsWeb
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/extensions/extensions.dart';
@@ -65,20 +64,12 @@ class PhotoProfilePickerField extends StatelessWidget {
                     photo != null
                         ? ClipOval(
                           key: const ValueKey('photo'),
-                          child:
-                              kIsWeb
-                                  ? Image.network(
-                                    photo,
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  )
-                                  : Image.file(
-                                    File(photo),
-                                    fit: BoxFit.cover,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  ),
+                          child: Image.file(
+                            File(photo),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
                         )
                         : Center(
                           key: const ValueKey('icon'),
@@ -102,11 +93,10 @@ class PhotoProfilePickerField extends StatelessWidget {
                         value: 'gallery',
                         child: Text(l10n.gallery),
                       ),
-                      if (!kIsWeb)
-                        PopupMenuItem(
-                          value: 'camera',
-                          child: Text(l10n.takePicture),
-                        ),
+                      PopupMenuItem(
+                        value: 'camera',
+                        child: Text(l10n.takePicture),
+                      ),
                       if (photo != null)
                         PopupMenuItem(
                           value: 'delete',

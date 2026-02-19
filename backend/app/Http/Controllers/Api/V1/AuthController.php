@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserProvider;
-use App\Services\AppleAuthService;
-use App\Services\GoogleAuthService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -16,12 +14,6 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    public function __construct(
-        private AppleAuthService $appleAuthService,
-        private GoogleAuthService $googleAuthService
-    ) {
-    }
-
     public function signUp(Request $request)
     {
         $request->validate([
@@ -130,108 +122,6 @@ class AuthController extends Controller
         $user->notify(new VerifyEmail);
 
         return response()->json(['message' => 'Verification email sent'], 200);
-    }
-
-    public function signInWithProvider(Request $request)
-    {
-        $request->validate([
-            'provider' => 'required|string|in:google,apple',
-            'id_token' => 'required|string',
-        ]);
-
-        $provider = $request->input('provider');
-
-        switch ($provider) {
-            case 'google':
-                return $this->handleGoogleSignIn($request);
-            case 'apple':
-                return $this->handleAppleSignIn($request);
-            default:
-                throw ValidationException::withMessages([
-                    'provider' => ['Unsupported provider.'],
-                ]);
-        }
-    }
-
-    private function handleGoogleSignIn(Request $request)
-    {
-
-        $idToken = $request->input('id_token');
-
-        $tokenData = $this->googleAuthService->verifyGoogleIdToken($idToken);
-
-        $userData = $this->googleAuthService->extractUserDataFromToken($tokenData);
-
-        $googleId = $userData['google_id'];
-        $email = $userData['email'];
-
-        $existingProvider = UserProvider::byProvider('google', $googleId)->first();
-
-        if ($existingProvider) {
-            $user = $existingProvider->user;
-        } else {
-            $emailProvider = UserProvider::where('provider_email', $email)->first();
-
-            if ($emailProvider) {
-                $user = $emailProvider->user;
-            } else {
-                $user = User::create([
-                    'email' => $email,
-                ]);
-            }
-
-            UserProvider::create([
-                'user_id' => $user->id,
-                'provider' => 'google',
-                'provider_id' => $googleId,
-                'provider_email' => $email,
-                'email_verified_at' => now(),
-            ]);
-        }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json(['token' => $token]);
-    }
-
-    private function handleAppleSignIn(Request $request)
-    {
-        $idToken = $request->input('id_token');
-
-        $decoded = $this->appleAuthService->verifyAppleIdToken($idToken);
-
-        $userData = $this->appleAuthService->extractUserDataFromToken($decoded);
-
-        $appleId = $userData['apple_id'];
-        $email = $userData['email'];
-
-        $existingProvider = UserProvider::byProvider('apple', $appleId)->first();
-
-        if ($existingProvider) {
-            $user = $existingProvider->user;
-        } else {
-            $emailProvider = UserProvider::where('provider_email', $email)->first();
-
-            if ($emailProvider) {
-                $user = $emailProvider->user;
-            } else {
-                $user = User::create([
-                    'email' => $email,
-                ]);
-            }
-
-            UserProvider::create([
-                'user_id' => $user->id,
-                'provider' => 'apple',
-                'provider_id' => $appleId,
-                'provider_email' => $email,
-                'email_verified_at' => $email ? now() : null,
-            ]);
-        }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json(['token' => $token]);
     }
 
     public function forgotPassword(Request $request)

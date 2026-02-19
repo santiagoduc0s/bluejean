@@ -25,8 +25,6 @@ class SignInScreen {
           create:
               (context) => SignInNotifier(
                 signInWithEmailPasswordUseCase: context.read(),
-                signInWithAppleUseCase: context.read(),
-                signInWithGoogleUseCase: context.read(),
                 saveFcmTokenUseCase: context.read(),
                 authRepository: context.read(),
                 onSignInSuccess: (

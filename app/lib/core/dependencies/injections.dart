@@ -32,8 +32,6 @@ List<SingleChildWidget> providers = [
 
   /// USE CASES
   Provider.value(value: AppProvider.get<SignInWithEmailPasswordUseCase>()),
-  Provider.value(value: AppProvider.get<SignInWithAppleUseCase>()),
-  Provider.value(value: AppProvider.get<SignInWithGoogleUseCase>()),
   Provider.value(value: AppProvider.get<SignUpUseCase>()),
   Provider.value(value: AppProvider.get<ForgotPasswordUseCase>()),
   Provider.value(value: AppProvider.get<UpdateCurrentUserUsecase>()),

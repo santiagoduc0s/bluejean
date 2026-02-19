@@ -4,7 +4,6 @@
 
 Add .env, copy the env.example
 Run ```php artisan key:generate```
-- To use sign in with google set the ```GOOGLE_CLIENT_ID```
 
 ```
 composer install

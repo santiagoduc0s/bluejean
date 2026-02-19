@@ -80,20 +80,6 @@ class AppProvider {
       ),
     );
     _getIt.registerLazySingleton(
-      () => SignInWithAppleUseCase(
-        authRepository: get<AuthRepository>(),
-        deviceRepository: get<DeviceRepository>(),
-        userPreferenceRepository: get<PreferenceRepository>(),
-      ),
-    );
-    _getIt.registerLazySingleton(
-      () => SignInWithGoogleUseCase(
-        authRepository: get<AuthRepository>(),
-        deviceRepository: get<DeviceRepository>(),
-        userPreferenceRepository: get<PreferenceRepository>(),
-      ),
-    );
-    _getIt.registerLazySingleton(
       () => SignUpUseCase(authRepository: get<AuthRepository>()),
     );
     _getIt.registerLazySingleton(

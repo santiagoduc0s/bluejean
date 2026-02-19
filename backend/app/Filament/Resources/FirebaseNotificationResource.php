@@ -5,9 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FirebaseNotificationResource\Pages;
 use App\Models\FirebaseNotification;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Infolists;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,22 +16,22 @@ class FirebaseNotificationResource extends Resource
 {
     protected static ?string $model = FirebaseNotification::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bell';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-bell';
     
     protected static ?string $navigationLabel = 'Firebase Notifications';
     
     protected static ?string $modelLabel = 'Firebase Notification';
     
-    protected static ?string $navigationGroup = 'Push Notifications';
+    protected static string|\UnitEnum|null $navigationGroup = 'Push Notifications';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form->schema([]);
+        return $schema->schema([]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Notification Details')
                     ->schema([

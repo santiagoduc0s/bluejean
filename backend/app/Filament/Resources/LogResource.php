@@ -6,9 +6,8 @@ use App\Filament\Resources\LogResource\Pages;
 use App\Filament\Resources\LogResource\RelationManagers;
 use App\Models\Log;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Infolists;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,15 +18,15 @@ class LogResource extends Resource
 {
     protected static ?string $model = Log::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-exclamation-triangle';
     
     protected static ?string $navigationLabel = 'Application Logs';
     
     protected static ?string $modelLabel = 'Log Entry';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('message')
                     ->disabled(),
@@ -49,9 +48,9 @@ class LogResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Log Details')
                     ->schema([

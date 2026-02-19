@@ -216,15 +216,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forgotMyPassword => 'I forgot my password';
 
   @override
-  String get signInWithGoogle => 'Sign in with Google';
-
-  @override
-  String get signInWithApple => 'Sign in with Apple';
-
-  @override
-  String get signInWithFacebook => 'Sign In with Facebook';
-
-  @override
   String get connected => 'Connected';
 
   @override

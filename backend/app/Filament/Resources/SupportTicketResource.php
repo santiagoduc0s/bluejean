@@ -6,9 +6,8 @@ use App\Filament\Resources\SupportTicketResource\Pages;
 use App\Filament\Resources\SupportTicketResource\RelationManagers;
 use App\Models\SupportTicket;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Schemas\Schema;
 use Filament\Infolists;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,15 +18,15 @@ class SupportTicketResource extends Resource
 {
     protected static ?string $model = SupportTicket::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
     
     protected static ?string $navigationLabel = 'Support Tickets';
     
     protected static ?string $modelLabel = 'Support Ticket';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -43,9 +42,9 @@ class SupportTicketResource extends Resource
             ]);
     }
 
-    public static function infolist(Infolist $infolist): Infolist
+    public static function infolist(Schema $schema): Schema
     {
-        return $infolist
+        return $schema
             ->schema([
                 Infolists\Components\Section::make('Support Ticket Details')
                     ->schema([

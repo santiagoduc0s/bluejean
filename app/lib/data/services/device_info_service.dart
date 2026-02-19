@@ -25,11 +25,6 @@ class DeviceInfoService {
   }
 
   Future<String> getDeviceModel() async {
-    if (kIsWeb) {
-      final webInfo = await _deviceInfo.webBrowserInfo;
-      return webInfo.browserName.name;
-    }
-
     switch (defaultTargetPlatform) {
       case TargetPlatform.iOS:
         final iosInfo = await _deviceInfo.iosInfo;

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -157,19 +156,17 @@ class SettingsPage extends StatelessWidget {
                     duration: 700.ms,
                   )
                   .fadeIn(),
-              if (!kIsWeb) ...[
-                SizedBox(height: 4.space),
-                const NotificationsSettings()
-                    .animate()
-                    .slide(
-                      begin: const Offset(0, 1),
-                      curve: Curves.easeInOut,
-                      end: Offset.zero,
-                      delay: 1000.ms,
-                      duration: 700.ms,
-                    )
-                    .fadeIn(),
-              ],
+              SizedBox(height: 4.space),
+              const NotificationsSettings()
+                  .animate()
+                  .slide(
+                    begin: const Offset(0, 1),
+                    curve: Curves.easeInOut,
+                    end: Offset.zero,
+                    delay: 1000.ms,
+                    duration: 700.ms,
+                  )
+                  .fadeIn(),
               SizedBox(height: 4.space),
               Card(
                     elevation: 0,
