@@ -3,16 +3,44 @@
 ## Backend
 
 Add .env, copy the env.example
-Run ```php artisan key:generate```
 
 ```
 composer install
+php artisan key:generate
 php artisan storage:link
 php artisan migrate
-php artisan serve # or herd link projectname -> then set the APP_URL
+php artisan serve
 ```
 
-Add serviceAccountKey.json to the root
+### Docker
+
+```bash
+cd backend
+make deploy-dev
+```
+
+To deploy to production locally (run with prod ports):
+
+```bash
+cd backend
+make deploy-prod
+```
+
+To stop the environments:
+
+```bash
+cd backend
+make down-dev
+# or
+make down-prod
+```
+
+To build and push the image to a registry:
+
+```bash
+cd backend
+make push REGISTRY_URL=<your-registry>
+```
 
 ## App
 
@@ -26,12 +54,6 @@ fvm flutter pub get
     --env="prod"
 ```
 
-Add to the ```<env>/env.json```
-```
-  "BASE_URL": "http://backend.test", # your backend url
-  "SERVER_CLIENT_ID": "" # sign in with google
-```
-
 ## Project
 
 Rename the ```bluejean.code-workspace```
@@ -39,5 +61,5 @@ Rename the ```bluejean.code-workspace```
 ## Create user admin
 
 ```
-php artisan user-admin:create --name="Test Admin" --email="admin@admin.com" --password="12341234"
+php artisan user-admin:create --name="Test Admin" --email="[EMAIL_ADDRESS]" --password="[PASSWORD]"
 ```
