@@ -7,7 +7,8 @@
       "Bash(composer update:*)",
       "Bash(fvm flutter analyze:*)",
       "WebFetch(domain:filamentphp.com)",
-      "WebFetch(domain:hafiz.dev)"
+      "WebFetch(domain:hafiz.dev)",
+      "Bash(docker compose exec:*)"
     ]
   }
 }
