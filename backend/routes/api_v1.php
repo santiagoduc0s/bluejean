@@ -33,7 +33,6 @@ Route::prefix('logs')->group(function () {
     Route::post('/', [LogController::class, 'store']);
 });
 
-
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('auth')->group(function () {

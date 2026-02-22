@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -41,7 +42,7 @@ class FileController extends Controller
 
         $storedPath = Storage::putFileAs($path, $file, $filename);
 
-        \Log::info("File uploaded to {$storedPath} with MIME type {$mimeType}");
+        Log::info("File uploaded to {$storedPath} with MIME type {$mimeType}");
 
         if (!$storedPath) {
             return response()->json([
