@@ -2,30 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserAdminResource\Pages;
-use App\Filament\Resources\UserAdminResource\RelationManagers;
-use App\Models\UserAdmin;
+use App\Filament\Resources\UserResource\Pages;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
 use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserAdminResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = UserAdmin::class;
+    protected static ?string $model = User::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-users';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
@@ -34,6 +30,9 @@ class UserAdminResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required(fn (string $operation): bool => $operation === 'create')
+                    ->dehydrated(fn (?string $state) => filled($state))
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('photo')
                     ->maxLength(255),
             ]);
     }
@@ -46,6 +45,10 @@ class UserAdminResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\IconColumn::make('email_verified_at')
+                    ->label('Verified')
+                    ->boolean()
+                    ->getStateUsing(fn ($record) => $record->email_verified_at !== null),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -60,6 +63,7 @@ class UserAdminResource extends Resource
             ])
             ->actions([
                 Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Actions\BulkActionGroup::make([
@@ -78,9 +82,9 @@ class UserAdminResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUserAdmins::route('/'),
-            'create' => Pages\CreateUserAdmin::route('/create'),
-            'edit' => Pages\EditUserAdmin::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

@@ -1,12 +1,10 @@
 env-dev:
 	@test -f .env.dev || (echo "Error: .env.dev not found. Copy .env.example to .env.dev and configure it." && exit 1)
 	cp .env.dev .env
-	make cache-clear-dev
 
 env-prod:
 	@test -f .env.prod || (echo "Error: .env.prod not found. Copy .env.example to .env.prod and configure it." && exit 1)
 	cp .env.prod .env
-	make cache-clear-prod
 
 deploy-dev: down-dev env-dev
 	docker compose -f docker-compose.yml up -d

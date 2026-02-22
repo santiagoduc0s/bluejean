@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -155,13 +156,17 @@ class AuthController extends Controller
     public function deleteAccount(Request $request)
     {
         $user = $request->user();
-        $user->devices()->update([
-            'user_id' => null,
-            'personal_access_tokens_id' => null,
-            'fcm_token' => null,
-        ]);
-        $user->tokens()->delete();
-        $user->delete();
+
+        DB::transaction(function () use ($user) {
+            $user->devices()->update([
+                'user_id' => null,
+                'personal_access_tokens_id' => null,
+                'fcm_token' => null,
+            ]);
+            $user->tokens()->delete();
+            $user->delete();
+        });
+
         return response()->json([], 204);
     }
 }

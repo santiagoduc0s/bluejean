@@ -11,8 +11,6 @@ class DeviceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'personal_access_tokens_id' => $this->personal_access_tokens_id,
             'identifier' => $this->identifier,
             'model' => $this->model,
             'fcm_token' => $this->fcm_token,
