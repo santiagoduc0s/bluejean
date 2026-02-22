@@ -17,11 +17,11 @@ class FileController extends Controller
             'path' => 'required|string|max:255',
         ]);
 
-        $allowedPaths = ['profile', 'support_tickets'];
+        $allowedPaths = ['profile'];
 
         if (!in_array(trim($request->input('path'), '/'), $allowedPaths)) {
             throw ValidationException::withMessages([
-                'path' => 'Invalid path. Only profile or support_tickets uploads are allowed.',
+                'path' => 'Invalid path. Only profile uploads are allowed.',
             ]);
         }
 

@@ -12,12 +12,9 @@ php artisan migrate
 php artisan serve
 ```
 
-### Docker
-
-```bash
-cd backend
-make deploy-dev
-```
+- **Makefile**: Shortcuts for deployment and teardown.
+    - `make deploy-dev`:  Runs dev setup (port 8002/3307).
+    - `make deploy-prod`: Runs prod setup (port 8000/3306) with Octane.
 
 To deploy to production locally (run with prod ports):
 
@@ -35,12 +32,6 @@ make down-dev
 make down-prod
 ```
 
-To build and push the image to a registry:
-
-```bash
-cd backend
-make push REGISTRY_URL=<your-registry>
-```
 
 ## App
 
@@ -61,5 +52,5 @@ Rename the ```bluejean.code-workspace```
 ## Create user admin
 
 ```
-php artisan user-admin:create --name="Test Admin" --email="[EMAIL_ADDRESS]" --password="[PASSWORD]"
+docker exec bluejean-app-dev php artisan user-admin:create --name="Test Admin" --email="admin@admin.com" --password="12341234"
 ```

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +9,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
- * @property int|null $preference_id
  * @property string $name
  * @property string $email
  * @property string|null $photo
@@ -20,7 +18,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
@@ -34,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'photo',
-        'preference_id',
+        'password',
     ];
 
     /**
@@ -43,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $hidden = [
+        'password',
         'remember_token',
     ];
 
@@ -54,7 +53,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            //
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
         ];
     }
 
@@ -63,48 +63,20 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Device::class);
     }
 
-    public function preference()
-    {
-        return $this->belongsTo(Preference::class);
-    }
-
-    public function providers()
-    {
-        return $this->hasMany(UserProvider::class);
-    }
-
-    /**
-     * Get the primary email provider for this user.
-     */
-    public function emailProvider()
-    {
-        return $this->hasOne(UserProvider::class)->where('provider', 'email');
-    }
-
-
-    /**
-     * Check if the user has verified their email.
-     */
     public function hasVerifiedEmail(): bool
     {
-        return $this->emailProvider?->hasVerifiedEmail() ?? false;
+        return $this->email_verified_at !== null;
     }
 
-    /**
-     * Mark the user's email as verified.
-     */
     public function markEmailAsVerified(): bool
     {
-        return $this->emailProvider?->markEmailAsVerified() ?? false;
+        return $this->forceFill([
+            'email_verified_at' => $this->freshTimestamp(),
+        ])->save();
     }
 
-    /**
-     * Get the email address that should be used for verification.
-     */
     public function getEmailForVerification(): string
     {
         return $this->email ?: '';
     }
-
-
 }

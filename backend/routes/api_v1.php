@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\V1\FileController;
 use App\Http\Controllers\Api\V1\DeviceController;
 use App\Http\Controllers\Api\V1\LogController;
 use App\Http\Controllers\Api\V1\PreferenceController;
-use App\Http\Controllers\Api\V1\SupportTicketController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,10 +23,6 @@ Route::prefix('devices')->group(function () {
 Route::prefix('preferences')->group(function () {
     Route::get('/by-device', [PreferenceController::class, 'getCurrentDevicePreference']);
     Route::put('/by-device', [PreferenceController::class, 'updateDevice']);
-});
-
-Route::prefix('support-tickets')->middleware('throttle:20,1440')->group(function () {
-    Route::post('/', [SupportTicketController::class, 'store']);
 });
 
 Route::prefix('files')->group(function () {

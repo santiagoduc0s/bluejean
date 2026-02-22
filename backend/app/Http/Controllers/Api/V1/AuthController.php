@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Models\UserProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Password;
@@ -17,19 +17,12 @@ class AuthController extends Controller
     public function signUp(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|unique:user_providers,provider_id',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8',
         ]);
 
         $user = User::create([
             'email' => $request->input('email'),
-        ]);
-
-        UserProvider::create([
-            'user_id' => $user->id,
-            'provider' => 'email',
-            'provider_id' => $request->input('email'),
-            'provider_email' => $request->input('email'),
             'password' => $request->input('password'),
         ]);
 
@@ -45,15 +38,13 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $provider = UserProvider::byEmail($request->input('email'))->first();
+        $user = User::where('email', $request->input('email'))->first();
 
-        if (!$provider || !$provider->checkPassword($request->input('password'))) {
+        if (!$user || !Hash::check($request->input('password'), $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
-
-        $user = $provider->user;
 
         if (!$user->hasVerifiedEmail()) {
             throw ValidationException::withMessages([
@@ -93,7 +84,7 @@ class AuthController extends Controller
 
     public function verifyEmail(Request $request, $id, $hash)
     {
-        $user = User::with('emailProvider')->findOrFail($id);
+        $user = User::findOrFail($id);
 
         $isInvalid = !hash_equals(
             known_string: (string) $hash,
@@ -130,14 +121,9 @@ class AuthController extends Controller
             'email' => 'required|email',
         ]);
 
-        $email = $request->input('email');
+        $user = User::where('email', $request->input('email'))->first();
 
-        $provider = UserProvider::where('provider_email', $email)
-            ->where('provider', 'email')
-            ->first();
-
-        if ($provider) {
-            $user = $provider->user;
+        if ($user) {
             Password::sendResetLink(['email' => $user->email]);
         }
 
@@ -155,10 +141,7 @@ class AuthController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user, string $password) {
-                $provider = $user->emailProvider;
-                if ($provider) {
-                    $provider->update(['password' => $password]);
-                }
+                $user->update(['password' => $password]);
             }
         );
 

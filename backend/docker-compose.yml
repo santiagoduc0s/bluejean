@@ -1,0 +1,44 @@
+name: bluejean-dev
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: bluejean-app-dev
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8003:8000"
+        env_file:
+            - .env.dev
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - bluejean-network-dev
+
+    db:
+        image: mysql:8.0
+        container_name: bluejean-mysql-dev
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "3307:3306"
+        env_file:
+            - .env.dev
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-backend}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - dbdata:/var/lib/mysql/
+        networks:
+            - bluejean-network-dev
+
+networks:
+    bluejean-network-dev:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local

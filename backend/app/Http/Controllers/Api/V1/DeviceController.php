@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DeviceResource;
 use App\Models\Device;
 use App\Models\Preference;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -83,41 +82,8 @@ class DeviceController extends Controller
 
         $device->update([
             'user_id' => $request->user()->id,
-            'personal_access_tokens_id' => $request->user()->currentAccessToken()->id
+            'personal_access_tokens_id' => $request->user()->currentAccessToken()->id,
         ]);
-
-        if (!$request->user()->preference_id) {
-            // Check if device's preference is already linked to another user
-            // This can happen when:
-            // 1. User A signs up and links device (gets device's preference)
-            // 2. User A signs out (device unlinks but keeps preference linked to User A)
-            // 3. User B tries to sign in on same device (preference conflict!)
-            $devicePreference = $device->preference;
-            $preferenceIsLinkedToAnotherUser = User::where('preference_id', $device->preference_id)
-                ->where('id', '!=', $request->user()->id)
-                ->exists();
-
-            if ($preferenceIsLinkedToAnotherUser) {
-                $newPreference = Preference::create($devicePreference->only([
-                    'theme',
-                    'language',
-                    'text_scaler',
-                    'notifications_are_enabled',
-                ]));
-
-                $request->user()->update([
-                    'preference_id' => $newPreference->id,
-                ]);
-
-                $device->update([
-                    'preference_id' => $newPreference->id,
-                ]);
-            } else {
-                $request->user()->update([
-                    'preference_id' => $device->preference_id,
-                ]);
-            }
-        }
 
         return DeviceResource::make($device);
     }

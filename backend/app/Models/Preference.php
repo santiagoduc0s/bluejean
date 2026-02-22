@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property int $id
  * @property Device|null $device
- * @property User|null $user
  * @property string|null $theme
  * @property string|null $language
  * @property int|null $text_scaler
@@ -40,8 +39,4 @@ class Preference extends Model
         return $this->hasOne(Device::class);
     }
 
-    public function user()
-    {
-        return $this->hasOne(User::class);
-    }
 }

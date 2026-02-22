@@ -8,6 +8,7 @@ use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Infolists;
 use Filament\Resources\Resource;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -186,7 +187,7 @@ class FirebaseNotificationResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->whereNull('user_id')),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 // No bulk actions for read-only

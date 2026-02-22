@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PreferenceResource;
-use App\Models\Preference;
 use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -23,18 +22,19 @@ class PreferenceController extends Controller
 
         $this->authorize('canSeePreference', $device);
 
-        $preference = Preference::findOrFail($device->preference_id);
+        $preference = $device->preference;
 
         return PreferenceResource::make($preference);
     }
 
     public function getCurrentAuthPreference(Request $request)
     {
-        $preference = Preference::findOrFail($request->user()->preference_id);
+        $token = $request->user()->currentAccessToken();
+        $device = Device::where('personal_access_tokens_id', $token->id)->firstOrFail();
 
-        $this->authorize('canGetPreference', $preference);
+        $this->authorize('canSeePreference', $device);
 
-        return PreferenceResource::make($preference);
+        return PreferenceResource::make($device->preference);
     }
 
     public function updateDevice(Request $request)
@@ -48,18 +48,17 @@ class PreferenceController extends Controller
         ]);
 
         $device = Device::where('identifier', $request->input('identifier'))->firstOrFail();
-        $preference = Preference::findOrFail($device->preference_id);
 
-        $this->authorize('canGetPreference', $preference);
+        $this->authorize('canSeePreference', $device);
 
-        $preference->update($request->only([
+        $device->preference->update($request->only([
             'theme',
             'language',
             'text_scaler',
             'notifications_are_enabled',
         ]));
 
-        return PreferenceResource::make($preference);
+        return PreferenceResource::make($device->preference);
     }
 
     public function updateAuth(Request $request)
@@ -71,17 +70,18 @@ class PreferenceController extends Controller
             'notifications_are_enabled' => 'nullable|boolean',
         ]);
 
-        $preference = Preference::findOrFail($request->user()->preference_id);
+        $token = $request->user()->currentAccessToken();
+        $device = Device::where('personal_access_tokens_id', $token->id)->firstOrFail();
 
-        $this->authorize('canGetPreference', $preference);
+        $this->authorize('canSeePreference', $device);
 
-        $preference->update($request->only([
+        $device->preference->update($request->only([
             'theme',
             'language',
             'text_scaler',
             'notifications_are_enabled',
         ]));
 
-        return PreferenceResource::make($preference);
+        return PreferenceResource::make($device->preference);
     }
 }

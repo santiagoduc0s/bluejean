@@ -5,7 +5,9 @@
       "Bash(composer remove:*)",
       "Bash(fvm flutter gen-l10n:*)",
       "Bash(composer update:*)",
-      "Bash(fvm flutter analyze:*)"
+      "Bash(fvm flutter analyze:*)",
+      "WebFetch(domain:filamentphp.com)",
+      "WebFetch(domain:hafiz.dev)"
     ]
   }
 }

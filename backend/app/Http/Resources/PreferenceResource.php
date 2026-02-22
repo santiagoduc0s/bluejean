@@ -11,8 +11,6 @@ class PreferenceResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'device_id' => $this->device_id,
             'theme' => $this->theme,
             'language' => $this->language,
             'text_scaler' => $this->text_scaler,
