@@ -42,6 +42,9 @@ cache-clear-dev:
 cache-clear-prod:
 	docker compose -f docker-compose.prod.yml exec app php artisan optimize:clear
 
+test:
+	docker compose -f docker-compose.yml exec app php artisan test
+
 down-dev:
 	docker compose -f docker-compose.yml down
 
