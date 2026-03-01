@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
@@ -33,7 +35,14 @@ class SignInNotifier extends ChangeNotifier {
     ),
   });
 
-  bool isSigningIn = false;
+  @override
+  void dispose() {
+    form.dispose();
+    super.dispose();
+  }
+
+  bool _isSigningIn = false;
+  bool get isSigningIn => _isSigningIn;
 
   Future<void> signInWithEmailAndPassword() async {
     if (!form.valid) {
@@ -51,13 +60,12 @@ class SignInNotifier extends ChangeNotifier {
         password: form.control('password').value as String,
       );
 
-      await saveFcmTokenUseCase.call();
-
       if (user != null) {
         onSignInSuccess(user);
+        unawaited(saveFcmTokenUseCase.call().catchError((_) {}));
+      } else {
+        errorSnackbar(localization.generalError);
       }
-
-      // router.pop();
     } on EmailNotVerifiedException {
       errorSnackbar(localization.signIn_emailDoesNotVerified);
     } on InvalidCredentialException {
@@ -104,7 +112,7 @@ class SignInNotifier extends ChangeNotifier {
   }
 
   void _setSigningIn(bool value) {
-    isSigningIn = value;
+    _isSigningIn = value;
     notifyListeners();
   }
 }

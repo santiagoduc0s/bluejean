@@ -67,10 +67,7 @@ void initServiceLocator() {
   getIt.registerLazySingleton<MessagingRepository>(
     () => MessagingRepositoryImpl(),
   );
-  getIt.registerLazySingleton<SupportRepository>(
-    () => SupportRepositoryImpl(apiClient: getIt<ApiClient>()),
-  );
-  getIt.registerLazySingleton<RemoteStorageRepository>(
+getIt.registerLazySingleton<RemoteStorageRepository>(
     () => RemoteStorageRepositoryImpl(apiClient: getIt<ApiClient>()),
   );
 

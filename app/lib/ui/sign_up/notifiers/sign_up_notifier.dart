@@ -11,7 +11,14 @@ class SignUpNotifier extends ChangeNotifier {
 
   final SignUpUseCase signUpUseCase;
   final CustomRouter router;
-  bool isSigningUp = false;
+  @override
+  void dispose() {
+    form.dispose();
+    super.dispose();
+  }
+
+  bool _isSigningUp = false;
+  bool get isSigningUp => _isSigningUp;
 
   final form = FormGroup(
     {
@@ -71,7 +78,7 @@ class SignUpNotifier extends ChangeNotifier {
   }
 
   void _setSigningUp(bool value) {
-    isSigningUp = value;
+    _isSigningUp = value;
     notifyListeners();
   }
 }

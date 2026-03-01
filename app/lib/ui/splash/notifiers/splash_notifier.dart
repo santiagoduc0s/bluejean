@@ -2,19 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/enums/enums.dart';
-import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/home/home.dart';
 import 'package:lune/ui/public_onboard/public_onboard.dart';
 
 class SplashNotifier extends ChangeNotifier {
   SplashNotifier({
-    required this.authRepository,
     required this.localStorageService,
     required this.router,
   });
 
-  final AuthRepository authRepository;
   final LocalStorageService localStorageService;
   final CustomRouter router;
 

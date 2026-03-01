@@ -10,7 +10,6 @@ import 'package:lune/ui/devices/devices.dart';
 import 'package:lune/ui/preference/widgets/widgets.dart';
 import 'package:lune/ui/privacy_policy/privacy_policy.dart';
 import 'package:lune/ui/settings/settings.dart';
-import 'package:lune/ui/support/support.dart';
 import 'package:lune/ui/terms_conditions/terms_conditions.dart';
 import 'package:provider/provider.dart';
 
@@ -88,14 +87,6 @@ class SettingsPage extends StatelessWidget {
                           ),
                           SizedBox(height: 3.space),
                           const ListLanguages(),
-                          SizedBox(height: 3.space),
-                          FilledButton.tonal(
-                            onPressed: () {
-                              context.pushNamed<void>(SupportScreen.path);
-                            },
-                            style: buttonStyles.primaryFilledTonal,
-                            child: Text(l10n.support),
-                          ),
                           SizedBox(height: 3.space),
                           FilledButton.tonal(
                             onPressed: () {

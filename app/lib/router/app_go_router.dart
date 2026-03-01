@@ -106,7 +106,6 @@ class AppGoRouter extends CustomRouter {
                   routes: [
                     TermsConditionsScreen.route(),
                     PrivacyPolicyScreen.route(),
-                    SupportScreen.route(),
                     DevicesScreen.route(),
                   ],
                 ),
