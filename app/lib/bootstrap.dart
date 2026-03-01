@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:lune/core/config/config.dart';
 import 'package:lune/core/dependencies/dependencies.dart';
 import 'package:lune/core/utils/utils.dart';
-import 'package:lune/firebase_options.dart';
 import 'package:provider/provider.dart';
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
@@ -34,9 +32,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         return true;
       };
 
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      // await Firebase.initializeApp(
+      //   options: DefaultFirebaseOptions.currentPlatform,
+      // );
 
       AppLoggerHelper.debug(Env.environment);
 

@@ -8,7 +8,8 @@
       "Bash(fvm flutter analyze:*)",
       "WebFetch(domain:filamentphp.com)",
       "WebFetch(domain:hafiz.dev)",
-      "Bash(docker compose exec:*)"
+      "Bash(docker compose exec:*)",
+      "Bash(ls:*)"
     ]
   }
 }

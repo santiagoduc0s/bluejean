@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/ui/animations/animations.dart';
-import 'package:lune/domain/domain.dart';
+import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
-import 'package:lune/ui/preference/notifiers/notifiers.dart';
 import 'package:lune/ui/sign_in/notifiers/notifiers.dart';
 import 'package:lune/ui/sign_in/widgets/views.dart';
 import 'package:provider/provider.dart';
@@ -27,12 +26,8 @@ class SignInScreen {
                 signInWithEmailPasswordUseCase: context.read(),
                 saveFcmTokenUseCase: context.read(),
                 authRepository: context.read(),
-                onSignInSuccess: (
-                  UserEntity user,
-                  PreferenceEntity preference,
-                ) {
+                onSignInSuccess: (UserEntity user) {
                   context.read<AuthNotifier>().setUser(user);
-                  context.read<PreferenceNotifier>().initialize(preference);
                 },
                 router: context.read(),
               ),

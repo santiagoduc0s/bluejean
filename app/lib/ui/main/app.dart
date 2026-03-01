@@ -31,10 +31,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prefs = context.watch<PreferenceNotifier>().preference;
-
-    final theme = prefs?.theme;
-    final locale = prefs?.language;
+    final prefNotifier = context.watch<PreferenceNotifier>();
 
     return ReactiveFormConfig(
       validationMessages: validationMessages(context),
@@ -43,13 +40,13 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: UIThemeLight.instance.theme,
         darkTheme: UIThemeDark.instance.theme,
-        themeMode: getThemeMode(theme),
-        locale: getLocale(locale),
+        themeMode: getThemeMode(prefNotifier.theme),
+        locale: getLocale(prefNotifier.language),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routerConfig: context.read<CustomRouter>().router,
         builder: (context, child) {
-          final textScaler = prefs?.textScaler;
+          final textScaler = prefNotifier.textScaler;
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(
               textScaler:

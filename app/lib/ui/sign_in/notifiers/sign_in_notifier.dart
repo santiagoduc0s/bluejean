@@ -23,8 +23,7 @@ class SignInNotifier extends ChangeNotifier {
   final SaveFcmTokenUseCase saveFcmTokenUseCase;
   final AuthRepository authRepository;
   final CustomRouter router;
-  final void Function(UserEntity user, PreferenceEntity preference)
-  onSignInSuccess;
+  final void Function(UserEntity user) onSignInSuccess;
 
   final FormGroup form = FormGroup({
     'email': FormControl<String>(
@@ -50,17 +49,16 @@ class SignInNotifier extends ChangeNotifier {
     _setSigningIn(true);
 
     try {
-      final data = await signInWithEmailPasswordUseCase.call(
+      final user = await signInWithEmailPasswordUseCase.call(
         email: form.control('email').value as String,
         password: form.control('password').value as String,
       );
 
       await saveFcmTokenUseCase.call();
 
-      onSignInSuccess(
-        data['user'] as UserEntity,
-        data['preference'] as PreferenceEntity,
-      );
+      if (user != null) {
+        onSignInSuccess(user);
+      }
 
       // router.pop();
     } on EmailNotVerifiedException {

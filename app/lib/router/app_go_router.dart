@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lune/core/session/session.dart';
 import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
@@ -41,8 +40,6 @@ import 'package:provider/provider.dart';
 
 class AppGoRouter extends CustomRouter {
   AppGoRouter(AuthNotifier authNotifier) : _authNotifier = authNotifier {
-    AppSession.instance.initialize(authNotifier);
-
     router = GoRouter(
       refreshListenable: _authNotifier,
       navigatorKey: AppGlobalKey.rootNavigatorKey,
@@ -195,6 +192,8 @@ class AppGoRouter extends CustomRouter {
 
       final usecase = context.read<OpenAppUseCase>();
 
+      await AppProvider.get<PreferenceNotifier>().initialize();
+
       final value = await Future.wait([
         Future.delayed(300.ms, () {}), // Min time native splash
         usecase.call(),
@@ -203,10 +202,6 @@ class AppGoRouter extends CustomRouter {
       final data = value.last!;
 
       AppProvider.get<AuthNotifier>().initialize(data['user'] as UserEntity?);
-
-      AppProvider.get<PreferenceNotifier>().initialize(
-        data['preference'] as PreferenceEntity,
-      );
     } catch (e, s) {
       AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {

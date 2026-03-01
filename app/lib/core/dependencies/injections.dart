@@ -24,7 +24,6 @@ List<SingleChildWidget> providers = [
   /// REPOSITORIES
   Provider.value(value: AppProvider.get<AuthRepository>()),
   Provider.value(value: AppProvider.get<DeviceRepository>()),
-  Provider.value(value: AppProvider.get<PreferenceRepository>()),
   Provider.value(value: AppProvider.get<PermissionRepository>()),
   Provider.value(value: AppProvider.get<MessagingRepository>()),
   Provider.value(value: AppProvider.get<SupportRepository>()),

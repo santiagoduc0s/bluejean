@@ -1,54 +1,38 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:lune/core/utils/utils.dart';
-import 'package:lune/domain/entities/entities.dart';
-import 'package:lune/domain/repositories/repositories.dart';
+import 'package:lune/data/services/services.dart';
 
 class PreferenceNotifier extends ChangeNotifier {
-  PreferenceNotifier({required PreferenceRepository userPreferenceRepository})
-    : _userPreferenceRepository = userPreferenceRepository;
+  PreferenceNotifier({required LocalStorageService localStorageService})
+    : _localStorageService = localStorageService;
 
-  final PreferenceRepository _userPreferenceRepository;
+  final LocalStorageService _localStorageService;
 
-  PreferenceEntity? preference;
+  String? theme;
+  String? language;
+  double? textScaler;
 
-  void initialize(PreferenceEntity preference) {
-    this.preference = preference;
+  Future<void> initialize() async {
+    theme = await _localStorageService.getThemeModeKey();
+    language = await _localStorageService.getLocaleCode();
+    textScaler = await _localStorageService.getTextScaler();
     notifyListeners();
   }
 
-  Future<void> setTheme(String? theme) async {
-    preference = preference!.copyWith(theme: NullableParameter(theme));
+  Future<void> setTheme(String? value) async {
+    theme = value;
     notifyListeners();
-
-    unawaited(
-      _userPreferenceRepository.updatePreference(
-        theme: NullableParameter(theme),
-      ),
-    );
+    await _localStorageService.setThemeModeKey(value);
   }
 
-  Future<void> setTextScaler(double textScaler) async {
-    preference = preference!.copyWith(textScaler: textScaler);
+  Future<void> setTextScaler(double value) async {
+    textScaler = value;
     notifyListeners();
-
-    unawaited(
-      _userPreferenceRepository.updatePreference(
-        textScaler: NullableParameter(textScaler),
-      ),
-    );
+    await _localStorageService.setTextScaler(value);
   }
 
-  Future<void> setLanguage(String? language) async {
-    preference = preference!.copyWith(language: NullableParameter(language));
-
+  Future<void> setLanguage(String? value) async {
+    language = value;
     notifyListeners();
-
-    unawaited(
-      _userPreferenceRepository.updatePreference(
-        language: NullableParameter(language),
-      ),
-    );
+    await _localStorageService.setLocaleCode(value);
   }
 }

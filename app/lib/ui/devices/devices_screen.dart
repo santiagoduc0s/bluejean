@@ -16,6 +16,7 @@ class DevicesScreen {
           create:
               (context) => DevicesNotifier(
                 deviceRepository: context.read(),
+                deviceInfoService: context.read(),
                 signOutUseCase: context.read(),
                 onSignOut: () {
                   context.read<AuthNotifier>().signOut();

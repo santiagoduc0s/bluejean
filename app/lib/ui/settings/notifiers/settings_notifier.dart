@@ -14,21 +14,18 @@ class SettingsNotifier extends ChangeNotifier {
     required PermissionRepository permissionRepository,
     required SaveFcmTokenUseCase saveTokenUseCase,
     required AuthNotifier authNotifier,
-    required PreferenceRepository userPreferenceRepository,
     required SignOutUseCase signOutUseCase,
     required DeleteAccountUsecase deleteAccountUsecase,
   }) : _saveTokenUseCase = saveTokenUseCase,
        _permissionRepository = permissionRepository,
        _onSignOut = onSignOut,
        _authNotifier = authNotifier,
-       _userPreferenceRepository = userPreferenceRepository,
        _signOutUseCase = signOutUseCase,
        _deleteAccountUsecase = deleteAccountUsecase;
 
   final PermissionRepository _permissionRepository;
   final SaveFcmTokenUseCase _saveTokenUseCase;
   final AuthNotifier _authNotifier;
-  final PreferenceRepository _userPreferenceRepository;
   final SignOutUseCase _signOutUseCase;
   final DeleteAccountUsecase _deleteAccountUsecase;
 
@@ -57,13 +54,11 @@ class SettingsNotifier extends ChangeNotifier {
   }
 
   Future<void> checkNotificationPermission() async {
-    final pref = await _userPreferenceRepository.getCurrentPreference();
     final status = await _permissionRepository.check(
       PermissionType.notifications,
     );
 
-    notificationsEnabled =
-        pref.notificationsAreEnabled && status == PermissionStatus.granted;
+    notificationsEnabled = status == PermissionStatus.granted;
 
     if (!hasListeners) return;
 
@@ -106,19 +101,10 @@ class SettingsNotifier extends ChangeNotifier {
           notifyListeners();
 
           await _saveTokenUseCase.call();
-          await _userPreferenceRepository.updatePreference(
-            notificationsAreEnabled: true,
-          );
         }
       } else {
         notificationsEnabled = false;
         notifyListeners();
-
-        if (previousState) {
-          await _userPreferenceRepository.updatePreference(
-            notificationsAreEnabled: false,
-          );
-        }
       }
     } catch (e, s) {
       notificationsEnabled = previousState;

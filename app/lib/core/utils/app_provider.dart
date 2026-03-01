@@ -52,12 +52,6 @@ class AppProvider {
         apiClient: get<ApiClient>(),
       ),
     );
-    _getIt.registerLazySingleton<PreferenceRepository>(
-      () => PreferenceRepositoryImpl(
-        deviceInfoService: get<DeviceInfoService>(),
-        apiClient: get<ApiClient>(),
-      ),
-    );
     _getIt.registerLazySingleton<PermissionRepository>(
       () => PermissionRepositoryImpl(service: get<PermissionService>()),
     );
@@ -76,7 +70,6 @@ class AppProvider {
       () => SignInWithEmailPasswordUseCase(
         authRepository: get<AuthRepository>(),
         deviceRepository: get<DeviceRepository>(),
-        userPreferenceRepository: get<PreferenceRepository>(),
       ),
     );
     _getIt.registerLazySingleton(
@@ -95,6 +88,7 @@ class AppProvider {
       () => SignOutUseCase(
         deviceRepository: get<DeviceRepository>(),
         authRepository: get<AuthRepository>(),
+        deviceInfoService: get<DeviceInfoService>(),
       ),
     );
     _getIt.registerLazySingleton(
@@ -109,7 +103,6 @@ class AppProvider {
     _getIt.registerLazySingleton(
       () => OpenAppUseCase(
         deviceRepository: get<DeviceRepository>(),
-        preferenceRepository: get<PreferenceRepository>(),
         authRepository: get<AuthRepository>(),
         messagingRepository: get<MessagingRepository>(),
       ),
@@ -119,7 +112,7 @@ class AppProvider {
     _getIt.registerLazySingleton(() => AuthNotifier());
     _getIt.registerLazySingleton(
       () => PreferenceNotifier(
-        userPreferenceRepository: get<PreferenceRepository>(),
+        localStorageService: get<LocalStorageService>(),
       ),
     );
 

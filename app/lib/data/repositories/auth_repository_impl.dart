@@ -1,22 +1,17 @@
-import 'dart:async';
-
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/data/models/user_model.dart';
 import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
+
 class AuthRepositoryImpl extends AuthRepository {
   AuthRepositoryImpl({
     required LocalStorageService localStorageService,
     required ApiClient apiClient,
-    StreamController<UserEntity>? userController,
   }) : _localStorageService = localStorageService,
-       _apiClient = apiClient,
-       _userController =
-           userController ?? StreamController<UserEntity>.broadcast();
+       _apiClient = apiClient;
 
-  final StreamController<UserEntity> _userController;
   final ApiClient _apiClient;
   final LocalStorageService _localStorageService;
 
@@ -203,9 +198,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
     if (response.isSuccess) {
       final data = response.jsonBody['data'] as Map<String, dynamic>;
-      final user = UserModel.fromJson(data);
-      _userController.add(user);
-      return user;
+      return UserModel.fromJson(data);
     } else {
       throw Exception('Failed to update user');
     }

@@ -1,19 +1,17 @@
+import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class SignInWithEmailPasswordUseCase {
   SignInWithEmailPasswordUseCase({
     required AuthRepository authRepository,
     required DeviceRepository deviceRepository,
-    required PreferenceRepository userPreferenceRepository,
   }) : _authRepository = authRepository,
-       _deviceRepository = deviceRepository,
-       _userPreferenceRepository = userPreferenceRepository;
+       _deviceRepository = deviceRepository;
 
   final AuthRepository _authRepository;
   final DeviceRepository _deviceRepository;
-  final PreferenceRepository _userPreferenceRepository;
 
-  Future<Map<String, dynamic>> call({
+  Future<UserEntity?> call({
     required String email,
     required String password,
   }) async {
@@ -22,11 +20,8 @@ class SignInWithEmailPasswordUseCase {
       password: password,
     );
 
-    await _deviceRepository.linkDevice();
+    await _deviceRepository.upsertDevice();
 
-    final user = await _authRepository.currentUser();
-    final preference = await _userPreferenceRepository.getCurrentPreference();
-
-    return {'user': user, 'preference': preference};
+    return _authRepository.currentUser();
   }
 }

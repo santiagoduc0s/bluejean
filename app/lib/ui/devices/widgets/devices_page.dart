@@ -51,7 +51,8 @@ class DevicesPage extends StatelessWidget {
           separatorBuilder: (_, __) => 2.spaceY,
           itemBuilder: (context, index) {
             final device = notifier.devices[index];
-            final isCurrentDevice = notifier.currentDevice?.id == device.id;
+            final isCurrentDevice =
+                device.identifier == notifier.currentIdentifier;
             return _DeviceCard(
               device: device,
               isCurrentDevice: isCurrentDevice,

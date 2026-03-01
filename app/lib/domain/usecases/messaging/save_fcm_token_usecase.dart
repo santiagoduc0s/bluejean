@@ -15,6 +15,6 @@ class SaveFcmTokenUseCase {
 
     if (fcmToken == null) return;
 
-    await _deviceRepository.updateDevice(fcmToken: fcmToken);
+    await _deviceRepository.upsertDevice(fcmToken: fcmToken);
   }
 }

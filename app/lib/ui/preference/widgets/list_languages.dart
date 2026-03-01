@@ -14,8 +14,7 @@ class ListLanguages extends StatelessWidget {
     final l10n = context.l10n;
     final colors = context.colors;
     final buttonStyles = context.buttonStyles;
-    final currentLocale =
-        context.watch<PreferenceNotifier>().preference?.language;
+    final currentLocale = context.watch<PreferenceNotifier>().language;
 
     return SizedBox(
       child: FilledButton.tonal(

@@ -31,9 +31,13 @@ class LocalStorageService {
     return prefs.getString(_keyLocale);
   }
 
-  Future<void> setThemeModeKey(String key) async {
+  Future<void> setThemeModeKey(String? key) async {
     final prefs = await _getPrefs();
-    await prefs.setString(_keyTheme, key);
+    if (key != null) {
+      await prefs.setString(_keyTheme, key);
+    } else {
+      await prefs.remove(_keyTheme);
+    }
   }
 
   Future<void> setTextScaler(double scaler) async {

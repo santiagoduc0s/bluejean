@@ -10,9 +10,7 @@ class ToggleTextScale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prefs = context.watch<PreferenceNotifier>().preference;
-
-    final textScaleFactor = prefs?.textScaler ?? 1;
+    final textScaleFactor = context.watch<PreferenceNotifier>().textScaler ?? 1;
 
     return ToggleButtons(
       borderRadius: BorderRadius.circular(2.space),

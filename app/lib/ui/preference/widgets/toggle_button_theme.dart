@@ -8,9 +8,7 @@ class ToggleButtonTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final prefs = context.watch<PreferenceNotifier>().preference;
-
-    final theme = prefs?.theme;
+    final theme = context.watch<PreferenceNotifier>().theme;
 
     return ToggleButtons(
       borderRadius: BorderRadius.circular(2.space),

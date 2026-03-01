@@ -22,7 +22,6 @@ class SettingsScreen {
               permissionRepository: context.read(),
               saveTokenUseCase: context.read(),
               authNotifier: context.read(),
-              userPreferenceRepository: context.read(),
               signOutUseCase: context.read(),
               deleteAccountUsecase: context.read(),
             )..initialize(),
