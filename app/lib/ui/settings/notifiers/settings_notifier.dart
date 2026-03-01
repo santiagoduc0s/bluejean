@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
 import 'package:lune/domain/usecases/messaging/messaging.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 
-class SettingsNotifier extends ChangeNotifier {
+class SettingsNotifier extends ChangeNotifier with NotifierEffects {
   SettingsNotifier({
     required void Function() onSignOut,
     required PermissionRepository permissionRepository,
@@ -75,10 +76,10 @@ class SettingsNotifier extends ChangeNotifier {
         );
 
         if (status == PermissionStatus.permanentlyDenied) {
-          final shouldOpenSettings = await dialogConfirm(
-            message: localization.notificationsAreDisabled,
-            confirmText: localization.goToSettings,
-            cancelText: localization.cancel,
+          final shouldOpenSettings = await emitConfirmDialog(
+            message: (l10n) => l10n.notificationsAreDisabled,
+            confirmText: (l10n) => l10n.goToSettings,
+            cancelText: (l10n) => l10n.cancel,
           );
           if (shouldOpenSettings) {
             await _permissionRepository.openSettings();
@@ -110,7 +111,7 @@ class SettingsNotifier extends ChangeNotifier {
       notificationsEnabled = previousState;
       notifyListeners();
       logError(e, s);
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
     }
   }
 
@@ -121,10 +122,10 @@ class SettingsNotifier extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final shouldDelete = await dialogConfirm(
-        message: localization.deleteAccountMessage,
-        confirmText: localization.yes,
-        cancelText: localization.cancel,
+      final shouldDelete = await emitConfirmDialog(
+        message: (l10n) => l10n.deleteAccountMessage,
+        confirmText: (l10n) => l10n.yes,
+        cancelText: (l10n) => l10n.cancel,
       );
 
       if (!shouldDelete) return;
@@ -133,7 +134,7 @@ class SettingsNotifier extends ChangeNotifier {
       _onSignOut();
     } catch (e, s) {
       logError(e, s);
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
     } finally {
       isDeletingAccount = false;
       notifyListeners();

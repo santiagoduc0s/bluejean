@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/sign_up/notifiers/notifiers.dart';
 import 'package:lune/ui/sign_up/widgets/views.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class SignUpScreen {
               signUpUseCase: context.read(),
               router: context.read(),
             ),
-        child: const SignUpPage(),
+        child: const EffectListener<SignUpNotifier>(child: SignUpPage()),
       );
     },
     routes: routes,

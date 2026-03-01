@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/profile/notifiers/notifiers.dart';
 import 'package:lune/ui/profile/views/views.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,9 @@ class ProfileScreen {
               updateCurrentUserUsecase: context.read(),
               authNotifier: context.read(),
             )..initialize(),
-        child: const ProfilePage(),
+        child: const EffectListener<ProfileNotifier>(
+          child: ProfilePage(),
+        ),
       );
     },
     routes: routes,

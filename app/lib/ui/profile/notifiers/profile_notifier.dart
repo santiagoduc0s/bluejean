@@ -7,7 +7,7 @@ import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class ProfileNotifier extends ChangeNotifier {
+class ProfileNotifier extends ChangeNotifier with NotifierEffects {
   ProfileNotifier({
     required UpdateCurrentUserUseCase updateCurrentUserUsecase,
     required AuthNotifier authNotifier,
@@ -100,9 +100,9 @@ class ProfileNotifier extends ChangeNotifier {
                 : null,
       );
 
-      primarySnackbar(localization.profile_userUpdated);
+      emitPrimarySnackbar((l10n) => l10n.profile_userUpdated);
     } catch (e, s) {
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
       logError(e, s);
     } finally {
       __isUpdatingData(false);

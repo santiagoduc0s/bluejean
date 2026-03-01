@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/ui.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,9 @@ class DevicesScreen {
                   context.read<AuthNotifier>().signOut();
                 },
               )..loadDevices(),
-          child: const DevicesPage(),
+          child: const EffectListener<DevicesNotifier>(
+            child: DevicesPage(),
+          ),
         );
       },
       routes: routes,

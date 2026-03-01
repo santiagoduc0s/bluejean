@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 import 'package:lune/ui/reset_password/notifiers/notifiers.dart';
 import 'package:lune/ui/reset_password/widgets/views.dart';
@@ -21,7 +22,9 @@ class ResetPasswordScreen {
               user: context.read<AuthNotifier>().currentUser!,
               router: context.read(),
             ),
-        child: const ResetPasswordPage(),
+        child: const EffectListener<ResetPasswordNotifier>(
+          child: ResetPasswordPage(),
+        ),
       );
     },
     routes: routes,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/core/form/form.dart';
 import 'package:lune/core/ui/ui.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/ui/profile/notifiers/notifiers.dart';
+import 'package:lune/ui/profile/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 

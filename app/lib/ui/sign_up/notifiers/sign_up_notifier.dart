@@ -2,11 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
 import 'package:lune/router/router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class SignUpNotifier extends ChangeNotifier {
+class SignUpNotifier extends ChangeNotifier with NotifierEffects {
   SignUpNotifier({required this.signUpUseCase, required this.router});
 
   final SignUpUseCase signUpUseCase;
@@ -64,13 +65,13 @@ class SignUpNotifier extends ChangeNotifier {
         'password': form.control('password').value as String,
       });
     } on EmailAlreadyInUseException {
-      errorSnackbar(localization.signUp_emailAlreadyInUse);
+      emitErrorSnackbar((l10n) => l10n.signUp_emailAlreadyInUse);
     } on WeakPasswordException {
-      errorSnackbar(localization.signUp_weakPassword);
+      emitErrorSnackbar((l10n) => l10n.signUp_weakPassword);
     } on InvalidEmailFormatException {
-      errorSnackbar(localization.signUp_InvalidEmailFormat);
+      emitErrorSnackbar((l10n) => l10n.signUp_InvalidEmailFormat);
     } catch (e, s) {
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
       logError(e, s);
     } finally {
       _setSigningUp(false);

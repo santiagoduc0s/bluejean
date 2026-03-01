@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/ui/animations/animations.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 import 'package:lune/ui/sign_in/notifiers/notifiers.dart';
@@ -30,7 +31,9 @@ class SignInScreen {
                 },
                 router: context.read(),
               ),
-          child: const SignInPage(),
+          child: const EffectListener<SignInNotifier>(
+            child: SignInPage(),
+          ),
         ),
       );
     },

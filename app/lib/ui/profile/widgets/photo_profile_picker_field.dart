@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/core/form/fields/reactive_image_picker_field.dart';
+import 'package:lune/core/form/form.dart';
 import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
 import 'package:lune/core/utils/utils.dart';

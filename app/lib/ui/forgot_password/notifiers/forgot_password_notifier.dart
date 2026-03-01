@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/router/router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class ForgotPasswordNotifier extends ChangeNotifier {
+class ForgotPasswordNotifier extends ChangeNotifier with NotifierEffects {
   ForgotPasswordNotifier({
     required this.forgotPasswordUseCase,
     required this.router,
@@ -53,11 +54,11 @@ class ForgotPasswordNotifier extends ChangeNotifier {
       final email = form.control('email').value as String;
       await forgotPasswordUseCase.call(email: email);
 
-      primarySnackbar(localization.forgotPassword_emailSent);
+      emitPrimarySnackbar((l10n) => l10n.forgotPassword_emailSent);
 
       router.pop(email);
     } catch (e, s) {
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
       logError(e, s);
     } finally {
       setIsSendingEmail(false);

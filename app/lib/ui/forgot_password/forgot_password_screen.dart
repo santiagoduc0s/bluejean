@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/forgot_password/notifiers/notifiers.dart';
 import 'package:lune/ui/forgot_password/widgets/views.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,9 @@ class ForgotPasswordScreen {
               forgotPasswordUseCase: context.read(),
               router: context.read(),
             )..init(email),
-        child: const ForgotPasswordPage(),
+        child: const EffectListener<ForgotPasswordNotifier>(
+          child: ForgotPasswordPage(),
+        ),
       );
     },
     routes: routes,

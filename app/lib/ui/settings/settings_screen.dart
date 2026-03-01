@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:lune/core/ui/widgets/widgets.dart';
 import 'package:lune/ui/auth/notifiers/notifiers.dart';
 import 'package:lune/ui/settings/notifiers/notifiers.dart';
 import 'package:lune/ui/settings/widgets/widgets.dart';
@@ -25,7 +26,9 @@ class SettingsScreen {
               signOutUseCase: context.read(),
               deleteAccountUsecase: context.read(),
             )..initialize(),
-        child: const SettingsPage(),
+        child: const EffectListener<SettingsNotifier>(
+          child: SettingsPage(),
+        ),
       );
     },
     routes: routes,

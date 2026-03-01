@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/router/router.dart';
@@ -11,7 +12,7 @@ import 'package:lune/ui/forgot_password/widgets/views.dart';
 import 'package:lune/ui/sign_up/widgets/views.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class SignInNotifier extends ChangeNotifier {
+class SignInNotifier extends ChangeNotifier with NotifierEffects {
   SignInNotifier({
     required this.signInWithEmailPasswordUseCase,
     required this.saveFcmTokenUseCase,
@@ -64,20 +65,20 @@ class SignInNotifier extends ChangeNotifier {
         onSignInSuccess(user);
         unawaited(saveFcmTokenUseCase.call().catchError((_) {}));
       } else {
-        errorSnackbar(localization.generalError);
+        emitErrorSnackbar((l10n) => l10n.generalError);
       }
     } on EmailNotVerifiedException {
-      errorSnackbar(localization.signIn_emailDoesNotVerified);
+      emitErrorSnackbar((l10n) => l10n.signIn_emailDoesNotVerified);
     } on InvalidCredentialException {
-      errorSnackbar(localization.signIn_invalidCredential);
+      emitErrorSnackbar((l10n) => l10n.signIn_invalidCredential);
     } on WrongPasswordException {
-      errorSnackbar(localization.signIn_wrongPassword);
+      emitErrorSnackbar((l10n) => l10n.signIn_wrongPassword);
     } on UserDisabledException {
-      errorSnackbar(localization.signIn_userDisabled);
+      emitErrorSnackbar((l10n) => l10n.signIn_userDisabled);
     } on NoInternetConnectionException {
-      errorSnackbar(localization.notConnected);
+      emitErrorSnackbar((l10n) => l10n.notConnected);
     } catch (e, s) {
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
 
       logError(e, s);
     } finally {

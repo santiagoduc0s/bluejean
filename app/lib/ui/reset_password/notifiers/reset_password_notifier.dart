@@ -2,13 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
 import 'package:lune/router/router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class ResetPasswordNotifier extends ChangeNotifier {
+class ResetPasswordNotifier extends ChangeNotifier with NotifierEffects {
   ResetPasswordNotifier({
     required SignInWithEmailPasswordUseCase signInWithEmailPasswordUseCase,
     required AuthRepository authRepository,
@@ -75,15 +76,15 @@ class ResetPasswordNotifier extends ChangeNotifier {
         password: form.control('newPassword').value as String,
       );
 
-      primarySnackbar(localization.settings_passwordUpdated);
+      emitPrimarySnackbar((l10n) => l10n.settings_passwordUpdated);
 
       _router.pop();
     } on InvalidCredentialException {
-      errorSnackbar(localization.signIn_invalidCredential);
+      emitErrorSnackbar((l10n) => l10n.signIn_invalidCredential);
     } on NoInternetConnectionException {
-      errorSnackbar(localization.notConnected);
+      emitErrorSnackbar((l10n) => l10n.notConnected);
     } catch (e, s) {
-      errorSnackbar(localization.generalError);
+      emitErrorSnackbar((l10n) => l10n.generalError);
 
       logError(e, s);
     } finally {
