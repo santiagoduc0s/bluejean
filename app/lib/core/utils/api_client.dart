@@ -9,32 +9,38 @@ class ApiClient {
   ApiClient({
     required this.baseUrl,
     this.enableLogging = false,
+    void Function()? onUnauthorized,
+    Future<bool> Function()? isAuthenticated,
+    String? Function()? getAccessToken,
     http.Client? client,
-  }) : _client = client ?? http.Client();
+  }) : _client = client ?? http.Client(),
+       _onUnauthorized = onUnauthorized ?? (() {}),
+       _isAuthenticated = isAuthenticated ?? (() async => false),
+       _getAccessToken = getAccessToken ?? (() => null);
 
   final http.Client _client;
 
   final String baseUrl;
-  late final void Function() onUnauthorized;
-  late final Future<bool> Function() isAuthenticated;
-  late final String? Function() getAccessToken;
+  final void Function() _onUnauthorized;
+  final Future<bool> Function() _isAuthenticated;
+  final String? Function() _getAccessToken;
 
   final bool enableLogging;
 
-  Future<bool> get isNotAuthenticated async => !(await isAuthenticated());
+  Future<bool> get isNotAuthenticated async => !(await _isAuthenticated());
 
   Future<Map<String, String>> getHeaders() async {
     return {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      if (await isAuthenticated())
-        'Authorization': 'Bearer ${getAccessToken()}',
+      if (await _isAuthenticated())
+        'Authorization': 'Bearer ${_getAccessToken()}',
     };
   }
 
   http.Response _handleResponse(http.Response response) {
     if (response.statusCode == 401) {
-      onUnauthorized.call();
+      _onUnauthorized.call();
       throw InvalidCredentialException();
     }
 

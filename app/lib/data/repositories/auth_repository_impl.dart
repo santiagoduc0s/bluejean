@@ -41,7 +41,8 @@ class AuthRepositoryImpl extends AuthRepository {
       }
 
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      AppLoggerHelper.error('Failed to fetch current user: $e', stackTrace: s);
       return null;
     }
   }

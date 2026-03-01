@@ -95,10 +95,10 @@ class _MultiImagePickerContentState extends State<_MultiImagePickerContent> {
 
       if (!mounted) return;
 
-      final tr = AppProvider.get<Localization>().tr;
+      final tr = getIt<Localization>().tr;
 
       if (status == PermissionStatus.permanentlyDenied) {
-        final shouldOpen = await DialogHelper.confirm(
+        final shouldOpen = await getIt<CustomDialog>().confirm(
           message:
               source == ImageSource.camera
                   ? tr.cameraIsDisabled

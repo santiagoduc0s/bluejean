@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/fields/reactive_image_picker_field.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
+import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/l10n/l10n.dart';
 
@@ -30,7 +31,7 @@ class PhotoProfilePickerField extends StatelessWidget {
       formControlName: formControlName,
       imageQuality: imageQuality ?? 90,
       onError: (e) {
-        SnackbarHelper.error(l10n.generalError);
+        getIt<CustomSnackbar>().show(ErrorSnackBar(text: l10n.generalError));
       },
       permissionRepository: permissionRepository,
       builder: (

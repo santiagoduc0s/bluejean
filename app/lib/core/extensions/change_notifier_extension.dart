@@ -13,11 +13,11 @@ extension ChangeNotifierX on ChangeNotifier {
   }
 
   void primarySnackbar(String text, [void Function()? onTap]) {
-    SnackbarHelper.success(text, onTap: onTap);
+    getIt<CustomSnackbar>().show(PrimarySnackBar(text: text, onTap: onTap));
   }
 
   void errorSnackbar(String text, [void Function()? onTap]) {
-    SnackbarHelper.error(text, onTap: onTap);
+    getIt<CustomSnackbar>().show(ErrorSnackBar(text: text, onTap: onTap));
   }
 
   Future<bool> dialogConfirm({
@@ -25,7 +25,7 @@ extension ChangeNotifierX on ChangeNotifier {
     required String confirmText,
     required String cancelText,
   }) {
-    return DialogHelper.confirm(
+    return getIt<CustomDialog>().confirm(
       message: message,
       confirmText: confirmText,
       cancelText: cancelText,
@@ -36,8 +36,11 @@ extension ChangeNotifierX on ChangeNotifier {
     required String message,
     required String confirmText,
   }) {
-    return DialogHelper.info(message: message, confirmText: confirmText);
+    return getIt<CustomDialog>().info(
+      message: message,
+      confirmText: confirmText,
+    );
   }
 
-  AppLocalizations get localization => AppProvider.get<Localization>().tr;
+  AppLocalizations get localization => getIt<Localization>().tr;
 }

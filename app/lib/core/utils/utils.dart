@@ -1,7 +1,7 @@
 export 'api_client.dart';
 export 'app_global_keys.dart';
 export 'app_logger.dart';
-export 'app_provider.dart';
 export 'debouncer.dart';
 export 'localization.dart';
 export 'nullable_parameter.dart';
+export 'service_locator.dart';

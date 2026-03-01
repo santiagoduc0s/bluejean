@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/fields/reactive_multi_image_picker_field.dart';
-import 'package:lune/core/ui/alerts/dialog/dialog.dart';
-import 'package:lune/core/ui/alerts/snackbar/snackbar.dart';
+import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/core/ui/spacing/spacing.dart';
+import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/l10n/l10n.dart';
 
@@ -31,7 +31,7 @@ class SupportImagePickerField extends StatelessWidget {
       maxImages: maxImages,
       permissionRepository: permissionRepository,
       onError: (error) {
-        SnackbarHelper.error(l10n.generalError);
+        getIt<CustomSnackbar>().show(ErrorSnackBar(text: l10n.generalError));
       },
       builder: (
         context,

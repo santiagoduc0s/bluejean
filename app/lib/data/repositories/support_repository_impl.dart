@@ -1,8 +1,8 @@
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
-class SupportRespositoryImpl extends SupportRepository {
-  SupportRespositoryImpl({required ApiClient apiClient})
+class SupportRepositoryImpl extends SupportRepository {
+  SupportRepositoryImpl({required ApiClient apiClient})
     : _apiClient = apiClient;
 
   final ApiClient _apiClient;

@@ -1,3 +1,4 @@
+import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
 class OpenAppUseCase {
@@ -13,7 +14,7 @@ class OpenAppUseCase {
   final AuthRepository _authRepository;
   final MessagingRepository _messagingRepository;
 
-  Future<Map<String, dynamic>> call() async {
+  Future<UserEntity?> call() async {
     final user = await _authRepository.currentUser();
 
     final token = await _messagingRepository.getFCMToken();
@@ -22,6 +23,6 @@ class OpenAppUseCase {
       await _deviceRepository.upsertDevice(fcmToken: token);
     }
 
-    return {'user': user};
+    return user;
   }
 }

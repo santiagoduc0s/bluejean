@@ -1,42 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lune/core/ui/alerts/dialog/dialog.dart';
 import 'package:lune/core/utils/utils.dart';
-import 'package:lune/domain/entities/entities.dart';
-import 'package:lune/domain/repositories/repositories.dart';
-import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/l10n/l10n.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/ui.dart';
 import 'package:provider/provider.dart';
-
-/// To allow user without sing-in do the next:
-/// Comment this line: refreshListenable: _authNotifier,
-///
-/// and comment this other lines:
-///
-///     if (state.matchedLocation == SplashScreen.path) {
-///       return null;
-///     }
-///
-///     final isAuthenticated = _authNotifier.isAuthenticated;
-///
-///     final isPublicRoute = publicRoutes.contains(state.matchedLocation);
-///
-///     if (!isAuthenticated && !isPublicRoute) {
-///       return SignInScreen.path;
-///     }
-///
-///     if (isPublicRoute && isAuthenticated) {
-///       return HomeScreen.path;
-///     }
-///
-/// And go to the sign_in_notifier
-/// And uncomment this line: router.pop();
 
 class AppGoRouter extends CustomRouter {
   AppGoRouter(AuthNotifier authNotifier) : _authNotifier = authNotifier {
@@ -56,6 +27,12 @@ class AppGoRouter extends CustomRouter {
             final l10n = context.l10n;
             final isPortrait =
                 MediaQuery.of(context).orientation == Orientation.portrait;
+
+            final destinations = [
+              (icon: Icons.person, label: l10n.profile),
+              (icon: Icons.home, label: l10n.home),
+              (icon: Icons.settings, label: l10n.settings),
+            ];
 
             Future<void> onDestinationSelected(int index) async {
               unawaited(HapticFeedback.selectionClick());
@@ -92,18 +69,11 @@ class AppGoRouter extends CustomRouter {
                     selectedIndex: navigationShell.currentIndex,
                     onDestinationSelected: onDestinationSelected,
                     destinations: [
-                      NavigationDestination(
-                        icon: const Icon(Icons.person),
-                        label: l10n.profile,
-                      ),
-                      NavigationDestination(
-                        icon: const Icon(Icons.home),
-                        label: l10n.home,
-                      ),
-                      NavigationDestination(
-                        icon: const Icon(Icons.settings),
-                        label: l10n.settings,
-                      ),
+                      for (final d in destinations)
+                        NavigationDestination(
+                          icon: Icon(d.icon),
+                          label: d.label,
+                        ),
                     ],
                   ),
                 )
@@ -115,18 +85,11 @@ class AppGoRouter extends CustomRouter {
                         onDestinationSelected: onDestinationSelected,
                         labelType: NavigationRailLabelType.all,
                         destinations: [
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.person),
-                            label: Text(l10n.profile),
-                          ),
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.home),
-                            label: Text(l10n.home),
-                          ),
-                          NavigationRailDestination(
-                            icon: const Icon(Icons.settings),
-                            label: Text(l10n.settings),
-                          ),
+                          for (final d in destinations)
+                            NavigationRailDestination(
+                              icon: Icon(d.icon),
+                              label: Text(d.label),
+                            ),
                         ],
                       ),
                       Expanded(child: navigationShell),
@@ -157,7 +120,6 @@ class AppGoRouter extends CustomRouter {
   }
 
   final AuthNotifier _authNotifier;
-  bool _isInitialized = false;
 
   @override
   late RouterConfig<Object> router;
@@ -169,56 +131,7 @@ class AppGoRouter extends CustomRouter {
     PublicOnboardScreen.path,
   ];
 
-  Future<void> _initialize(BuildContext context) async {
-    if (!context.mounted) return;
-
-    _isInitialized = true;
-
-    try {
-      AppLoggerHelper.authNotifier = context.read<AuthNotifier>();
-
-      context.read<ApiClient>().onUnauthorized = () {
-        context.read<AuthNotifier>().signOut();
-        context.read<AuthRepository>().clearSession();
-      };
-
-      context.read<ApiClient>().isAuthenticated = () async {
-        return context.read<AuthRepository>().isAuthenticated();
-      };
-
-      context.read<ApiClient>().getAccessToken = () {
-        return context.read<AuthRepository>().accessToken;
-      };
-
-      final usecase = context.read<OpenAppUseCase>();
-
-      await AppProvider.get<PreferenceNotifier>().initialize();
-
-      final value = await Future.wait([
-        Future.delayed(300.ms, () {}), // Min time native splash
-        usecase.call(),
-      ]);
-
-      final data = value.last!;
-
-      AppProvider.get<AuthNotifier>().initialize(data['user'] as UserEntity?);
-    } catch (e, s) {
-      AppLoggerHelper.error(e.toString(), stackTrace: s);
-    } finally {
-      _isInitialized = true;
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        FlutterNativeSplash.remove();
-      });
-    }
-  }
-
-  FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
-    if (!_isInitialized) {
-      await _initialize(context);
-      return null;
-    }
-
+  String? _redirect(BuildContext context, GoRouterState state) {
     if (state.matchedLocation == SplashScreen.path) {
       return null;
     }
