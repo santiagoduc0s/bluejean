@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
@@ -86,7 +85,7 @@ class ResetPasswordNotifier extends ChangeNotifier with NotifierEffects {
     } catch (e, s) {
       emitErrorSnackbar((l10n) => l10n.generalError);
 
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       setIsResetting(false);
     }

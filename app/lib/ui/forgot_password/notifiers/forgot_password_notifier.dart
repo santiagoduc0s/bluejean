@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/router/router.dart';
@@ -59,7 +58,7 @@ class ForgotPasswordNotifier extends ChangeNotifier with NotifierEffects {
       router.pop(email);
     } catch (e, s) {
       emitErrorSnackbar((l10n) => l10n.generalError);
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       setIsSendingEmail(false);
     }

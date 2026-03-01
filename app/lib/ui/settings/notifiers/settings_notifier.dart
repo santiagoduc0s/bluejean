@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
@@ -110,7 +109,7 @@ class SettingsNotifier extends ChangeNotifier with NotifierEffects {
     } catch (e, s) {
       notificationsEnabled = previousState;
       notifyListeners();
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
       emitErrorSnackbar((l10n) => l10n.generalError);
     }
   }
@@ -133,7 +132,7 @@ class SettingsNotifier extends ChangeNotifier with NotifierEffects {
       await _deleteAccountUsecase.call();
       _onSignOut();
     } catch (e, s) {
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
       emitErrorSnackbar((l10n) => l10n.generalError);
     } finally {
       isDeletingAccount = false;

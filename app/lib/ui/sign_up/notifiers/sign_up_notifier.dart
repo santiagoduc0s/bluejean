@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/form/validators/validators.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/auth/auth.dart';
@@ -72,7 +71,7 @@ class SignUpNotifier extends ChangeNotifier with NotifierEffects {
       emitErrorSnackbar((l10n) => l10n.signUp_InvalidEmailFormat);
     } catch (e, s) {
       emitErrorSnackbar((l10n) => l10n.generalError);
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       _setSigningUp(false);
     }

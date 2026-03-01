@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:lune/core/extensions/change_notifier_extension.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
@@ -37,7 +36,7 @@ class DevicesNotifier extends ChangeNotifier with NotifierEffects {
       _devices = await _deviceRepository.getDevices();
       _currentIdentifier = await _deviceRepository.getDeviceIdentifier();
     } catch (e, s) {
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
       emitErrorSnackbar((l10n) => l10n.generalError);
     } finally {
       _isLoading = false;
@@ -62,7 +61,7 @@ class DevicesNotifier extends ChangeNotifier with NotifierEffects {
 
       emitPrimarySnackbar((l10n) => l10n.deviceDeletedSuccessfully);
     } catch (e, s) {
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
       emitErrorSnackbar((l10n) => l10n.generalError);
     }
   }

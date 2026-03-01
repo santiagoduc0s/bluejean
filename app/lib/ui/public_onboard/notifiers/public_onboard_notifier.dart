@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:lune/domain/repositories/repositories.dart';
@@ -38,7 +37,7 @@ class PublicOnboardNotifier extends ChangeNotifier with NotifierEffects {
       router.goNamed(HomeScreen.path);
     } catch (e, s) {
       emitErrorSnackbar((l10n) => l10n.generalError);
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       _setLoading(false);
     }

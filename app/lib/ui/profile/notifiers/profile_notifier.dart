@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/core/functions/functions.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/usecases/usecases.dart';
@@ -103,7 +102,7 @@ class ProfileNotifier extends ChangeNotifier with NotifierEffects {
       emitPrimarySnackbar((l10n) => l10n.profile_userUpdated);
     } catch (e, s) {
       emitErrorSnackbar((l10n) => l10n.generalError);
-      logError(e, s);
+      AppLoggerHelper.error(e.toString(), stackTrace: s);
     } finally {
       __isUpdatingData(false);
     }
