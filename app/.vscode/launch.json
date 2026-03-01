@@ -5,12 +5,12 @@
       "name": "Development - Debug",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
         "--target",
-        "lib/main_development.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -22,12 +22,12 @@
       "name": "Development - Profile",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
         "--target",
-        "lib/main_development.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -40,12 +40,12 @@
       "name": "Development - Release",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
         "--target",
-        "lib/main_development.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -58,12 +58,12 @@
       "name": "Staging - Debug",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_staging.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "staging",
         "--target",
-        "lib/main_staging.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -75,12 +75,12 @@
       "name": "Staging - Profile",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_staging.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "staging",
         "--target",
-        "lib/main_staging.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -93,12 +93,12 @@
       "name": "Staging - Release",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_staging.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "staging",
         "--target",
-        "lib/main_staging.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -111,12 +111,12 @@
       "name": "Production - Debug",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_production.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "production",
         "--target",
-        "lib/main_production.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -128,12 +128,12 @@
       "name": "Production - Profile",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_production.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "production",
         "--target",
-        "lib/main_production.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -146,12 +146,12 @@
       "name": "Production - Release",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_production.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "production",
         "--target",
-        "lib/main_production.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080"
@@ -164,10 +164,10 @@
       "name": "Development - Chrome (No Web Security)",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--target",
-        "lib/main_development.dart",
+        "lib/main.dart",
         "--dart-define-from-file",
         "env.json",
         "--web-port=8080",
