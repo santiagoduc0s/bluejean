@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lune/core/exceptions/exceptions.dart';
 import 'package:lune/core/extensions/extensions.dart';
 import 'package:lune/domain/entities/entities.dart';
-import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/forgot_password/widgets/views.dart';
@@ -14,14 +13,12 @@ class SignInNotifier extends ChangeNotifier {
   SignInNotifier({
     required this.signInWithEmailPasswordUseCase,
     required this.saveFcmTokenUseCase,
-    required this.authRepository,
     required this.router,
     required this.onSignInSuccess,
   });
 
   final SignInWithEmailPasswordUseCase signInWithEmailPasswordUseCase;
   final SaveFcmTokenUseCase saveFcmTokenUseCase;
-  final AuthRepository authRepository;
   final CustomRouter router;
   final void Function(UserEntity user) onSignInSuccess;
 

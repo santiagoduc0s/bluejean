@@ -25,7 +25,6 @@ class SignInScreen {
               (context) => SignInNotifier(
                 signInWithEmailPasswordUseCase: context.read(),
                 saveFcmTokenUseCase: context.read(),
-                authRepository: context.read(),
                 onSignInSuccess: (UserEntity user) {
                   context.read<AuthNotifier>().setUser(user);
                 },

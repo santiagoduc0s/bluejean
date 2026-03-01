@@ -15,15 +15,6 @@ class SignUpNotifier extends ChangeNotifier {
 
   final form = FormGroup(
     {
-      // 'photo': FormControl<XFile?>(),
-      // 'firstName': FormControl<String>(
-      //   value: '',
-      //   // validators: [Validators.required],
-      // ),
-      // 'lastName': FormControl<String>(
-      //   value: '',
-      //   // validators: [Validators.required],
-      // ),
       'email': FormControl<String>(
         value: '',
         validators: [Validators.required, Validators.email],
