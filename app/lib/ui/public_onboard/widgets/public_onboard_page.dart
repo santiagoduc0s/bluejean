@@ -66,7 +66,7 @@ class PublicOnboardPage extends StatelessWidget {
                         SizedBox(height: 6.space),
                         Text(
                               l10n.onboard_title,
-                              style: textStyles.headlineMedium.copyWith(
+                              style: textStyles.headlineMedium?.copyWith(
                                 color: colors.primary,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -78,7 +78,7 @@ class PublicOnboardPage extends StatelessWidget {
                         Text(
                               l10n.onboard_description,
                               textAlign: TextAlign.center,
-                              style: textStyles.bodyLarge.copyWith(
+                              style: textStyles.bodyLarge?.copyWith(
                                 color: colors.onSurface.withValues(alpha: 0.7),
                               ),
                             )

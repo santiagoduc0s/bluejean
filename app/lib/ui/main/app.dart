@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lune/core/form/validators/validators.dart';
-import 'package:lune/core/ui/themes/themes.dart';
+import 'package:lune/core/ui/themes/app_theme.dart';
 import 'package:lune/core/utils/utils.dart';
 import 'package:lune/l10n/gen_l10n/app_localizations.dart';
 import 'package:lune/router/router.dart';
@@ -38,8 +38,8 @@ class App extends StatelessWidget {
       child: MaterialApp.router(
         scaffoldMessengerKey: AppGlobalKey.scaffoldMessengerKey,
         debugShowCheckedModeBanner: false,
-        theme: UIThemeLight.instance.theme,
-        darkTheme: UIThemeDark.instance.theme,
+        theme: AppTheme.light(),
+        darkTheme: AppTheme.dark(),
         themeMode: getThemeMode(prefNotifier.theme),
         locale: getLocale(prefNotifier.language),
         localizationsDelegates: AppLocalizations.localizationsDelegates,

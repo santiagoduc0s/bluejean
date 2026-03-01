@@ -35,7 +35,7 @@ class DevicesPage extends StatelessWidget {
                     2.spaceY,
                     Text(
                       l10n.noDevicesFound,
-                      style: textStyles.titleMedium.copyWith(
+                      style: textStyles.titleMedium?.copyWith(
                         color: colors.onSurfaceVariant,
                       ),
                     ),
@@ -137,7 +137,7 @@ class _DeviceCard extends StatelessWidget {
                           device.model.isNotEmpty
                               ? device.model
                               : 'Unknown Device',
-                          style: textStyles.titleMedium.copyWith(
+                          style: textStyles.titleMedium?.copyWith(
                             color:
                                 isCurrentDevice
                                     ? colors.onPrimaryContainer
@@ -150,7 +150,7 @@ class _DeviceCard extends StatelessWidget {
                   1.spaceY,
                   Text(
                     'Added: ${device.createdAt.day}/${device.createdAt.month}/${device.createdAt.year}',
-                    style: textStyles.bodySmall.copyWith(
+                    style: textStyles.bodySmall?.copyWith(
                       color:
                           isCurrentDevice
                               ? colors.onPrimaryContainer

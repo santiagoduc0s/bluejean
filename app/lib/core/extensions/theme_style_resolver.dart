@@ -1,77 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:lune/core/ui/ui.dart';
+import 'package:lune/core/ui/assets/app_assets.dart';
+import 'package:lune/core/ui/icons/app_icons.dart';
+import 'package:lune/core/ui/styles/buttons/app_button_styles.dart';
+import 'package:lune/core/ui/styles/inputs/app_input_styles.dart';
 
-/// Extension on [ThemeData] to provide access to UI based on the current theme.
 extension ThemeStyleResolver on BuildContext {
-  /// Access icons based on the current theme.
-  UIIcon get icons {
-    final brightness = Theme.of(this).brightness;
+  ColorScheme get colors => Theme.of(this).colorScheme;
 
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UIIconDark.instance;
-    } else {
-      return UIIconLight.instance;
-    }
-  }
+  TextTheme get textStyles => Theme.of(this).textTheme;
 
-  /// Access colors based on the current theme.
-  UIColor get colors {
-    final brightness = Theme.of(this).brightness;
+  AppButtonStyles get buttonStyles =>
+      AppButtonStyles(colorScheme: colors, textTheme: textStyles);
 
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UIColorDark.instance;
-    } else {
-      return UIColorLight.instance;
-    }
-  }
+  AppInputStyles get inputStyles => AppInputStyles(colorScheme: colors);
 
-  /// Access assets based on the current theme.
-  UIAsset get assets {
-    final brightness = Theme.of(this).brightness;
+  AppAssets get assets => AppAssets(brightness: Theme.of(this).brightness);
 
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UIAssetDark.instance;
-    } else {
-      return UIAssetLight.instance;
-    }
-  }
-
-  /// Access button styles based on the current theme.
-  UIButtonStyle get buttonStyles {
-    final brightness = Theme.of(this).brightness;
-
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UIButtonStyleDark.instance;
-    } else {
-      return UIButtonStyleLight.instance;
-    }
-  }
-
-  /// Access input styles based on the current theme.
-  UIInputStyle get inputStyles {
-    final brightness = Theme.of(this).brightness;
-
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UIInputStyleDark.instance;
-    } else {
-      return UIInputStyleLight.instance;
-    }
-  }
-
-  /// Access text styles based on the current theme.
-  UITextStyle get textStyles {
-    final brightness = Theme.of(this).brightness;
-
-    final isDarkMode = brightness == Brightness.dark;
-    if (isDarkMode) {
-      return UITextStyleDark.instance;
-    } else {
-      return UITextStyleLight.instance;
-    }
-  }
+  AppIcons get icons => AppIcons(assets: assets);
 }

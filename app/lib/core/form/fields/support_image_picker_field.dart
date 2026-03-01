@@ -48,7 +48,7 @@ class SupportImagePickerField extends StatelessWidget {
             1.spaceY,
             Text(
               '${l10n.maxImages}: $maxImages',
-              style: context.textStyles.bodySmall.copyWith(
+              style: context.textStyles.bodySmall?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
             ),

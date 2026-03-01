@@ -56,7 +56,7 @@ class SettingsPage extends StatelessWidget {
             children: [
               Text(
                     l10n.settings,
-                    style: textStyles.headlineLarge.copyWith(
+                    style: textStyles.headlineLarge?.copyWith(
                       color: colors.primary,
                       fontWeight: FontWeight.bold,
                     ),
@@ -81,7 +81,7 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           Text(
                             l10n.options,
-                            style: textStyles.titleMedium.copyWith(
+                            style: textStyles.titleMedium?.copyWith(
                               color: colors.primary,
                               fontWeight: FontWeight.bold,
                             ),
@@ -134,7 +134,7 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           Text(
                             context.l10n.appearance,
-                            style: textStyles.titleMedium.copyWith(
+                            style: textStyles.titleMedium?.copyWith(
                               color: colors.primary,
                               fontWeight: FontWeight.bold,
                             ),
@@ -184,7 +184,7 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           Text(
                             'Legal',
-                            style: textStyles.titleMedium.copyWith(
+                            style: textStyles.titleMedium?.copyWith(
                               color: colors.primary,
                               fontWeight: FontWeight.bold,
                             ),
@@ -326,7 +326,7 @@ class _AuthButtonsAnimatedRowState extends State<AuthButtonsAnimatedRow>
                         Flexible(
                           child: Text(
                             l10n.signOut,
-                            style: textStyles.labelLarge.copyWith(
+                            style: textStyles.labelLarge?.copyWith(
                               color: colors.error,
                             ),
                             overflow: TextOverflow.ellipsis,
@@ -357,7 +357,7 @@ class _AuthButtonsAnimatedRowState extends State<AuthButtonsAnimatedRow>
                         Flexible(
                           child: Text(
                             l10n.deleteAccount,
-                            style: textStyles.labelLarge.copyWith(
+                            style: textStyles.labelLarge?.copyWith(
                               color: colors.error,
                             ),
                             overflow: TextOverflow.ellipsis,

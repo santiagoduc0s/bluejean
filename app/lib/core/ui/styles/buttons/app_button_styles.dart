@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lune/core/ui/colors/colors.dart';
 import 'package:lune/core/ui/font_weight/ui_font_weight.dart';
 import 'package:lune/core/ui/spacing/ui_spacing.dart';
-import 'package:lune/core/ui/styles/buttons/buttons.dart';
-import 'package:lune/core/ui/styles/texts/texts.dart';
 
-/// Implements the dark theme for [UIButtonStyle].
-class UIButtonStyleDark extends UIButtonStyle {
-  UIButtonStyleDark._singleton();
+class AppButtonStyles {
+  AppButtonStyles({required this.colorScheme, required this.textTheme});
 
-  /// Singleton instance of [UIButtonStyleDark].
-  static final UIButtonStyleDark instance = UIButtonStyleDark._singleton();
+  final ColorScheme colorScheme;
+  final TextTheme textTheme;
 
-  /// Singleton instance of [UIColor].
-  UIColor uiColor = UIColorDark.instance;
-
-  /// Singleton instance of [UIFontWeight].
-  UITextStyle uiTextStyle = UITextStyleDark.instance;
-
-  @override
   ButtonStyle get primaryElevated {
     return ButtonStyle(
       minimumSize: WidgetStateProperty.all(Size.zero),
@@ -29,28 +18,27 @@ class UIButtonStyleDark extends UIButtonStyle {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
+        textTheme.labelLarge!.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface;
+          return colorScheme.onSurface;
         }
-        return uiColor.primary;
+        return colorScheme.primary;
       }),
       backgroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface.withValues(alpha: 0.12);
+          return colorScheme.onSurface.withValues(alpha: 0.12);
         }
-        return uiColor.surfaceContainerLow;
+        return colorScheme.surfaceContainerLow;
       }),
-      shadowColor: WidgetStateProperty.all<Color>(uiColor.shadow),
+      shadowColor: WidgetStateProperty.all<Color>(colorScheme.shadow),
       elevation: WidgetStateProperty.all<double>(0.25.space),
     );
   }
 
-  @override
   ButtonStyle get primaryFilled {
     return ButtonStyle(
       minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
@@ -61,26 +49,25 @@ class UIButtonStyleDark extends UIButtonStyle {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
+        textTheme.labelLarge!.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface.withValues(alpha: 0.50);
+          return colorScheme.onSurface.withValues(alpha: 0.50);
         }
-        return uiColor.onPrimary;
+        return colorScheme.onPrimary;
       }),
       backgroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface.withValues(alpha: 0.12);
+          return colorScheme.onSurface.withValues(alpha: 0.12);
         }
-        return uiColor.primary;
+        return colorScheme.primary;
       }),
     );
   }
 
-  @override
   ButtonStyle get primaryFilledTonal {
     return ButtonStyle(
       minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
@@ -91,26 +78,25 @@ class UIButtonStyleDark extends UIButtonStyle {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
+        textTheme.labelLarge!.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface.withValues(alpha: 0.50);
+          return colorScheme.onSurface.withValues(alpha: 0.50);
         }
-        return uiColor.onSecondaryContainer;
+        return colorScheme.onSecondaryContainer;
       }),
       backgroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.onSurface.withValues(alpha: 0.12);
+          return colorScheme.onSurface.withValues(alpha: 0.12);
         }
-        return uiColor.secondaryContainer;
+        return colorScheme.secondaryContainer;
       }),
     );
   }
 
-  @override
   ButtonStyle get primaryOutlined {
     return ButtonStyle(
       minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
@@ -121,57 +107,53 @@ class UIButtonStyleDark extends UIButtonStyle {
         RoundedRectangleBorder(borderRadius: BorderRadius.circular(2.space)),
       ),
       textStyle: WidgetStateProperty.all<TextStyle>(
-        uiTextStyle.labelLarge.copyWith(fontWeight: UIFontWeight.light),
+        textTheme.labelLarge!.copyWith(fontWeight: UIFontWeight.light),
       ),
       foregroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.outline;
+          return colorScheme.outline;
         }
-        return uiColor.primary;
+        return colorScheme.primary;
       }),
       backgroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
-        if (states.contains(WidgetState.disabled)) {
-          return UIColor.transparent;
-        }
-        return UIColor.transparent;
+        return Colors.transparent;
       }),
       side: WidgetStateProperty.resolveWith<BorderSide>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.disabled)) {
           return BorderSide(
-            color: uiColor.onSurface.withValues(alpha: 0.12),
+            color: colorScheme.onSurface.withValues(alpha: 0.12),
             width: .25.space,
           );
         }
-        return BorderSide(color: uiColor.outline, width: .25.space);
+        return BorderSide(color: colorScheme.outline, width: .25.space);
       }),
     );
   }
 
-  @override
   ButtonStyle get primaryText {
     return ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
-        return UIColor.transparent;
+        return Colors.transparent;
       }),
       foregroundColor: WidgetStateProperty.resolveWith<Color>((
         Set<WidgetState> states,
       ) {
         if (states.contains(WidgetState.disabled)) {
-          return uiColor.outline;
+          return colorScheme.outline;
         }
-        return uiColor.primary;
+        return colorScheme.primary;
       }),
       minimumSize: WidgetStateProperty.all(Size(UISpacing.zero, 12.space)),
       padding: WidgetStateProperty.all<EdgeInsets>(
         EdgeInsets.symmetric(horizontal: 4.space),
       ),
-      textStyle: WidgetStateProperty.all<TextStyle>(uiTextStyle.labelLarge),
+      textStyle: WidgetStateProperty.all<TextStyle>(textTheme.labelLarge!),
       elevation: WidgetStateProperty.all(UISpacing.zero),
       splashFactory: InkRipple.splashFactory,
     );

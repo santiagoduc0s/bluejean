@@ -57,7 +57,7 @@ class ProfilePage extends StatelessWidget {
               title:
                   Text(
                         l10n.profile,
-                        style: textsProvider.headlineLarge.copyWith(
+                        style: textsProvider.headlineLarge?.copyWith(
                           color: colorsProvider.primary,
                           fontWeight: FontWeight.bold,
                         ),
@@ -130,7 +130,7 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     child: Text(
                                       l10n.profileEmailNote,
-                                      style: textsProvider.bodySmall.copyWith(
+                                      style: textsProvider.bodySmall?.copyWith(
                                         color: colorsProvider.onSurface
                                             .withValues(alpha: 0.6),
                                         fontSize: 12,

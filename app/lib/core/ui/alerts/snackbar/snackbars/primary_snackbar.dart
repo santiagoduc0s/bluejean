@@ -58,7 +58,7 @@ class PrimarySnackBarContent extends StatelessWidget {
               Expanded(
                 child: Text(
                   text,
-                  style: textStylesProvider.bodySmall.copyWith(
+                  style: textStylesProvider.bodySmall?.copyWith(
                     color: colorsProvider.onPrimary,
                   ),
                 ),

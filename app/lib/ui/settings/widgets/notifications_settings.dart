@@ -32,7 +32,7 @@ class NotificationsSettings extends StatelessWidget {
               children: [
                 Text(
                   l10n.notifications,
-                  style: textStyles.titleMedium.copyWith(
+                  style: textStyles.titleMedium?.copyWith(
                     color: colors.primary,
                     fontWeight: FontWeight.bold,
                   ),
