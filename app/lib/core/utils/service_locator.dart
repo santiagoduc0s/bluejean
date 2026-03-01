@@ -66,6 +66,11 @@ void initServiceLocator() {
   getIt.registerLazySingleton<MessagingRepository>(
     () => MessagingRepositoryImpl(),
   );
+  getIt.registerLazySingleton<PreferenceRepository>(
+    () => PreferenceRepositoryImpl(
+      localStorageService: getIt<LocalStorageService>(),
+    ),
+  );
 getIt.registerLazySingleton<RemoteStorageRepository>(
     () => RemoteStorageRepositoryImpl(apiClient: getIt<ApiClient>()),
   );
@@ -93,7 +98,6 @@ getIt.registerLazySingleton<RemoteStorageRepository>(
     () => SignOutUseCase(
       deviceRepository: getIt<DeviceRepository>(),
       authRepository: getIt<AuthRepository>(),
-      deviceInfoService: getIt<DeviceInfoService>(),
     ),
   );
   getIt.registerLazySingleton(
@@ -117,7 +121,7 @@ getIt.registerLazySingleton<RemoteStorageRepository>(
   getIt.registerLazySingleton(() => AuthNotifier());
   getIt.registerLazySingleton(
     () => PreferenceNotifier(
-      localStorageService: getIt<LocalStorageService>(),
+      preferenceRepository: getIt<PreferenceRepository>(),
     ),
   );
 

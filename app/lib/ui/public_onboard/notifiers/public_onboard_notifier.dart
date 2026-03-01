@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lune/core/extensions/extensions.dart';
-import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/enums/enums.dart';
+import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/router/router.dart';
 import 'package:lune/ui/home/home.dart';
 
 class PublicOnboardNotifier extends ChangeNotifier {
   PublicOnboardNotifier({
-    required this.localStorageService,
+    required this.preferenceRepository,
     required this.router,
   });
 
-  LocalStorageService localStorageService;
+  PreferenceRepository preferenceRepository;
 
   CustomRouter router;
 
@@ -20,7 +20,7 @@ class PublicOnboardNotifier extends ChangeNotifier {
   bool isLoading = false;
 
   Future<void> initialize() async {
-    status = await localStorageService.getPOStatus();
+    status = await preferenceRepository.getPOStatus();
   }
 
   void _setLoading(bool value) {
@@ -32,7 +32,7 @@ class PublicOnboardNotifier extends ChangeNotifier {
     _setLoading(true);
 
     try {
-      await localStorageService.setPOStatus(PublicOnboardStatus.seen);
+      await preferenceRepository.setPOStatus(PublicOnboardStatus.seen);
 
       router.goNamed(HomeScreen.path);
     } catch (e, s) {

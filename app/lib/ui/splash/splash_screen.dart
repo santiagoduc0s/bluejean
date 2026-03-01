@@ -20,7 +20,7 @@ class SplashScreen {
             lazy: false,
             create:
                 (context) => SplashNotifier(
-                  localStorageService: context.read(),
+                  preferenceRepository: context.read(),
                   router: context.read(),
                 )..initialize(),
             child: const SplashPage(),

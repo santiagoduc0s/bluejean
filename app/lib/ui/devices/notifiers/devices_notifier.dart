@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:lune/core/extensions/change_notifier_extension.dart';
-import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/usecases.dart';
@@ -8,16 +7,13 @@ import 'package:lune/domain/usecases/usecases.dart';
 class DevicesNotifier extends ChangeNotifier {
   DevicesNotifier({
     required DeviceRepository deviceRepository,
-    required DeviceInfoService deviceInfoService,
     required SignOutUseCase signOutUseCase,
     required void Function() onSignOut,
   }) : _deviceRepository = deviceRepository,
-       _deviceInfoService = deviceInfoService,
        _signOutUseCase = signOutUseCase,
        _onSignOut = onSignOut;
 
   final DeviceRepository _deviceRepository;
-  final DeviceInfoService _deviceInfoService;
   final SignOutUseCase _signOutUseCase;
   final void Function() _onSignOut;
 
@@ -38,7 +34,7 @@ class DevicesNotifier extends ChangeNotifier {
 
     try {
       _devices = await _deviceRepository.getDevices();
-      _currentIdentifier = await _deviceInfoService.getDeviceId();
+      _currentIdentifier = await _deviceRepository.getDeviceIdentifier();
     } catch (e, s) {
       logError(e, s);
       errorSnackbar(localization.generalError);

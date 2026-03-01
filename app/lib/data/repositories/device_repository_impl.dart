@@ -61,4 +61,7 @@ class DeviceRepositoryImpl implements DeviceRepository {
 
     throw Exception('Failed to get devices');
   }
+
+  @override
+  Future<String> getDeviceIdentifier() => _deviceInfoService.getDeviceId();
 }

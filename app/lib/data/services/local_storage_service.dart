@@ -1,43 +1,49 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lune/domain/enums/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   SharedPreferences? _prefs;
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   static const _keyTheme = 'themeMode';
   static const _keyScale = 'textScaler';
   static const _keyLocale = 'locale';
-  static const _publicOnboard = 'publicOnboard';
-  static const _accessToken = 'accessToken';
-  static const _homeTutorialShown = 'homeTutorialShown';
+  static const _keyPublicOnboard = 'publicOnboard';
+  static const _keyAccessToken = 'accessToken';
+  static const _keyHomeTutorialShown = 'homeTutorialShown';
+  static const _keyDeviceId = 'deviceId';
 
   Future<SharedPreferences> _getPrefs() async {
     _prefs ??= await SharedPreferences.getInstance();
     return _prefs!;
   }
 
+  Future<void> _setOrRemoveString(String key, String? value) async {
+    final prefs = await _getPrefs();
+    if (value != null) {
+      await prefs.setString(key, value);
+    } else {
+      await prefs.remove(key);
+    }
+  }
+
+  // Theme
+
   Future<String?> getThemeModeKey() async {
     final prefs = await _getPrefs();
     return prefs.getString(_keyTheme);
   }
 
+  Future<void> setThemeModeKey(String? key) async {
+    await _setOrRemoveString(_keyTheme, key);
+  }
+
+  // Text Scale
+
   Future<double?> getTextScaler() async {
     final prefs = await _getPrefs();
     return prefs.getDouble(_keyScale);
-  }
-
-  Future<String?> getLocaleCode() async {
-    final prefs = await _getPrefs();
-    return prefs.getString(_keyLocale);
-  }
-
-  Future<void> setThemeModeKey(String? key) async {
-    final prefs = await _getPrefs();
-    if (key != null) {
-      await prefs.setString(_keyTheme, key);
-    } else {
-      await prefs.remove(_keyTheme);
-    }
   }
 
   Future<void> setTextScaler(double scaler) async {
@@ -45,69 +51,67 @@ class LocalStorageService {
     await prefs.setDouble(_keyScale, scaler);
   }
 
-  Future<void> setLocaleCode(String? code) async {
+  // Locale
+
+  Future<String?> getLocaleCode() async {
     final prefs = await _getPrefs();
-    if (code != null) {
-      await prefs.setString(_keyLocale, code);
-    } else {
-      await prefs.remove(_keyLocale);
-    }
+    return prefs.getString(_keyLocale);
   }
+
+  Future<void> setLocaleCode(String? code) async {
+    await _setOrRemoveString(_keyLocale, code);
+  }
+
+  // Public Onboard
 
   Future<PublicOnboardStatus> getPOStatus() async {
     final prefs = await _getPrefs();
-    final publicOnboardStatusRaw = prefs.getString(_publicOnboard);
-
-    if (publicOnboardStatusRaw == 'seen') {
-      return PublicOnboardStatus.seen;
-    } else if (publicOnboardStatusRaw == 'unseen') {
-      return PublicOnboardStatus.unseen;
-    } else {
-      return PublicOnboardStatus.unseen;
-    }
+    final raw = prefs.getString(_keyPublicOnboard);
+    return raw == PublicOnboardStatus.seen.name
+        ? PublicOnboardStatus.seen
+        : PublicOnboardStatus.unseen;
   }
 
   Future<void> setPOStatus(PublicOnboardStatus status) async {
     final prefs = await _getPrefs();
-    switch (status) {
-      case PublicOnboardStatus.seen:
-        await prefs.setString(_publicOnboard, 'seen');
-      case PublicOnboardStatus.unseen:
-        await prefs.setString(_publicOnboard, 'unseen');
-    }
+    await prefs.setString(_keyPublicOnboard, status.name);
   }
 
+  // Access Token (secure storage)
+
   Future<String?> getAccessToken() async {
-    final prefs = await _getPrefs();
-    return prefs.getString(_accessToken);
+    return _secureStorage.read(key: _keyAccessToken);
   }
 
   Future<void> setAccessToken(String? token) async {
-    final prefs = await _getPrefs();
     if (token != null) {
-      await prefs.setString(_accessToken, token);
+      await _secureStorage.write(key: _keyAccessToken, value: token);
     } else {
-      await prefs.remove(_accessToken);
+      await _secureStorage.delete(key: _keyAccessToken);
     }
   }
 
+  // Home Tutorial
+
   Future<bool> getHomeTutorialShown() async {
     final prefs = await _getPrefs();
-    return prefs.getBool(_homeTutorialShown) ?? false;
+    return prefs.getBool(_keyHomeTutorialShown) ?? false;
   }
 
   Future<void> setHomeTutorialShown(bool shown) async {
     final prefs = await _getPrefs();
-    await prefs.setBool(_homeTutorialShown, shown);
+    await prefs.setBool(_keyHomeTutorialShown, shown);
   }
+
+  // Device ID
 
   Future<String?> getDeviceId() async {
     final prefs = await _getPrefs();
-    return prefs.getString('deviceId');
+    return prefs.getString(_keyDeviceId);
   }
 
   Future<void> setDeviceId(String deviceId) async {
     final prefs = await _getPrefs();
-    await prefs.setString('deviceId', deviceId);
+    await prefs.setString(_keyDeviceId, deviceId);
   }
 }

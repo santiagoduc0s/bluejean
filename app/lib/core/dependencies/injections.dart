@@ -1,6 +1,5 @@
 import 'package:lune/core/ui/alerts/alerts.dart';
 import 'package:lune/core/utils/utils.dart';
-import 'package:lune/data/services/services.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 import 'package:lune/domain/usecases/usecases.dart';
 import 'package:lune/router/router.dart';
@@ -14,10 +13,6 @@ List<SingleChildWidget> providers = [
   Provider(create: (_) => getIt<CustomDialog>()),
   Provider(create: (_) => getIt<Localization>()),
 
-  /// SERVICES
-  Provider(create: (_) => getIt<LocalStorageService>()),
-  Provider(create: (_) => getIt<DeviceInfoService>()),
-
   /// REPOSITORIES
   Provider<AuthRepository>(create: (_) => getIt<AuthRepository>()),
   Provider<DeviceRepository>(
@@ -25,6 +20,9 @@ List<SingleChildWidget> providers = [
   ),
   Provider<PermissionRepository>(
     create: (_) => getIt<PermissionRepository>(),
+  ),
+  Provider<PreferenceRepository>(
+    create: (_) => getIt<PreferenceRepository>(),
   ),
 
   /// USE CASES

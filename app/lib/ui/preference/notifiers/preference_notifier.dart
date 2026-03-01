@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:lune/data/services/services.dart';
+import 'package:lune/domain/repositories/repositories.dart';
 
 class PreferenceNotifier extends ChangeNotifier {
-  PreferenceNotifier({required LocalStorageService localStorageService})
-    : _localStorageService = localStorageService;
+  PreferenceNotifier({required PreferenceRepository preferenceRepository})
+    : _preferenceRepository = preferenceRepository;
 
-  final LocalStorageService _localStorageService;
+  final PreferenceRepository _preferenceRepository;
 
   String? theme;
   String? language;
   double? textScaler;
 
   Future<void> initialize() async {
-    theme = await _localStorageService.getThemeModeKey();
-    language = await _localStorageService.getLocaleCode();
-    textScaler = await _localStorageService.getTextScaler();
+    theme = await _preferenceRepository.getThemeModeKey();
+    language = await _preferenceRepository.getLocaleCode();
+    textScaler = await _preferenceRepository.getTextScaler();
     notifyListeners();
   }
 
   Future<void> setTheme(String? value) async {
     theme = value;
     notifyListeners();
-    await _localStorageService.setThemeModeKey(value);
+    await _preferenceRepository.setThemeModeKey(value);
   }
 
   Future<void> setTextScaler(double value) async {
     textScaler = value;
     notifyListeners();
-    await _localStorageService.setTextScaler(value);
+    await _preferenceRepository.setTextScaler(value);
   }
 
   Future<void> setLanguage(String? value) async {
     language = value;
     notifyListeners();
-    await _localStorageService.setLocaleCode(value);
+    await _preferenceRepository.setLocaleCode(value);
   }
 }

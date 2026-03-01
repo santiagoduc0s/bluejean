@@ -19,7 +19,7 @@ class PublicOnboardScreen {
         child: ChangeNotifierProvider<PublicOnboardNotifier>(
           create:
               (_) => PublicOnboardNotifier(
-                localStorageService: context.read(),
+                preferenceRepository: context.read(),
                 router: context.read(),
               ),
           child: const PublicOnboardPage(),
