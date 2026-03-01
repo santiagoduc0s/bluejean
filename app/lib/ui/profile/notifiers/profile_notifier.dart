@@ -9,12 +9,12 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 class ProfileNotifier extends ChangeNotifier {
   ProfileNotifier({
-    required UpdateCurrentUserUsecase updateCurrentUserUsecase,
+    required UpdateCurrentUserUseCase updateCurrentUserUsecase,
     required AuthNotifier authNotifier,
   }) : _updateCurrentUserUsecase = updateCurrentUserUsecase,
        _authNotifier = authNotifier;
 
-  final UpdateCurrentUserUsecase _updateCurrentUserUsecase;
+  final UpdateCurrentUserUseCase _updateCurrentUserUsecase;
   final AuthNotifier _authNotifier;
 
   bool _isUpdatingData = false;

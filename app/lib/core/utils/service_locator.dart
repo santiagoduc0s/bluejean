@@ -33,7 +33,6 @@ void initServiceLocator() {
 
   // SERVICES
   getIt.registerLazySingleton(() => LocalStorageService());
-  getIt.registerLazySingleton(() => PermissionService());
   getIt.registerLazySingleton(() => DeviceInfoService());
   getIt.registerLazySingleton(
     () => ApiClient(
@@ -62,7 +61,7 @@ void initServiceLocator() {
     ),
   );
   getIt.registerLazySingleton<PermissionRepository>(
-    () => PermissionRepositoryImpl(service: getIt<PermissionService>()),
+    () => PermissionRepositoryImpl(),
   );
   getIt.registerLazySingleton<MessagingRepository>(
     () => MessagingRepositoryImpl(),
@@ -85,7 +84,7 @@ getIt.registerLazySingleton<RemoteStorageRepository>(
     () => ForgotPasswordUseCase(getIt<AuthRepository>()),
   );
   getIt.registerLazySingleton(
-    () => UpdateCurrentUserUsecase(
+    () => UpdateCurrentUserUseCase(
       authRepository: getIt<AuthRepository>(),
       remoteStorageRepository: getIt<RemoteStorageRepository>(),
     ),
@@ -98,7 +97,7 @@ getIt.registerLazySingleton<RemoteStorageRepository>(
     ),
   );
   getIt.registerLazySingleton(
-    () => DeleteAccountUsecase(authRepository: getIt<AuthRepository>()),
+    () => DeleteAccountUseCase(authRepository: getIt<AuthRepository>()),
   );
   getIt.registerLazySingleton(
     () => SaveFcmTokenUseCase(

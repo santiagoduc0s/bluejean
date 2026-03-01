@@ -4,8 +4,8 @@ import 'package:lune/core/utils/utils.dart';
 import 'package:lune/domain/entities/entities.dart';
 import 'package:lune/domain/repositories/repositories.dart';
 
-class UpdateCurrentUserUsecase {
-  UpdateCurrentUserUsecase({
+class UpdateCurrentUserUseCase {
+  UpdateCurrentUserUseCase({
     required AuthRepository authRepository,
     required RemoteStorageRepository remoteStorageRepository,
   }) : _authRepository = authRepository,

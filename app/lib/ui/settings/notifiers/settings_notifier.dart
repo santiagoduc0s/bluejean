@@ -15,7 +15,7 @@ class SettingsNotifier extends ChangeNotifier {
     required SaveFcmTokenUseCase saveTokenUseCase,
     required AuthNotifier authNotifier,
     required SignOutUseCase signOutUseCase,
-    required DeleteAccountUsecase deleteAccountUsecase,
+    required DeleteAccountUseCase deleteAccountUsecase,
   }) : _saveTokenUseCase = saveTokenUseCase,
        _permissionRepository = permissionRepository,
        _onSignOut = onSignOut,
@@ -27,7 +27,7 @@ class SettingsNotifier extends ChangeNotifier {
   final SaveFcmTokenUseCase _saveTokenUseCase;
   final AuthNotifier _authNotifier;
   final SignOutUseCase _signOutUseCase;
-  final DeleteAccountUsecase _deleteAccountUsecase;
+  final DeleteAccountUseCase _deleteAccountUsecase;
 
   final void Function() _onSignOut;
 

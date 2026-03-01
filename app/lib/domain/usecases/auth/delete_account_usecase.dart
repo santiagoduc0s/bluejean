@@ -1,7 +1,7 @@
 import 'package:lune/domain/repositories/repositories.dart';
 
-class DeleteAccountUsecase {
-  DeleteAccountUsecase({required AuthRepository authRepository})
+class DeleteAccountUseCase {
+  DeleteAccountUseCase({required AuthRepository authRepository})
     : _authRepository = authRepository;
 
   final AuthRepository _authRepository;

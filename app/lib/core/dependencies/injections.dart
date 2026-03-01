@@ -31,9 +31,9 @@ List<SingleChildWidget> providers = [
   Provider(create: (_) => getIt<SignInWithEmailPasswordUseCase>()),
   Provider(create: (_) => getIt<SignUpUseCase>()),
   Provider(create: (_) => getIt<ForgotPasswordUseCase>()),
-  Provider(create: (_) => getIt<UpdateCurrentUserUsecase>()),
+  Provider(create: (_) => getIt<UpdateCurrentUserUseCase>()),
   Provider(create: (_) => getIt<SignOutUseCase>()),
-  Provider(create: (_) => getIt<DeleteAccountUsecase>()),
+  Provider(create: (_) => getIt<DeleteAccountUseCase>()),
   Provider(create: (_) => getIt<SaveFcmTokenUseCase>()),
 
   /// GLOBAL NOTIFIERS
