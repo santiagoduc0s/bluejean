@@ -34,7 +34,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
       AppLoggerHelper.debug(Env.environment);
 
-      initServiceLocator();
+      initServiceLocator(
+        useFakeRepositories: const bool.fromEnvironment('USE_FAKES'),
+      );
 
       await _initializeApp();
 

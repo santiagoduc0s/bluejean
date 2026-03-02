@@ -17,7 +17,7 @@ final getIt = GetIt.instance;
 
 bool _isInitialized = false;
 
-void initServiceLocator() {
+void initServiceLocator({bool useFakeRepositories = false}) {
   if (_isInitialized) return;
 
   // CORE
@@ -48,32 +48,53 @@ void initServiceLocator() {
   );
 
   // REPOSITORIES
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-      localStorageService: getIt<LocalStorageService>(),
-      apiClient: getIt<ApiClient>(),
-    ),
-  );
-  getIt.registerLazySingleton<DeviceRepository>(
-    () => DeviceRepositoryImpl(
-      deviceInfoService: getIt<DeviceInfoService>(),
-      apiClient: getIt<ApiClient>(),
-    ),
-  );
-  getIt.registerLazySingleton<PermissionRepository>(
-    () => PermissionRepositoryImpl(),
-  );
-  getIt.registerLazySingleton<MessagingRepository>(
-    () => MessagingRepositoryImpl(),
-  );
-  getIt.registerLazySingleton<PreferenceRepository>(
-    () => PreferenceRepositoryImpl(
-      localStorageService: getIt<LocalStorageService>(),
-    ),
-  );
-getIt.registerLazySingleton<RemoteStorageRepository>(
-    () => RemoteStorageRepositoryImpl(apiClient: getIt<ApiClient>()),
-  );
+  if (useFakeRepositories) {
+    getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryFake(),
+    );
+    getIt.registerLazySingleton<DeviceRepository>(
+      () => DeviceRepositoryFake(),
+    );
+    getIt.registerLazySingleton<PermissionRepository>(
+      () => PermissionRepositoryFake(),
+    );
+    getIt.registerLazySingleton<MessagingRepository>(
+      () => MessagingRepositoryFake(),
+    );
+    getIt.registerLazySingleton<PreferenceRepository>(
+      () => PreferenceRepositoryFake(),
+    );
+    getIt.registerLazySingleton<RemoteStorageRepository>(
+      () => RemoteStorageRepositoryFake(),
+    );
+  } else {
+    getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(
+        localStorageService: getIt<LocalStorageService>(),
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+    getIt.registerLazySingleton<DeviceRepository>(
+      () => DeviceRepositoryImpl(
+        deviceInfoService: getIt<DeviceInfoService>(),
+        apiClient: getIt<ApiClient>(),
+      ),
+    );
+    getIt.registerLazySingleton<PermissionRepository>(
+      () => PermissionRepositoryImpl(),
+    );
+    getIt.registerLazySingleton<MessagingRepository>(
+      () => MessagingRepositoryImpl(),
+    );
+    getIt.registerLazySingleton<PreferenceRepository>(
+      () => PreferenceRepositoryImpl(
+        localStorageService: getIt<LocalStorageService>(),
+      ),
+    );
+    getIt.registerLazySingleton<RemoteStorageRepository>(
+      () => RemoteStorageRepositoryImpl(apiClient: getIt<ApiClient>()),
+    );
+  }
 
   // USE CASES
   getIt.registerLazySingleton(
